@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5G-A确定性网络智能调度仿真平台</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <style>
+        /* 全局样式 */
+        :root {
+            --primary-color: #0a1929;
+            --secondary-color: #86909c;
+            --accent-color: #33ff88;
+            --dark-bg: #06111c;
+            --light-bg: #0f2336;
+            --border-color: #1a365d;
+            --text-primary: #ffffff;
+            --text-secondary: #86909c;
+            --text-accent: #33ff88;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+            --box-shadow-hover: 0 8px 32px rgba(51, 255, 136, 0.3);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            font-family: 'Microsoft YaHei', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        
+        /* 标题样式 */
+        h1 {
+            color: var(--text-primary);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            text-shadow: 0 0 30px rgba(51, 255, 136, 0.4);
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+        }
+        
+        h2, h3, h4, h5 {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            color: var(--text-accent);
+        }
+        
+        /* 头部样式 */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-bg) 100%);
+            padding: 25px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(51, 255, 136, 0.3);
+            transition: var(--transition);
+        }
+        
+        .logo-icon:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(51, 255, 136, 0.5);
+        }
+        
+        .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-shadow: 0 0 20px rgba(51, 255, 136, 0.3);
+        }
+        
+        .header-title {
+            font-size: 18px;
+            color: var(--text-secondary);
+            text-align: right;
+        }
+        
+        /* 导航栏样式 */
+        .navbar-custom {
+            background-color: var(--light-bg);
+            border-radius: var(--border-radius);
+            padding: 0;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .navbar-custom .nav-link {
+            padding: 18px 30px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            border-right: 1px solid var(--border-color);
+            transition: var(--transition);
+            border-radius: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .navbar-custom .nav-link:hover {
+            color: var(--accent-color);
+            background-color: rgba(51, 255, 136, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .navbar-custom .nav-link.active {
+            color: var(--accent-color);
+            background-color: rgba(51, 255, 136, 0.15);
+            border-bottom: 4px solid var(--accent-color);
+        }
+        
+        .navbar-custom .nav-link:last-child {
+            border-right: none;
+        }
+        
+        /* 卡片样式 */
+        .card {
+            background-color: var(--light-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 25px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), transparent);
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--box-shadow-hover);
+            border-color: var(--accent-color);
+        }
+        
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .card-header {
+            background-color: var(--primary-color);
+            color: var(--text-primary);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-body {
+            padding: 25px;
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: var(--transition);
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:active {
+            transform: scale(0.95);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: 2px solid var(--accent-color);
+            color: var(--text-primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(51, 255, 136, 0.4);
+        }
+        
+        .btn-scenario {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-scenario:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(51, 255, 136, 0.4);
+        }
+        
+        /* 场景描述 */
+        .scenario-description {
+            margin-top: 15px;
+            padding: 20px;
+            background-color: rgba(51, 255, 136, 0.05);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--accent-color);
+            transition: var(--transition);
+            color: var(--text-secondary);
+        }
+        
+        .scenario-description:hover {
+            background-color: rgba(51, 255, 136, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .scenario-description p {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+        
+        /* 图表容器 */
+        .chart-container {
+            position: relative;
+            height: 320px;
+            margin-top: 20px;
+            border-radius: var(--border-radius);
+            background-color: rgba(15, 35, 54, 0.9);
+            padding: 25px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+        }
+        
+        .chart-container:hover {
+            box-shadow: 0 8px 32px rgba(51, 255, 136, 0.2);
+        }
+        
+        /* 表格样式 */
+        .metrics-table {
+            margin-top: 20px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .metrics-table th {
+            background-color: var(--primary-color);
+            color: var(--text-primary);
+            font-weight: 600;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: left;
+        }
+        
+        .metrics-table td {
+            background-color: var(--light-bg);
+            color: var(--text-primary);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+        
+        .metrics-table tr:hover td {
+            background-color: rgba(51, 255, 136, 0.05);
+            transform: translateX(5px);
+        }
+        
+        /* 高亮样式 */
+        .optimization-highlight {
+            color: var(--text-accent);
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                text-shadow: 0 0 5px rgba(51, 255, 136, 0.5);
+            }
+            50% {
+                text-shadow: 0 0 25px rgba(51, 255, 136, 0.8);
+            }
+            100% {
+                text-shadow: 0 0 5px rgba(51, 255, 136, 0.5);
+            }
+        }
+        
+        /* 加载动画 */
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(51, 255, 136, 0.2);
+            border-left-color: var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 25px;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* 动画效果 */
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 数据卡片 - 渐变边框 */
+        .metric-card {
+            background-color: var(--light-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 20px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid transparent;
+            background: linear-gradient(var(--light-bg), var(--light-bg)) padding-box,
+                        linear-gradient(135deg, var(--accent-color), var(--secondary-color)) border-box;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(51, 255, 136, 0.3);
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent-color), transparent);
+        }
+        
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 15px 0;
+            color: var(--text-accent);
+            animation: numberPulse 3s infinite;
+        }
+        
+        @keyframes numberPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        .metric-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* 标签页样式 */
+        .nav-tabs {
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 25px;
+        }
+        
+        .nav-tabs .nav-link {
+            border: none;
+            border-bottom: 3px solid transparent;
+            border-radius: 0;
+            padding: 15px 25px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            background-color: var(--light-bg);
+            transition: var(--transition);
+            margin-right: 2px;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            color: var(--text-accent);
+            background-color: rgba(51, 255, 136, 0.05);
+            border-bottom-color: rgba(51, 255, 136, 0.5);
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--text-accent);
+            border-bottom-color: var(--accent-color);
+            background-color: rgba(51, 255, 136, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                margin-top: 15px;
+                padding: 0 15px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .navbar-custom .nav-link {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+            
+            .card-body {
+                padding: 20px;
+            }
+            
+            .chart-container {
+                height: 280px;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .metric-value {
+                font-size: 24px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .card-header {
+                padding: 15px 20px;
+            }
+            
+            .card-body {
+                padding: 15px;
+            }
+            
+            .chart-container {
+                height: 250px;
+                padding: 15px;
+            }
+        }
+        
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--light-bg);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #22cc66;
+        }
+        
+        /* 加载状态 */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(10, 25, 41, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* 优化详情列表 */
+        #optimization-details-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        #optimization-details-list li {
+            padding: 12px 20px;
+            margin-bottom: 10px;
+            background-color: rgba(51, 255, 136, 0.05);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 0 8px 8px 0;
+            transition: var(--transition);
+            color: var(--text-secondary);
+        }
+        
+        #optimization-details-list li:hover {
+            background-color: rgba(51, 255, 136, 0.1);
+            transform: translateX(10px);
+        }
+        
+        /* 按钮组 */
+        .btn-group {
+            margin-top: 20px;
+        }
+        
+        /* 网络拓扑连线闪烁效果 */
+        .link-flash {
+            animation: linkFlash 2s infinite;
+        }
+        
+        @keyframes linkFlash {
+            0%, 100% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 1;
+                stroke-width: 3;
+            }
+        }
+        
+        /* 核心指标区样式 */
+        .core-metrics-section {
+            margin-bottom: 30px;
+        }
+        
+        /* 场景可视化区样式 */
+        .scenario-visualization-section {
+            margin-bottom: 30px;
+        }
+        
+        /* 操作模拟区样式 */
+        .operation-simulation-section {
+            margin-bottom: 30px;
+        }
+        
+        /* 表格样式调整 */
+        .table {
+            color: var(--text-primary);
+        }
+        
+        /* 表单控件样式 */
+        .form-label {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .form-select {
+            background-color: var(--light-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: var(--border-radius);
+            padding: 10px 15px;
+            transition: var(--transition);
+        }
+        
+        .form-select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(51, 255, 136, 0.25);
+        }
+        
+        .form-control {
+            background-color: var(--light-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: var(--border-radius);
+            padding: 10px 15px;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(51, 255, 136, 0.25);
+        }
+        
+        /* 表单滑块样式 */
+        .form-range {
+            background-color: var(--light-bg);
+        }
+        
+        .form-range::-webkit-slider-thumb {
+            background-color: var(--accent-color);
+            transition: var(--transition);
+        }
+        
+        .form-range::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+        
+        .form-range::-moz-range-thumb {
+            background-color: var(--accent-color);
+        }
+        
+        /* 警告框样式 */
+        .alert {
+            background-color: rgba(51, 255, 136, 0.05);
+            border: 1px solid var(--accent-color);
+            color: var(--text-primary);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            transition: var(--transition);
+        }
+        
+        .alert:hover {
+            box-shadow: 0 4px 16px rgba(51, 255, 136, 0.2);
+        }
+        
+        .alert-success {
+            background-color: rgba(51, 255, 136, 0.1);
+        }
+        
+        .alert-info {
+            background-color: rgba(134, 144, 156, 0.1);
+            border-color: var(--secondary-color);
+        }
+        
+        .alert-danger {
+            background-color: rgba(220, 53, 69, 0.1);
+            border-color: #dc3545;
+        }
+        
+        /* 通感融合样式 */
+        .sensing-map-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            background-color: var(--light-bg);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .sensing-map-container:hover {
+            box-shadow: var(--box-shadow-hover);
+        }
+        
+        .sensing-map {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--light-bg) 0%, var(--primary-color) 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .sensing-map::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(51, 255, 136, 0.1) 0%, transparent 70%);
+        }
+        
+        .sensing-map-icon {
+            position: relative;
+            z-index: 1;
+            width: 140px;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(51, 255, 136, 0.1);
+            border-radius: 50%;
+            border: 2px solid rgba(51, 255, 136, 0.5);
+            transition: var(--transition);
+        }
+        
+        .sensing-map-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(51, 255, 136, 0.4);
+        }
+        
+        .sensing-map-text {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            margin-top: 25px;
+            color: var(--text-primary);
+            font-size: 18px;
+            font-weight: 600;
+            text-shadow: 0 0 20px rgba(51, 255, 136, 0.3);
+        }
+        
+        .sensing-coverage {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(51, 255, 136, 0.2);
+            border: 2px solid rgba(51, 255, 136, 0.6);
+            animation: pulse 3s infinite;
+        }
+        
+        .target-trail {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background-color: #33ff88;
+            border-radius: 50%;
+            animation: trail 2s linear infinite;
+        }
+        
+        @keyframes trail {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(4);
+            }
+        }
+        
+        /* 指标卡片渐变边框 */
+        .gradient-border-card {
+            position: relative;
+            border-radius: var(--border-radius);
+            background-color: var(--light-bg);
+            padding: 25px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .gradient-border-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-hover);
+        }
+        
+        .gradient-border-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid transparent;
+            border-radius: var(--border-radius);
+            background: linear-gradient(var(--light-bg), var(--light-bg)) padding-box,
+                        linear-gradient(45deg, var(--accent-color), var(--secondary-color)) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+        
+        /* 告警样式 */
+        .alert-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(10, 25, 41, 0.95);
+            border: 1px solid var(--accent-color);
+            border-left: 4px solid var(--accent-color);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            z-index: 1000;
+            animation: slideIn 0.5s ease-out;
+            max-width: 400px;
+            transition: var(--transition);
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .alert-notification:hover {
+            box-shadow: 0 8px 32px rgba(51, 255, 136, 0.3);
+            transform: translateX(-5px);
+        }
+        
+        /* 筛选按钮样式 */
+        .filter-btn {
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+        
+        .filter-btn.active {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 16px rgba(51, 255, 136, 0.4);
+        }
+        
+        /* 边缘算力调度样式 */
+        .edge-topology-container {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            background-color: var(--light-bg);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .edge-topology-container:hover {
+            box-shadow: var(--box-shadow-hover);
+        }
+        
+        .edge-node {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 10;
+        }
+        
+        .edge-node:hover {
+            transform: scale(1.15);
+        }
+        
+        .edge-node-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 10px;
+            transition: var(--transition);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .edge-node:hover .edge-node-icon {
+            box-shadow: 0 0 30px var(--accent-color);
+            transform: scale(1.1);
+        }
+        
+        .edge-node-label {
+            font-size: 14px;
+            color: var(--text-primary);
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .edge-node-tooltip {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(10, 25, 41, 0.95);
+            border: 1px solid var(--accent-color);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 100;
+            color: var(--text-primary);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .edge-node:hover .edge-node-tooltip {
+            opacity: 1;
+            visibility: visible;
+            top: -90px;
+        }
+        
+        .edge-node-tooltip div {
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+        
+        .edge-node-tooltip div strong {
+            color: var(--text-accent);
+        }
+        
+        .edge-connection {
+            position: absolute;
+            background-color: var(--accent-color);
+            opacity: 0.4;
+            transition: var(--transition);
+        }
+        
+        /* 时间筛选按钮 */
+        .time-filter-btn {
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+        
+        .time-filter-btn.active {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 16px rgba(51, 255, 136, 0.4);
+        }
+        
+        /* 设备筛选 */
+        .device-filter-section {
+            margin-bottom: 20px;
+        }
+        
+        .device-card {
+            background-color: var(--light-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+            cursor: pointer;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .device-card:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 8px 32px rgba(51, 255, 136, 0.3);
+            transform: translateX(5px);
+        }
+        
+        .device-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 28px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .device-info h6 {
+            margin: 0;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        .device-info p {
+            margin: 5px 0 0 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        /* 底部标语 */
+        .footer-slogan {
+            text-align: center;
+            padding: 40px;
+            margin-top: 60px;
+            border-top: 1px solid var(--border-color);
+            background: linear-gradient(135deg, var(--light-bg) 0%, var(--primary-color) 100%);
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+        
+        .slogan-text {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-shadow: 0 0 30px rgba(51, 255, 136, 0.5);
+            letter-spacing: 5px;
+        }
+        
+        .slogan-sub {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-top: 15px;
+        }
+        
+        /* 切片卡片样式 */
+        .slice-card {
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .slice-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--box-shadow-hover);
+        }
+        
+        .slice-preview {
+            height: 140px;
+            background: linear-gradient(135deg, var(--primary-color), var(--light-bg));
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .slice-card:hover .slice-preview {
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+        }
+        
+        /* 骨架屏 */
+        .skeleton {
+            background: linear-gradient(90deg, var(--light-bg) 25%, rgba(51, 255, 136, 0.1) 50%, var(--light-bg) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+        
+        @keyframes skeleton-loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+        
+        /* 批量操作样式 */
+        .batch-actions {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: var(--light-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--box-shadow);
+        }
+        
+        /* 搜索框样式 */
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 50px 12px 20px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            background-color: var(--light-bg);
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(51, 255, 136, 0.25);
+        }
+        
+        .search-button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--accent-color);
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 8px 15px;
+            color: var(--primary-color);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .search-button:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 4px 16px rgba(51, 255, 136, 0.4);
+        }
+        
+        /* 排序控制 */
+        .sort-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .sort-select {
+            flex: 1;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 992px) {
+            .header-title {
+                font-size: 16px;
+            }
+            
+            .logo-text {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 加载覆盖层 -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-container">
+            <div class="spinner"></div>
+            <p>正在进行仿真计算，请稍候...</p>
+        </div>
+    </div>
+    
+    <!-- 模态框 -->
+    <div class="modal fade" id="subpageModal" tabindex="-1" aria-labelledby="subpageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content" style="background-color: var(--light-bg); border-color: var(--border-color); border-radius: var(--border-radius);">
+                <div class="modal-header" style="border-bottom: 1px solid var(--border-color);">
+                    <h5 class="modal-title" id="subpageModalLabel" style="color: var(--text-primary);"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(1);"></button>
+                </div>
+                <div class="modal-body" id="subpageContent">
+                    <!-- 子页面内容将通过JavaScript动态加载 -->
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid var(--border-color);">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 新增切片模态框 -->
+    <div class="modal fade" id="addSliceModal" tabindex="-1" aria-labelledby="addSliceModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background-color: var(--light-bg); border-color: var(--border-color); border-radius: var(--border-radius);">
+                <div class="modal-header" style="border-bottom: 1px solid var(--border-color);">
+                    <h5 class="modal-title" id="addSliceModalLabel" style="color: var(--text-primary);">新增网络切片</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(1);"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addSliceForm">
+                        <div class="mb-4">
+                            <label class="form-label">切片名称</label>
+                            <input type="text" class="form-control" id="sliceName" required placeholder="请输入切片名称">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">切片类型</label>
+                            <select class="form-select" id="sliceType" required>
+                                <option value="industrial">工业切片</option>
+                                <option value="vehicle">车联网切片</option>
+                                <option value="civil">民生切片</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">切片大小</label>
+                            <input type="number" class="form-control" id="sliceSize" required placeholder="请输入切片大小 (MB)" min="10">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">描述</label>
+                            <textarea class="form-control" id="sliceDescription" rows="3" placeholder="请输入切片描述"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid var(--border-color);">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="addSlice()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 头部 -->
+    <div class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">5G-A</div>
+                    <div class="logo-text">智能网络运营中心</div>
+                </div>
+                <div class="header-title">5G-A 确定性网络智能调度仿真平台</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <div class="container">
+        <nav class="navbar-custom">
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#dashboard-tab" type="button">核心仪表盘</button>
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#sensing-tab" type="button">通感一体</button>
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#slice-tab" type="button">切片管理</button>
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#edge-tab" type="button">边缘算力</button>
+            </div>
+        </nav>
+        
+        <!-- 标签页内容 -->
+        <div class="tab-content" id="nav-tabContent">
+            <!-- 核心仪表盘 -->
+            <div class="tab-pane fade show active" id="dashboard-tab">
+                <div class="core-metrics-section">
+            <div class="card">
+                <div class="card-header">
+                    核心指标监控
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="metric-card">
+                                <div class="metric-label">空口峰值速率</div>
+                                <div class="metric-value" id="air-peak-rate">10.0 Gbps</div>
+                                <div class="text-secondary">下行速率</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="metric-card">
+                                <div class="metric-label">上行峰值速率</div>
+                                <div class="metric-value" id="uplink-peak-rate">1.0 Gbps</div>
+                                <div class="text-secondary">上行速率</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="metric-card">
+                                <div class="metric-label">端到端时延 (URLLC)</div>
+                                <div class="metric-value" id="urllc-latency">1.0 ms</div>
+                                <div class="text-secondary">超低时延</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="metric-card">
+                                <div class="metric-label">端到端时延 (车联网)</div>
+                                <div class="metric-value" id="v2x-latency">5.0 ms</div>
+                                <div class="text-secondary">低时延</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-4">
+                            <div class="metric-card">
+                                <div class="metric-label">网络切片SLA履约率</div>
+                                <div class="metric-value" id="sla-compliance">99.99%</div>
+                                <div class="text-secondary">工业切片</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="metric-card">
+                                <div class="metric-label">通感融合感知精度</div>
+                                <div class="metric-value" id="sensing-accuracy">98.5%</div>
+                                <div class="text-secondary">环境感知</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="metric-card">
+                                <div class="metric-label">网络可靠性</div>
+                                <div class="metric-value" id="network-reliability">99.999%</div>
+                                <div class="text-secondary">5个9标准</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 结束核心仪表盘 -->
+        </div>
+        
+        <!-- 通感一体 -->
+        <div class="tab-pane fade" id="sensing-tab">
+            <!-- 顶部区域 -->
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h4>5G-A通感一体监控中心</h4>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="status-indicator">
+                                        <span class="badge bg-success">运行正常</span>
+                                    </div>
+                                    <button class="btn btn-primary btn-sm" onclick="refreshSensingData()">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                            <path d="M8 3a5 5 0 1 0 4.546 2.916A5.986 5.986 0 0 1 8 4c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2c-2.21 0-3.582-1.343-3.582-3.582 0-1.154.597-2.135 1.438-2.736a.714.714 0 1 1 1.06 1.06C6.063 7.214 6 8.105 6 9c0 1.657 1.343 3 3 3s3 .895 3 2-1.343 2-3 2a5.002 5.002 0 0 1-4.546-2.916A5.986 5.986 0 0 0 8 13c1.657 0 3-.895 3-2s-1.343-2-3-2-3-.895-3-2 1.343-2 3-2c2.21 0 3.582 1.343 3.582 3.582 0 1.154-.597 2.135-1.438 2.736a.714.714 0 1 0 1.06 1.06C9.937 8.786 10 7.895 10 7c0-1.657-1.343-3-3-3z"/>
+                                        </svg>
+                                        刷新数据
+                                    </button>
+                                    <button class="btn btn-primary btn-sm" onclick="openSensingSettings()">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                            <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+                                        </svg>
+                                        设置
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 核心指标区 -->
+            <div class="row mb-4">
+                <div class="col-md-2">
+                    <div class="metric-card hover-effect" onclick="showMetricDetails('precision')">
+                        <div class="metric-label">通感融合感知精度</div>
+                        <div class="metric-value" id="sensing-precision">99.8%</div>
+                        <div class="text-secondary">感知准确率</div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="metric-card hover-effect" onclick="showMetricDetails('distance')">
+                        <div class="metric-label">感知距离</div>
+                        <div class="metric-value" id="sensing-distance">500m</div>
+                        <div class="text-secondary">最大感知范围</div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="metric-card hover-effect" onclick="showMetricDetails('refresh')">
+                        <div class="metric-label">感知刷新率</div>
+                        <div class="metric-value" id="sensing-refresh">100Hz</div>
+                        <div class="text-secondary">实时感知频率</div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="metric-card hover-effect" onclick="showMetricDetails('coverage')">
+                        <div class="metric-label">通感覆盖范围</div>
+                        <div class="metric-value">98.5%</div>
+                        <div class="text-secondary">区域覆盖率</div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="metric-card hover-effect" onclick="showMetricDetails('online')">
+                        <div class="metric-label">感知设备在线率</div>
+                        <div class="metric-value">100%</div>
+                        <div class="text-secondary">设备状态</div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="metric-card hover-effect" onclick="showMetricDetails('load')">
+                        <div class="metric-label">系统负载</div>
+                        <div class="metric-value">35%</div>
+                        <div class="text-secondary">资源使用</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 主要内容区 -->
+            <div class="row mb-4">
+                <!-- 左侧：场景可视化 -->
+                <div class="col-md-6">
+                    <div class="card h-100 hover-effect" onclick="openScenarioVisualization()">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5>场景可视化</h5>
+                                <span class="badge bg-primary">点击查看详情</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!-- 性能图表 -->
+                            <div class="chart-container mb-4">
+                                <canvas id="slice-performance-chart"></canvas>
+                            </div>
+                            
+                            <!-- 感知类型筛选 -->
+                            <div class="mb-4">
+                                <h6>筛选感知类型</h6>
+                                <div class="btn-group w-100">
+                                    <button class="btn btn-primary filter-btn active" onclick="filterSensingType('temperature')">温度感知</button>
+                                    <button class="btn btn-primary filter-btn" onclick="filterSensingType('person')">人员感知</button>
+                                    <button class="btn btn-primary filter-btn" onclick="filterSensingType('device')">设备感知</button>
+                                </div>
+                            </div>
+                            
+                            <!-- 实时状态 -->
+                            <div class="alert alert-info">
+                                <h6>实时状态</h6>
+                                <ul class="list-unstyled">
+                                    <li>• 感知设备在线: <span class="optimization-highlight">24/24</span></li>
+                                    <li>• 数据更新频率: <span class="optimization-highlight">50ms</span></li>
+                                    <li>• 系统负载: <span class="optimization-highlight">35%</span></li>
+                                    <li>• 告警数量: <span class="optimization-highlight">0</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 右侧：通感融合地图和告警 -->
+                <div class="col-md-6">
+                    <div class="row h-100">
+                        <!-- 通感融合地图 -->
+                        <div class="col-md-12 mb-4">
+                            <div class="card hover-effect" onclick="openSensingMapDetails()">
+                                <div class="card-header">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5>通感融合监控</h5>
+                                        <span class="badge bg-primary">点击查看详情</span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="sensing-map-container" style="height: 300px;">
+                                        <div class="sensing-map" id="sensing-map">
+                                            <!-- 感知覆盖范围 -->
+                                            <div class="sensing-coverage" style="top: 20%; left: 30%; width: 150px; height: 150px;"></div>
+                                            <div class="sensing-coverage" style="top: 40%; left: 60%; width: 100px; height: 100px;"></div>
+                                            
+                                            <!-- 伪目标轨迹 -->
+                                            <div class="target-trail" style="top: 30%; left: 35%;"></div>
+                                            <div class="target-trail" style="top: 35%; left: 38%; animation-delay: 0.5s;"></div>
+                                            <div class="target-trail" style="top: 40%; left: 41%; animation-delay: 1s;"></div>
+                                            <div class="target-trail" style="top: 45%; left: 44%; animation-delay: 1.5s;"></div>
+                                            <div class="target-trail" style="top: 50%; left: 47%; animation-delay: 2s;"></div>
+                                            
+                                            <!-- 替代图片的SVG图标和文本 -->
+                                            <div class="sensing-map-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#33ff88" viewBox="0 0 16 16">
+                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                    <path d="M5.187 12.327A3.32 3.32 0 0 0 8 14c1.058 0 2.067-.355 2.813-1.073a4.98 4.98 0 0 1-1.079-2.403A3.317 3.317 0 0 0 8 10.5c-.616 0-1.19-.15-1.703-.427a3.323 3.323 0 0 0-1.113 2.403z"/>
+                                                    <path d="M9.125 5.125a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                                    <path d="M6.5 6.5a1.5 1.5 0 1 1 3 0 1.5 1.5
