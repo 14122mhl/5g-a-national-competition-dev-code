@@ -1,8 +1,8 @@
 # 产品服务
 # 处理产品相关的业务逻辑
 
-from backend.models.product import Product, ProductStatus
-from backend.utils.logger import logger
+from models.product import Product, ProductStatus
+from utils.logger import logger
 
 class ProductService:
     """产品服务类"""

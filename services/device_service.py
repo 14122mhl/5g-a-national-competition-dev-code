@@ -1,8 +1,8 @@
 # 设备服务
 # 处理设备相关的业务逻辑
 
-from backend.models.device import Device, DeviceType, DeviceStatus
-from backend.utils.logger import logger
+from models.device import Device, DeviceType, DeviceStatus
+from utils.logger import logger
 
 class DeviceService:
     """设备服务类"""

@@ -1,7 +1,7 @@
 from flask import Blueprint, request
-from backend.services.device_service import DeviceService
-from backend.utils.response import success_response, error_response
-from backend.middleware.auth import require_auth, require_role
+from services.device_service import DeviceService
+from utils.response import success_response, error_response
+from middleware.auth import require_auth, require_role
 
 device_bp = Blueprint('device', __name__)
 device_service = DeviceService()

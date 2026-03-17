@@ -1,10 +1,10 @@
 # 订单服务
 # 处理订单相关的业务逻辑
 
-from backend.models.order import Order, OrderStatus
-from backend.models.order_item import OrderItem
-from backend.services.product_service import ProductService
-from backend.utils.logger import logger
+from models.order import Order, OrderStatus
+from models.order_item import OrderItem
+from services.product_service import ProductService
+from utils.logger import logger
 import uuid
 
 class OrderService:

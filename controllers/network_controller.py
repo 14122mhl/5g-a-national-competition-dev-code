@@ -1,7 +1,7 @@
 from flask import Blueprint, request
-from backend.services.network_service import NetworkService
-from backend.utils.response import success_response, error_response
-from backend.middleware.auth import require_auth, require_role
+from services.network_service import NetworkService
+from utils.response import success_response, error_response
+from middleware.auth import require_auth, require_role
 
 network_bp = Blueprint('network', __name__)
 network_service = NetworkService()

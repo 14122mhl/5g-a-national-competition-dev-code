@@ -1,8 +1,8 @@
 # 生产服务
 # 处理生产线相关的业务逻辑
 
-from backend.models.production_line import ProductionLine, ProductionLineStatus
-from backend.utils.logger import logger
+from models.production_line import ProductionLine, ProductionLineStatus
+from utils.logger import logger
 
 class ProductionService:
     """生产服务类"""

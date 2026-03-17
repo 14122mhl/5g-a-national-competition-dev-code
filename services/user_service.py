@@ -1,10 +1,10 @@
 # 用户服务
 # 处理用户相关的业务逻辑
 
-from backend.models.user import User, UserRole
-from backend.utils.password import hash_password, verify_password
-from backend.utils.jwt import generate_token
-from backend.utils.logger import logger
+from models.user import User, UserRole
+from utils.password import hash_password, verify_password
+from utils.jwt import generate_token
+from utils.logger import logger
 
 class UserService:
     """用户服务类"""

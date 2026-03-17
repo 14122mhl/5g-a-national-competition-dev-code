@@ -1,7 +1,7 @@
 from flask import Blueprint, request
-from backend.services.ai_service import AIService
-from backend.utils.response import success_response, error_response
-from backend.middleware.auth import require_auth, require_role
+from services.ai_service import AIService
+from utils.response import success_response, error_response
+from middleware.auth import require_auth, require_role
 
 ai_bp = Blueprint('ai', __name__)
 ai_service = AIService()

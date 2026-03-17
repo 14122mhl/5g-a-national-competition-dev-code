@@ -1,8 +1,8 @@
 # AI服务
 # 处理工业大模型相关的业务逻辑
 
-from backend.utils.logger import logger
-from backend.utils.network import simulate_network_response
+from utils.logger import logger
+from utils.network import simulate_network_response
 import json
 import random
 

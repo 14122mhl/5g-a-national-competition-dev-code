@@ -1,8 +1,8 @@
 # 网络服务
 # 处理5G-A网络相关的业务逻辑
 
-from backend.utils.logger import logger
-from backend.utils.network import simulate_5g_a_network_latency, simulate_5g_a_network_reliability, simulate_network_response
+from utils.logger import logger
+from utils.network import simulate_5g_a_network_latency, simulate_5g_a_network_reliability, simulate_network_response
 import random
 
 class NetworkService:
