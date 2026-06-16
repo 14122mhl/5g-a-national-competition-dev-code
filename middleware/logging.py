@@ -2,7 +2,7 @@
 # 记录请求和响应的日志
 
 from flask import request, g
-from backend.utils.logger import logger
+from utils.logger import logger
 import time
 
 def log_request(f):

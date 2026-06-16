@@ -1,7 +1,7 @@
 # 订单控制器
 # 处理订单相关的HTTP请求
 
-from flask import request
+from flask import request, Blueprint
 from services.order_service import OrderService
 from utils.response import success_response, error_response
 from middleware.auth import auth_required, role_required
@@ -100,3 +100,32 @@ class OrderController:
             return success_response(message="取消订单成功")
         except Exception as e:
             return error_response(message="取消订单失败", errors=str(e))
+
+# 初始化蓝图和控制器实例
+order_bp = Blueprint('order', __name__)
+order_controller = OrderController()
+
+# 路由注册
+@order_bp.route('/', methods=['GET'])
+def get_all_orders():
+    return order_controller.get_all_orders()
+
+@order_bp.route('/<int:order_id>', methods=['GET'])
+def get_order_by_id(order_id):
+    return order_controller.get_order_by_id(order_id)
+
+@order_bp.route('/number/<string:order_number>', methods=['GET'])
+def get_order_by_number(order_number):
+    return order_controller.get_order_by_number(order_number)
+
+@order_bp.route('/', methods=['POST'])
+def create_order():
+    return order_controller.create_order()
+
+@order_bp.route('/<int:order_id>/status', methods=['PUT'])
+def update_order_status(order_id):
+    return order_controller.update_order_status(order_id)
+
+@order_bp.route('/<int:order_id>/cancel', methods=['POST'])
+def cancel_order(order_id):
+    return order_controller.cancel_order(order_id)

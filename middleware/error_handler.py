@@ -2,7 +2,7 @@
 # 处理应用程序中的错误
 
 from flask import jsonify
-from backend.utils.logger import logger
+from utils.logger import logger
 
 def error_handler(f):
     """

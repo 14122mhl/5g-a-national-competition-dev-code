@@ -1,8 +1,6 @@
 # 订单模型
 # 包含订单相关的字段和方法
 
-from sqlalchemy import Column, String, Float, Integer, ForeignKey, Enum as SQLEnum
-from sqlalchemy.orm import relationship
 import enum
 from .base import BaseModel
 
@@ -15,16 +13,16 @@ class OrderStatus(enum.Enum):
 
 class Order(BaseModel):
     """订单模型"""
-    __tablename__ = 'orders'
     
-    order_number = Column(String(50), unique=True, nullable=False)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
-    total_amount = Column(Float, nullable=False)
-    status = Column(SQLEnum(OrderStatus), nullable=False, default=OrderStatus.PENDING)
-    
-    # 关系
-    user = relationship('User', back_populates='orders')
-    order_items = relationship('OrderItem', back_populates='order', cascade='all, delete-orphan')
+    def __init__(self, **kwargs):
+        super().__init__()
+        self.id = kwargs.get('id')
+        self.order_number = kwargs.get('order_number')
+        self.user_id = kwargs.get('user_id')
+        self.total_amount = kwargs.get('total_amount', 0.0)
+        self.status = kwargs.get('status', OrderStatus.PENDING)
+        self.user = kwargs.get('user')
+        self.order_items = kwargs.get('order_items', [])
     
     def to_dict(self):
         """将模型转换为字典"""

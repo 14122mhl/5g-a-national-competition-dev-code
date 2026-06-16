@@ -1,13 +1,20 @@
 from flask import Blueprint, request
 from services.production_service import ProductionService
 from utils.response import success_response, error_response
-from middleware.auth import require_auth, require_role
+from middleware.auth import auth_required, role_required
 
 production_bp = Blueprint('production', __name__)
 production_service = ProductionService()
 
+class ProductionController:
+    """生产控制器类"""
+    
+    def __init__(self):
+        """初始化生产控制器"""
+        self.production_service = ProductionService()
+
 @production_bp.route('/production-lines', methods=['GET'])
-@require_auth
+@auth_required
 def get_production_lines():
     """获取所有生产线"""
     try:
@@ -17,7 +24,7 @@ def get_production_lines():
         return error_response(str(e), 500)
 
 @production_bp.route('/production-lines/<int:line_id>', methods=['GET'])
-@require_auth
+@auth_required
 def get_production_line(line_id):
     """获取单个生产线"""
     try:
@@ -29,8 +36,8 @@ def get_production_line(line_id):
         return error_response(str(e), 500)
 
 @production_bp.route('/production-lines', methods=['POST'])
-@require_auth
-@require_role(['admin'])
+@auth_required
+@role_required(['admin'])
 def create_production_line():
     """创建生产线"""
     try:
@@ -41,7 +48,7 @@ def create_production_line():
         return error_response(str(e), 500)
 
 @production_bp.route('/production-lines/<int:line_id>/status', methods=['PUT'])
-@require_auth
+@auth_required
 def update_production_line_status(line_id):
     """更新生产线状态"""
     try:
@@ -54,8 +61,8 @@ def update_production_line_status(line_id):
         return error_response(str(e), 500)
 
 @production_bp.route('/production-lines/<int:line_id>/maintenance', methods=['POST'])
-@require_auth
-@require_role(['admin', 'maintenance'])
+@auth_required
+@role_required(['admin', 'maintenance'])
 def schedule_maintenance(line_id):
     """安排生产线维护"""
     try:

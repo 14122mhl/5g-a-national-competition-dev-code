@@ -2,8 +2,9 @@
 # 处理用户认证和角色验证
 
 from flask import request, jsonify
-from backend.utils.jwt import verify_token
-from backend.models.user import UserRole
+from utils.jwt import verify_token
+from models.user import UserRole
+import functools
 
 def auth_required(f):
     """
@@ -11,6 +12,7 @@ def auth_required(f):
     :param f: 被装饰的函数
     :return: 装饰后的函数
     """
+    @functools.wraps(f)
     def wrapper(*args, **kwargs):
         auth_header = request.headers.get('Authorization')
         if not auth_header:
@@ -42,6 +44,7 @@ def role_required(required_role):
     :return: 装饰器
     """
     def decorator(f):
+        @functools.wraps(f)
         def wrapper(*args, **kwargs):
             if not hasattr(request, 'user_role'):
                 return jsonify({

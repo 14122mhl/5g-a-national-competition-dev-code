@@ -1,23 +1,21 @@
 # 订单项模型
 # 包含订单项相关的字段和方法
 
-from sqlalchemy import Column, Integer, Float, ForeignKey
-from sqlalchemy.orm import relationship
 from .base import BaseModel
 
 class OrderItem(BaseModel):
     """订单项模型"""
-    __tablename__ = 'order_items'
     
-    order_id = Column(Integer, ForeignKey('orders.id'), nullable=False)
-    product_id = Column(Integer, ForeignKey('products.id'), nullable=False)
-    quantity = Column(Integer, nullable=False)
-    unit_price = Column(Float, nullable=False)
-    subtotal = Column(Float, nullable=False)
-    
-    # 关系
-    order = relationship('Order', back_populates='order_items')
-    product = relationship('Product', back_populates='order_items')
+    def __init__(self, **kwargs):
+        super().__init__()
+        self.id = kwargs.get('id')
+        self.order_id = kwargs.get('order_id')
+        self.product_id = kwargs.get('product_id')
+        self.quantity = kwargs.get('quantity', 0)
+        self.unit_price = kwargs.get('unit_price', 0.0)
+        self.subtotal = kwargs.get('subtotal', 0.0)
+        self.order = kwargs.get('order')
+        self.product = kwargs.get('product')
     
     def to_dict(self):
         """将模型转换为字典"""

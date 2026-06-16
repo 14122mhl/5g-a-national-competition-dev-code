@@ -1,0 +1,460 @@
+2026-06-16 21:06:10,323 - 5G-A-Industry - INFO - ÈÕÖ¾ÏµÍ³³õÊ¼»¯Íê³É
+2026-06-16 21:06:10,323 - 5G-A-Industry - DEBUG - µ±Ç°ÅäÖÃ: DevelopmentConfig
+2026-06-16 21:31:15,967 - 5G-A-Industry - INFO - ÈÕÖ¾ÏµÍ³³õÊ¼»¯Íê³É
+2026-06-16 21:31:15,968 - 5G-A-Industry - DEBUG - µ±Ç°ÅäÖÃ: DevelopmentConfig
+2026-06-16 21:31:16,407 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-06-16 21:31:16,407 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-06-16 21:31:39,070 - 5G-A-Industry - INFO - ÈÕÖ¾ÏµÍ³³õÊ¼»¯Íê³É
+2026-06-16 21:31:39,071 - 5G-A-Industry - DEBUG - µ±Ç°ÅäÖÃ: DevelopmentConfig
+2026-06-16 21:31:39,222 - __main__ - INFO - ==================================================
+2026-06-16 21:31:39,222 - __main__ - INFO - 5G-A È·¶¨ÐÔÍøÂçÖÇÄÜµ÷¶È·ÂÕæÆ½Ì¨ v2.0
+2026-06-16 21:31:39,228 - __main__ - INFO - Æô¶¯³É¹¦£¬·ÃÎÊ http://127.0.0.1:5000
+2026-06-16 21:31:39,234 - __main__ - INFO - ==================================================
+2026-06-16 21:31:40,568 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.3.42:5000
+2026-06-16 21:31:40,568 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-06-16 21:31:52,052 - app - INFO - [8cf3fa58] GET / -> 200 (114.6ms)
+2026-06-16 21:31:52,064 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:31:52] "GET / HTTP/1.1" 200 -
+2026-06-16 21:31:53,836 - app - INFO - [dde0001e] GET /api/dashboard/metrics -> 200 (0.2ms)
+2026-06-16 21:31:53,836 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:31:53] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:31:54,174 - app - ERROR - Î´²¶»ñÒì³£: 405 Method Not Allowed: The method is not allowed for the requested URL.
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+  File "D:\ANAC\envs\5ga\Lib\site-packages\werkzeug\routing\map.py", line 624, in match
+    raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not allowed for the requested URL.
+2026-06-16 21:31:54,259 - app - INFO - [412c9d7b] GET /@vite/client -> 500 (84.9ms)
+2026-06-16 21:31:54,259 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:31:54] "[35m[1mGET /@vite/client HTTP/1.1[0m" 500 -
+2026-06-16 21:32:22,302 - app - INFO - [2cee4254] GET /api/dashboard/metrics -> 200 (0.2ms)
+2026-06-16 21:32:22,303 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:32:22] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:32:34,009 - app - INFO - [4f299f81] GET /api/slices -> 200 (0.3ms)
+2026-06-16 21:32:34,009 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:32:34] "GET /api/slices HTTP/1.1" 200 -
+2026-06-16 21:32:51,676 - app - DEBUG - [54b86a34] POST /api/simulation/run body={'scenario': 'medium', 'slice_type': 'industrial'}
+2026-06-16 21:32:51,677 - app - ERROR - Î´²¶»ñÒì³£: name 'random' is not defined
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 305, in run_simulation
+    report = ai_agent.get_optimization_report(scenario)
+  File "D:\python_chuangxin\5G-A\services\ai_agent.py", line 142, in get_optimization_report
+    "latency_improvement": f"{round(data['latency_improvement'] + random.uniform(-3, 3), 1)}%",
+                                                                  ^^^^^^
+NameError: name 'random' is not defined. Did you forget to import 'random'?
+2026-06-16 21:32:51,683 - app - INFO - [54b86a34] POST /api/simulation/run -> 500 (7.4ms)
+2026-06-16 21:32:51,683 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:32:51] "[35m[1mPOST /api/simulation/run HTTP/1.1[0m" 500 -
+2026-06-16 21:33:03,840 - app - DEBUG - [204d3d22] POST /api/simulation/run body={'scenario': 'medium', 'slice_type': 'industrial'}
+2026-06-16 21:33:03,840 - app - ERROR - Î´²¶»ñÒì³£: name 'random' is not defined
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 305, in run_simulation
+    report = ai_agent.get_optimization_report(scenario)
+  File "D:\python_chuangxin\5G-A\services\ai_agent.py", line 142, in get_optimization_report
+    "latency_improvement": f"{round(data['latency_improvement'] + random.uniform(-3, 3), 1)}%",
+                                                                  ^^^^^^
+NameError: name 'random' is not defined. Did you forget to import 'random'?
+2026-06-16 21:33:03,842 - app - INFO - [204d3d22] POST /api/simulation/run -> 500 (2.1ms)
+2026-06-16 21:33:03,842 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:33:03] "[35m[1mPOST /api/simulation/run HTTP/1.1[0m" 500 -
+2026-06-16 21:37:53,450 - 5G-A-Industry - INFO - ÈÕÖ¾ÏµÍ³³õÊ¼»¯Íê³É
+2026-06-16 21:37:53,457 - 5G-A-Industry - DEBUG - µ±Ç°ÅäÖÃ: DevelopmentConfig
+2026-06-16 21:37:54,149 - __main__ - INFO - ==================================================
+2026-06-16 21:37:54,149 - __main__ - INFO - 5G-A È·¶¨ÐÔÍøÂçÖÇÄÜµ÷¶È·ÂÕæÆ½Ì¨ v2.0
+2026-06-16 21:37:54,149 - __main__ - INFO - Æô¶¯³É¹¦£¬·ÃÎÊ http://127.0.0.1:5000
+2026-06-16 21:37:54,150 - __main__ - INFO - ==================================================
+2026-06-16 21:37:55,901 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.3.42:5000
+2026-06-16 21:37:55,901 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-06-16 21:38:41,453 - 5G-A-Industry - INFO - ÈÕÖ¾ÏµÍ³³õÊ¼»¯Íê³É
+2026-06-16 21:38:41,453 - 5G-A-Industry - DEBUG - µ±Ç°ÅäÖÃ: DevelopmentConfig
+2026-06-16 21:38:41,619 - __main__ - INFO - ==================================================
+2026-06-16 21:38:41,619 - __main__ - INFO - 5G-A È·¶¨ÐÔÍøÂçÖÇÄÜµ÷¶È·ÂÕæÆ½Ì¨ v2.0
+2026-06-16 21:38:41,619 - __main__ - INFO - Æô¶¯³É¹¦£¬·ÃÎÊ http://127.0.0.1:5000
+2026-06-16 21:38:41,620 - __main__ - INFO - ==================================================
+2026-06-16 21:38:44,938 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.3.42:5000
+2026-06-16 21:38:44,938 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-06-16 21:39:26,256 - app - DEBUG - [cd2c0a25] POST /api/simulation/run body={'scenario': 'medium', 'slice_type': 'industrial'}
+2026-06-16 21:39:26,256 - app - ERROR - Î´²¶»ñÒì³£: name 'random' is not defined
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 305, in run_simulation
+    report = ai_agent.get_optimization_report(scenario)
+  File "D:\python_chuangxin\5G-A\services\ai_agent.py", line 142, in get_optimization_report
+    "latency_improvement": f"{round(data['latency_improvement'] + random.uniform(-3, 3), 1)}%",
+                                                                  ^^^^^^
+NameError: name 'random' is not defined. Did you forget to import 'random'?
+2026-06-16 21:39:26,258 - app - INFO - [cd2c0a25] POST /api/simulation/run -> 500 (2.9ms)
+2026-06-16 21:39:26,259 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:39:26] "[35m[1mPOST /api/simulation/run HTTP/1.1[0m" 500 -
+2026-06-16 21:41:26,941 - 5G-A-Industry - INFO - ÈÕÖ¾ÏµÍ³³õÊ¼»¯Íê³É
+2026-06-16 21:41:26,942 - 5G-A-Industry - DEBUG - µ±Ç°ÅäÖÃ: DevelopmentConfig
+2026-06-16 21:41:27,110 - __main__ - INFO - ==================================================
+2026-06-16 21:41:27,110 - __main__ - INFO - 5G-A È·¶¨ÐÔÍøÂçÖÇÄÜµ÷¶È·ÂÕæÆ½Ì¨ v2.0
+2026-06-16 21:41:27,110 - __main__ - INFO - Æô¶¯³É¹¦£¬·ÃÎÊ http://127.0.0.1:5000
+2026-06-16 21:41:27,110 - __main__ - INFO - ==================================================
+2026-06-16 21:41:28,415 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.3.42:5000
+2026-06-16 21:41:28,415 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-06-16 21:41:44,183 - __main__ - DEBUG - [9a637918] POST /api/simulation/run body={'scenario': 'medium', 'slice_type': 'industrial'}
+2026-06-16 21:41:44,183 - __main__ - ERROR - Î´²¶»ñÒì³£: name 'random' is not defined
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 305, in run_simulation
+    report = ai_agent.get_optimization_report(scenario)
+  File "D:\python_chuangxin\5G-A\services\ai_agent.py", line 142, in get_optimization_report
+    "latency_improvement": f"{round(data['latency_improvement'] + random.uniform(-3, 3), 1)}%",
+                                                                  ^^^^^^
+NameError: name 'random' is not defined. Did you forget to import 'random'?
+2026-06-16 21:41:44,186 - __main__ - INFO - [9a637918] POST /api/simulation/run -> 500 (3.3ms)
+2026-06-16 21:41:44,186 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:41:44] "[35m[1mPOST /api/simulation/run HTTP/1.1[0m" 500 -
+2026-06-16 21:43:41,296 - 5G-A-Industry - INFO - ÈÕÖ¾ÏµÍ³³õÊ¼»¯Íê³É
+2026-06-16 21:43:41,296 - 5G-A-Industry - DEBUG - µ±Ç°ÅäÖÃ: DevelopmentConfig
+2026-06-16 21:43:41,475 - __main__ - INFO - ==================================================
+2026-06-16 21:43:41,475 - __main__ - INFO - 5G-A È·¶¨ÐÔÍøÂçÖÇÄÜµ÷¶È·ÂÕæÆ½Ì¨ v2.0
+2026-06-16 21:43:41,475 - __main__ - INFO - Æô¶¯³É¹¦£¬·ÃÎÊ http://127.0.0.1:5000
+2026-06-16 21:43:41,476 - __main__ - INFO - ==================================================
+2026-06-16 21:43:42,802 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.3.42:5000
+2026-06-16 21:43:42,802 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-06-16 21:43:52,305 - __main__ - DEBUG - [71979f40] POST /api/simulation/run body={'scenario': 'medium', 'slice_type': 'industrial'}
+2026-06-16 21:43:52,306 - __main__ - ERROR - Î´²¶»ñÒì³£: name 'random' is not defined
+Traceback (most recent call last):
+  File "D:\ANAC\Lib\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\Lib\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 305, in run_simulation
+    report = ai_agent.get_optimization_report(scenario)
+  File "D:\python_chuangxin\5G-A\services\ai_agent.py", line 142, in get_optimization_report
+    "metrics": {
+    
+NameError: name 'random' is not defined. Did you forget to import 'random'?
+2026-06-16 21:43:52,343 - __main__ - INFO - [71979f40] POST /api/simulation/run -> 500 (38.5ms)
+2026-06-16 21:43:52,344 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:43:52] "[35m[1mPOST /api/simulation/run HTTP/1.1[0m" 500 -
+2026-06-16 21:44:41,308 - 5G-A-Industry - INFO - ÈÕÖ¾ÏµÍ³³õÊ¼»¯Íê³É
+2026-06-16 21:44:41,308 - 5G-A-Industry - DEBUG - µ±Ç°ÅäÖÃ: DevelopmentConfig
+2026-06-16 21:44:41,616 - __main__ - INFO - ==================================================
+2026-06-16 21:44:41,617 - __main__ - INFO - 5G-A È·¶¨ÐÔÍøÂçÖÇÄÜµ÷¶È·ÂÕæÆ½Ì¨ v2.0
+2026-06-16 21:44:41,617 - __main__ - INFO - Æô¶¯³É¹¦£¬·ÃÎÊ http://127.0.0.1:5000
+2026-06-16 21:44:41,617 - __main__ - INFO - ==================================================
+2026-06-16 21:44:42,931 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.3.42:5000
+2026-06-16 21:44:42,932 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-06-16 21:44:50,443 - __main__ - DEBUG - [6235803f] POST /api/simulation/run body={'scenario': 'medium', 'slice_type': 'industrial'}
+2026-06-16 21:44:50,443 - __main__ - ERROR - Î´²¶»ñÒì³£: name 'random' is not defined
+Traceback (most recent call last):
+  File "D:\ANAC\Lib\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\Lib\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "d:\python_chuangxin\5G-A\app.py", line 305, in run_simulation
+    report = ai_agent.get_optimization_report(scenario)
+  File "d:\python_chuangxin\5G-A\services\ai_agent.py", line 142, in get_optimization_report
+    "metrics": {
+    
+NameError: name 'random' is not defined. Did you forget to import 'random'?
+2026-06-16 21:44:50,446 - __main__ - INFO - [6235803f] POST /api/simulation/run -> 500 (4.0ms)
+2026-06-16 21:44:50,447 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:44:50] "[35m[1mPOST /api/simulation/run HTTP/1.1[0m" 500 -
+2026-06-16 21:45:36,850 - 5G-A-Industry - INFO - ÈÕÖ¾ÏµÍ³³õÊ¼»¯Íê³É
+2026-06-16 21:45:36,851 - 5G-A-Industry - DEBUG - µ±Ç°ÅäÖÃ: DevelopmentConfig
+2026-06-16 21:45:37,021 - __main__ - INFO - ==================================================
+2026-06-16 21:45:37,021 - __main__ - INFO - 5G-A È·¶¨ÐÔÍøÂçÖÇÄÜµ÷¶È·ÂÕæÆ½Ì¨ v2.0
+2026-06-16 21:45:37,021 - __main__ - INFO - Æô¶¯³É¹¦£¬·ÃÎÊ http://127.0.0.1:5000
+2026-06-16 21:45:37,021 - __main__ - INFO - ==================================================
+2026-06-16 21:45:38,321 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.3.42:5000
+2026-06-16 21:45:38,321 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-06-16 21:45:52,918 - __main__ - DEBUG - [6c962c03] POST /api/simulation/run body={'scenario': 'medium', 'slice_type': 'industrial'}
+2026-06-16 21:45:52,919 - __main__ - INFO - [6c962c03] POST /api/simulation/run -> 200 (1.0ms)
+2026-06-16 21:45:52,919 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:45:52] "POST /api/simulation/run HTTP/1.1" 200 -
+2026-06-16 21:46:11,727 - __main__ - INFO - [43eb47be] GET /api/dashboard/metrics -> 200 (0.2ms)
+2026-06-16 21:46:11,728 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:46:11] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:46:11,748 - __main__ - INFO - [9898fc2c] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:46:11,749 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:46:11] "GET /api/slices HTTP/1.1" 200 -
+2026-06-16 21:46:11,753 - __main__ - INFO - [c1c11aa7] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-16 21:46:11,754 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:46:11] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-16 21:46:11,761 - __main__ - INFO - [92bac2e3] GET /api/edge/nodes -> 200 (0.1ms)
+2026-06-16 21:46:11,761 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:46:11] "GET /api/edge/nodes HTTP/1.1" 200 -
+2026-06-16 21:46:11,777 - __main__ - DEBUG - [88b3d3f9] POST /api/ai/analyze body={'type': 'production', 'data': {}}
+2026-06-16 21:46:11,777 - services.ai_agent - INFO - DeepSeek APIÎ´ÅäÖÃ£¬Ê¹ÓÃ±¾µØËã·¨·ÖÎö
+2026-06-16 21:46:11,791 - __main__ - INFO - [88b3d3f9] POST /api/ai/analyze -> 200 (14.4ms)
+2026-06-16 21:46:11,792 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:46:11] "POST /api/ai/analyze HTTP/1.1" 200 -
+2026-06-16 21:46:11,796 - __main__ - DEBUG - [ab6c5fb5] POST /api/prediction/performance body={'duration': 30, 'metric': 'latency'}
+2026-06-16 21:46:11,796 - __main__ - INFO - [ab6c5fb5] POST /api/prediction/performance -> 200 (0.5ms)
+2026-06-16 21:46:11,796 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:46:11] "POST /api/prediction/performance HTTP/1.1" 200 -
+2026-06-16 21:46:30,394 - __main__ - INFO - [93b5e5f3] GET /api/simulation/history -> 200 (0.3ms)
+2026-06-16 21:46:30,394 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:46:30] "GET /api/simulation/history HTTP/1.1" 200 -
+2026-06-16 21:46:30,414 - __main__ - INFO - [d982b29a] GET /api/algorithm/params -> 200 (0.1ms)
+2026-06-16 21:46:30,414 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:46:30] "GET /api/algorithm/params HTTP/1.1" 200 -
+2026-06-16 21:46:30,420 - __main__ - INFO - [5782d4e8] GET /api/ai/status -> 200 (0.1ms)
+2026-06-16 21:46:30,421 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:46:30] "GET /api/ai/status HTTP/1.1" 200 -
+2026-06-16 21:46:30,425 - __main__ - INFO - [58e2fb92] GET /health -> 200 (0.1ms)
+2026-06-16 21:46:30,425 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:46:30] "GET /health HTTP/1.1" 200 -
+2026-06-16 21:46:30,432 - __main__ - DEBUG - [02c9b947] POST /api/sensing/filter body={'sensing_type': 'temperature'}
+2026-06-16 21:46:30,433 - __main__ - INFO - [02c9b947] POST /api/sensing/filter -> 200 (0.6ms)
+2026-06-16 21:46:30,433 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:46:30] "POST /api/sensing/filter HTTP/1.1" 200 -
+2026-06-16 21:46:30,437 - __main__ - DEBUG - [86fa3daf] POST /api/prediction/demand body={'product_type': 'sensor', 'horizon': 7}
+2026-06-16 21:46:30,437 - __main__ - INFO - [86fa3daf] POST /api/prediction/demand -> 200 (0.4ms)
+2026-06-16 21:46:30,438 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:46:30] "POST /api/prediction/demand HTTP/1.1" 200 -
+2026-06-16 21:46:52,763 - __main__ - INFO - [d70675fd] GET / -> 200 (83.3ms)
+2026-06-16 21:46:52,764 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:46:52] "GET / HTTP/1.1" 200 -
+2026-06-16 21:47:09,226 - __main__ - INFO - [2d674128] GET / -> 200 (1.0ms)
+2026-06-16 21:47:09,226 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:47:09] "GET / HTTP/1.1" 200 -
+2026-06-16 21:48:16,379 - __main__ - INFO - [b65f3415] GET / -> 200 (0.7ms)
+2026-06-16 21:48:16,380 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:48:16] "GET / HTTP/1.1" 200 -
+2026-06-16 21:48:17,861 - __main__ - INFO - [72d50421] GET /api/dashboard/metrics -> 200 (0.2ms)
+2026-06-16 21:48:17,861 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:48:17] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:48:17,872 - __main__ - ERROR - Î´²¶»ñÒì³£: 405 Method Not Allowed: The method is not allowed for the requested URL.
+Traceback (most recent call last):
+  File "D:\ANAC\Lib\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\Lib\site-packages\flask\app.py", line 1458, in dispatch_request
+    self.raise_routing_exception(req)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ANAC\Lib\site-packages\flask\app.py", line 1440, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ANAC\Lib\site-packages\flask\ctx.py", line 353, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+  File "D:\ANAC\Lib\site-packages\werkzeug\routing\map.py", line 624, in match
+    raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not allowed for the requested URL.
+2026-06-16 21:48:17,936 - __main__ - INFO - [ddcc61d8] GET /@vite/client -> 500 (64.5ms)
+2026-06-16 21:48:17,936 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:48:17] "[35m[1mGET /@vite/client HTTP/1.1[0m" 500 -
+2026-06-16 21:49:36,570 - __main__ - INFO - [6e3cd453] GET / -> 200 (0.7ms)
+2026-06-16 21:49:36,570 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:49:36] "GET / HTTP/1.1" 200 -
+2026-06-16 21:49:40,178 - __main__ - INFO - [8001372a] GET /api/dashboard/metrics -> 200 (0.2ms)
+2026-06-16 21:49:40,178 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:49:40] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:49:46,162 - __main__ - ERROR - Î´²¶»ñÒì³£: 405 Method Not Allowed: The method is not allowed for the requested URL.
+Traceback (most recent call last):
+  File "D:\ANAC\Lib\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\Lib\site-packages\flask\app.py", line 1458, in dispatch_request
+    self.raise_routing_exception(req)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ANAC\Lib\site-packages\flask\app.py", line 1440, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ANAC\Lib\site-packages\flask\ctx.py", line 353, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+  File "D:\ANAC\Lib\site-packages\werkzeug\routing\map.py", line 624, in match
+    raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not allowed for the requested URL.
+2026-06-16 21:49:46,164 - __main__ - INFO - [52f4814b] GET /@vite/client -> 500 (2.1ms)
+2026-06-16 21:49:46,164 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:49:46] "[35m[1mGET /@vite/client HTTP/1.1[0m" 500 -
+2026-06-16 21:50:09,931 - 5G-A-Industry - INFO - ÈÕÖ¾ÏµÍ³³õÊ¼»¯Íê³É
+2026-06-16 21:50:09,931 - 5G-A-Industry - DEBUG - µ±Ç°ÅäÖÃ: DevelopmentConfig
+2026-06-16 21:50:10,108 - __main__ - INFO - ==================================================
+2026-06-16 21:50:10,108 - __main__ - INFO - 5G-A È·¶¨ÐÔÍøÂçÖÇÄÜµ÷¶È·ÂÕæÆ½Ì¨ v2.0
+2026-06-16 21:50:10,108 - __main__ - INFO - Æô¶¯³É¹¦£¬·ÃÎÊ http://127.0.0.1:5000
+2026-06-16 21:50:10,108 - __main__ - INFO - ==================================================
+2026-06-16 21:50:11,742 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.3.42:5000
+2026-06-16 21:50:11,742 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-06-16 21:50:24,191 - __main__ - INFO - [518230d3] GET / -> 304 (0.7ms)
+2026-06-16 21:50:24,192 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:50:24] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-16 21:50:24,216 - __main__ - INFO - [de703614] GET /api/dashboard/metrics -> 200 (0.2ms)
+2026-06-16 21:50:24,216 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:50:24] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:50:24,245 - __main__ - ERROR - Î´²¶»ñÒì³£: 405 Method Not Allowed: The method is not allowed for the requested URL.
+Traceback (most recent call last):
+  File "D:\ANAC\Lib\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\Lib\site-packages\flask\app.py", line 1458, in dispatch_request
+    self.raise_routing_exception(req)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ANAC\Lib\site-packages\flask\app.py", line 1440, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ANAC\Lib\site-packages\flask\ctx.py", line 353, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+  File "D:\ANAC\Lib\site-packages\werkzeug\routing\map.py", line 624, in match
+    raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not allowed for the requested URL.
+2026-06-16 21:50:24,248 - __main__ - INFO - [7574deab] GET /@vite/client -> 500 (2.9ms)
+2026-06-16 21:50:24,248 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:50:24] "[35m[1mGET /@vite/client HTTP/1.1[0m" 500 -
+2026-06-16 21:50:43,503 - __main__ - INFO - [050ce166] GET / -> 200 (0.9ms)
+2026-06-16 21:50:43,503 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:50:43] "GET / HTTP/1.1" 200 -
+2026-06-16 21:51:29,170 - __main__ - INFO - [6fd650c1] GET /health -> 200 (0.1ms)
+2026-06-16 21:51:29,171 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "GET /health HTTP/1.1" 200 -
+2026-06-16 21:51:29,190 - __main__ - INFO - [8cc59565] GET /api/dashboard/metrics -> 200 (0.1ms)
+2026-06-16 21:51:29,190 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:51:29,198 - __main__ - INFO - [bec1047f] GET /api/slices -> 200 (0.1ms)
+2026-06-16 21:51:29,198 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "GET /api/slices HTTP/1.1" 200 -
+2026-06-16 21:51:29,207 - __main__ - DEBUG - [d395690f] POST /api/slices body={'name': '????', 'type': 'industrial', 'size': 120}
+2026-06-16 21:51:29,207 - __main__ - INFO - ´´½¨ÇÐÆ¬: ???? (ID:4)
+2026-06-16 21:51:29,207 - __main__ - INFO - [d395690f] POST /api/slices -> 201 (0.6ms)
+2026-06-16 21:51:29,208 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "[35m[1mPOST /api/slices HTTP/1.1[0m" 201 -
+2026-06-16 21:51:29,213 - __main__ - DEBUG - [5f8b5ea2] PUT /api/slices/4 body={'name': '????-??'}
+2026-06-16 21:51:29,213 - __main__ - INFO - ¸üÐÂÇÐÆ¬: ????-?? (ID:4)
+2026-06-16 21:51:29,213 - __main__ - INFO - [5f8b5ea2] PUT /api/slices/4 -> 200 (0.6ms)
+2026-06-16 21:51:29,214 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "PUT /api/slices/4 HTTP/1.1" 200 -
+2026-06-16 21:51:29,219 - __main__ - INFO - É¾³ýÇÐÆ¬: ????-?? (ID:4)
+2026-06-16 21:51:29,219 - __main__ - INFO - [d0b5b1eb] DELETE /api/slices/4 -> 200 (0.3ms)
+2026-06-16 21:51:29,219 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "DELETE /api/slices/4 HTTP/1.1" 200 -
+2026-06-16 21:51:29,223 - __main__ - INFO - [165e053d] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-16 21:51:29,224 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-16 21:51:29,231 - __main__ - DEBUG - [e6354f5c] POST /api/sensing/filter body={'type': 'temperature'}
+2026-06-16 21:51:29,231 - __main__ - INFO - [e6354f5c] POST /api/sensing/filter -> 200 (0.4ms)
+2026-06-16 21:51:29,232 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "POST /api/sensing/filter HTTP/1.1" 200 -
+2026-06-16 21:51:29,236 - __main__ - INFO - [4adc84c8] GET /api/sensing/tracking -> 200 (0.2ms)
+2026-06-16 21:51:29,237 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "GET /api/sensing/tracking HTTP/1.1" 200 -
+2026-06-16 21:51:29,243 - __main__ - INFO - [4a9ddc2e] GET /api/edge/nodes -> 200 (0.3ms)
+2026-06-16 21:51:29,244 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "GET /api/edge/nodes HTTP/1.1" 200 -
+2026-06-16 21:51:29,248 - __main__ - INFO - [945e9996] GET /api/edge/nodes/1/tasks -> 200 (0.2ms)
+2026-06-16 21:51:29,248 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "GET /api/edge/nodes/1/tasks HTTP/1.1" 200 -
+2026-06-16 21:51:29,254 - __main__ - DEBUG - [4d3da032] POST /api/simulation/run body={'scenario': 'high', 'slice_type': 'vehicle'}
+2026-06-16 21:51:29,255 - __main__ - INFO - [4d3da032] POST /api/simulation/run -> 200 (0.8ms)
+2026-06-16 21:51:29,255 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "POST /api/simulation/run HTTP/1.1" 200 -
+2026-06-16 21:51:29,264 - __main__ - INFO - [ceb679a3] GET /api/simulation/history -> 200 (0.4ms)
+2026-06-16 21:51:29,264 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "GET /api/simulation/history HTTP/1.1" 200 -
+2026-06-16 21:51:29,269 - __main__ - DEBUG - [8eb209ca] POST /api/prediction/performance body={'duration': 30, 'metric': 'latency'}
+2026-06-16 21:51:29,270 - __main__ - INFO - [8eb209ca] POST /api/prediction/performance -> 200 (0.5ms)
+2026-06-16 21:51:29,270 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "POST /api/prediction/performance HTTP/1.1" 200 -
+2026-06-16 21:51:29,274 - __main__ - DEBUG - [8eaaccff] POST /api/prediction/demand body={'product_type': 'sensor', 'horizon': 7}
+2026-06-16 21:51:29,275 - __main__ - INFO - [8eaaccff] POST /api/prediction/demand -> 200 (0.5ms)
+2026-06-16 21:51:29,275 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "POST /api/prediction/demand HTTP/1.1" 200 -
+2026-06-16 21:51:29,280 - __main__ - INFO - [743fa00a] GET /api/algorithm/params -> 200 (0.1ms)
+2026-06-16 21:51:29,280 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "GET /api/algorithm/params HTTP/1.1" 200 -
+2026-06-16 21:51:29,284 - __main__ - DEBUG - [7af19c30] POST /api/ai/analyze body={'type': 'production', 'data': {}}
+2026-06-16 21:51:29,284 - services.ai_agent - INFO - DeepSeek APIÎ´ÅäÖÃ£¬Ê¹ÓÃ±¾µØËã·¨·ÖÎö
+2026-06-16 21:51:29,284 - __main__ - INFO - [7af19c30] POST /api/ai/analyze -> 200 (0.7ms)
+2026-06-16 21:51:29,285 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "POST /api/ai/analyze HTTP/1.1" 200 -
+2026-06-16 21:51:29,290 - __main__ - DEBUG - [529cd230] POST /api/ai/analyze body={'type': 'risk'}
+2026-06-16 21:51:29,344 - __main__ - INFO - [529cd230] POST /api/ai/analyze -> 200 (54.2ms)
+2026-06-16 21:51:29,344 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "POST /api/ai/analyze HTTP/1.1" 200 -
+2026-06-16 21:51:29,350 - __main__ - DEBUG - [0b1a1420] POST /api/ai/analyze body={'type': 'report', 'scenario': 'high'}
+2026-06-16 21:51:29,350 - __main__ - INFO - [0b1a1420] POST /api/ai/analyze -> 200 (0.4ms)
+2026-06-16 21:51:29,350 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "POST /api/ai/analyze HTTP/1.1" 200 -
+2026-06-16 21:51:29,355 - __main__ - INFO - [df202b5a] GET /api/ai/status -> 200 (0.1ms)
+2026-06-16 21:51:29,356 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:29] "GET /api/ai/status HTTP/1.1" 200 -
+2026-06-16 21:51:56,385 - __main__ - DEBUG - [7cdd1a82] POST /api/simulation/run body={}
+2026-06-16 21:51:56,385 - __main__ - INFO - [7cdd1a82] POST /api/simulation/run -> 200 (0.6ms)
+2026-06-16 21:51:56,386 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "POST /api/simulation/run HTTP/1.1" 200 -
+2026-06-16 21:51:56,404 - __main__ - DEBUG - [3e6acd9c] POST /api/simulation/run body={'scenario': 'invalid'}
+2026-06-16 21:51:56,405 - __main__ - INFO - [3e6acd9c] POST /api/simulation/run -> 400 (0.5ms)
+2026-06-16 21:51:56,405 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "[31m[1mPOST /api/simulation/run HTTP/1.1[0m" 400 -
+2026-06-16 21:51:56,421 - __main__ - DEBUG - [4a471e16] PUT /api/slices/999 body={'name': 'test'}
+2026-06-16 21:51:56,421 - __main__ - INFO - [4a471e16] PUT /api/slices/999 -> 404 (0.4ms)
+2026-06-16 21:51:56,421 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "[33mPUT /api/slices/999 HTTP/1.1[0m" 404 -
+2026-06-16 21:51:56,426 - __main__ - DEBUG - [aeaa13cb] POST /api/ai/analyze body={'type': 'unknown'}
+2026-06-16 21:51:56,426 - __main__ - INFO - [aeaa13cb] POST /api/ai/analyze -> 400 (0.4ms)
+2026-06-16 21:51:56,426 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "[31m[1mPOST /api/ai/analyze HTTP/1.1[0m" 400 -
+2026-06-16 21:51:56,439 - __main__ - DEBUG - [2471b424] POST /api/sensing/filter body={'type': 'unknown'}
+2026-06-16 21:51:56,439 - __main__ - INFO - [2471b424] POST /api/sensing/filter -> 400 (0.4ms)
+2026-06-16 21:51:56,440 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "[31m[1mPOST /api/sensing/filter HTTP/1.1[0m" 400 -
+2026-06-16 21:51:56,449 - __main__ - INFO - [aca5ebfd] GET /api/dashboard/metrics -> 200 (0.2ms)
+2026-06-16 21:51:56,449 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:51:56,452 - __main__ - INFO - [f4455773] GET /api/dashboard/metrics -> 200 (0.1ms)
+2026-06-16 21:51:56,454 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:51:56,457 - __main__ - INFO - [8f6cb9c9] GET /api/dashboard/metrics -> 200 (0.2ms)
+2026-06-16 21:51:56,459 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:51:56,462 - __main__ - INFO - [6bdba744] GET /api/dashboard/metrics -> 200 (0.2ms)
+2026-06-16 21:51:56,462 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:51:56,465 - __main__ - INFO - [424c30b1] GET /api/dashboard/metrics -> 200 (0.2ms)
+2026-06-16 21:51:56,466 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:51:56,468 - __main__ - INFO - [be369b7d] GET /api/dashboard/metrics -> 200 (0.1ms)
+2026-06-16 21:51:56,469 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:51:56,471 - __main__ - INFO - [d5164797] GET /api/dashboard/metrics -> 200 (0.1ms)
+2026-06-16 21:51:56,472 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:51:56,474 - __main__ - INFO - [9a66072b] GET /api/dashboard/metrics -> 200 (0.1ms)
+2026-06-16 21:51:56,474 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:51:56,476 - __main__ - INFO - [8aab90e1] GET /api/dashboard/metrics -> 200 (0.1ms)
+2026-06-16 21:51:56,477 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:51:56,480 - __main__ - INFO - [6318ca18] GET /api/dashboard/metrics -> 200 (0.2ms)
+2026-06-16 21:51:56,480 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:51:56,485 - __main__ - DEBUG - [673e8c4c] POST /api/simulation/run body={'scenario': 'medium', 'slice_type': 'industrial'}
+2026-06-16 21:51:56,486 - __main__ - INFO - [673e8c4c] POST /api/simulation/run -> 200 (0.6ms)
+2026-06-16 21:51:56,486 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "POST /api/simulation/run HTTP/1.1" 200 -
+2026-06-16 21:51:56,489 - __main__ - DEBUG - [ec834566] POST /api/simulation/run body={'scenario': 'medium', 'slice_type': 'industrial'}
+2026-06-16 21:51:56,490 - __main__ - INFO - [ec834566] POST /api/simulation/run -> 200 (0.7ms)
+2026-06-16 21:51:56,490 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "POST /api/simulation/run HTTP/1.1" 200 -
+2026-06-16 21:51:56,493 - __main__ - DEBUG - [cdc087a1] POST /api/simulation/run body={'scenario': 'medium', 'slice_type': 'industrial'}
+2026-06-16 21:51:56,493 - __main__ - INFO - [cdc087a1] POST /api/simulation/run -> 200 (0.6ms)
+2026-06-16 21:51:56,494 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "POST /api/simulation/run HTTP/1.1" 200 -
+2026-06-16 21:51:56,496 - __main__ - DEBUG - [46478858] POST /api/simulation/run body={'scenario': 'medium', 'slice_type': 'industrial'}
+2026-06-16 21:51:56,497 - __main__ - INFO - [46478858] POST /api/simulation/run -> 200 (0.5ms)
+2026-06-16 21:51:56,497 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "POST /api/simulation/run HTTP/1.1" 200 -
+2026-06-16 21:51:56,500 - __main__ - DEBUG - [9aa6a64c] POST /api/simulation/run body={'scenario': 'medium', 'slice_type': 'industrial'}
+2026-06-16 21:51:56,501 - __main__ - INFO - [9aa6a64c] POST /api/simulation/run -> 200 (0.8ms)
+2026-06-16 21:51:56,501 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "POST /api/simulation/run HTTP/1.1" 200 -
+2026-06-16 21:51:56,516 - __main__ - DEBUG - [526c6bc8] POST /api/simulation/run body={'scenario': 'medium', 'slice_type': 'industrial'}
+2026-06-16 21:51:56,517 - __main__ - INFO - [526c6bc8] POST /api/simulation/run -> 200 (0.6ms)
+2026-06-16 21:51:56,517 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "POST /api/simulation/run HTTP/1.1" 200 -
+2026-06-16 21:51:56,520 - __main__ - DEBUG - [c05c00d9] POST /api/simulation/run body={'scenario': 'medium', 'slice_type': 'industrial'}
+2026-06-16 21:51:56,521 - __main__ - INFO - [c05c00d9] POST /api/simulation/run -> 200 (1.0ms)
+2026-06-16 21:51:56,522 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "POST /api/simulation/run HTTP/1.1" 200 -
+2026-06-16 21:51:56,524 - __main__ - DEBUG - [cafb7500] POST /api/simulation/run body={'scenario': 'medium', 'slice_type': 'industrial'}
+2026-06-16 21:51:56,525 - __main__ - INFO - [cafb7500] POST /api/simulation/run -> 200 (0.6ms)
+2026-06-16 21:51:56,525 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "POST /api/simulation/run HTTP/1.1" 200 -
+2026-06-16 21:51:56,528 - __main__ - DEBUG - [b38f3be6] POST /api/simulation/run body={'scenario': 'medium', 'slice_type': 'industrial'}
+2026-06-16 21:51:56,529 - __main__ - INFO - [b38f3be6] POST /api/simulation/run -> 200 (0.7ms)
+2026-06-16 21:51:56,529 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "POST /api/simulation/run HTTP/1.1" 200 -
+2026-06-16 21:51:56,532 - __main__ - DEBUG - [bf1b2d2b] POST /api/simulation/run body={'scenario': 'medium', 'slice_type': 'industrial'}
+2026-06-16 21:51:56,533 - __main__ - INFO - [bf1b2d2b] POST /api/simulation/run -> 200 (0.6ms)
+2026-06-16 21:51:56,533 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:51:56] "POST /api/simulation/run HTTP/1.1" 200 -
+2026-06-16 21:53:28,586 - __main__ - INFO - [568d0e30] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:53:28,587 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:53:28] "GET /api/slices HTTP/1.1" 200 -
+2026-06-16 21:53:31,424 - __main__ - DEBUG - [b59e4dc1] POST /api/sensing/filter body={'type': 'temperature'}
+2026-06-16 21:53:31,424 - __main__ - INFO - [b59e4dc1] POST /api/sensing/filter -> 200 (0.6ms)
+2026-06-16 21:53:31,425 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:53:31] "POST /api/sensing/filter HTTP/1.1" 200 -
+2026-06-16 21:53:31,445 - __main__ - INFO - [413759c3] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-16 21:53:31,445 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:53:31] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-16 21:53:31,450 - __main__ - INFO - [7117c61f] GET /api/sensing/tracking -> 200 (0.2ms)
+2026-06-16 21:53:31,450 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:53:31] "GET /api/sensing/tracking HTTP/1.1" 200 -
+2026-06-16 21:53:38,554 - __main__ - INFO - [5229b99f] GET /api/edge/nodes -> 200 (0.1ms)
+2026-06-16 21:53:38,554 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:53:38] "GET /api/edge/nodes HTTP/1.1" 200 -
+2026-06-16 21:53:40,771 - __main__ - INFO - [e120aac4] GET /api/simulation/history -> 200 (1.2ms)
+2026-06-16 21:53:40,772 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:53:40] "GET /api/simulation/history HTTP/1.1" 200 -
+2026-06-16 21:53:43,421 - __main__ - DEBUG - [7ce77fef] POST /api/prediction/performance body={'duration': 30, 'metric': 'latency'}
+2026-06-16 21:53:43,422 - __main__ - INFO - [7ce77fef] POST /api/prediction/performance -> 200 (0.6ms)
+2026-06-16 21:53:43,422 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:53:43] "POST /api/prediction/performance HTTP/1.1" 200 -
+2026-06-16 21:53:46,543 - __main__ - INFO - [7d96cbb7] GET /api/ai/status -> 200 (0.1ms)
+2026-06-16 21:53:46,543 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:53:46] "GET /api/ai/status HTTP/1.1" 200 -
+2026-06-16 21:55:36,182 - 5G-A-Industry - INFO - ÈÕÖ¾ÏµÍ³³õÊ¼»¯Íê³É
+2026-06-16 21:55:36,183 - 5G-A-Industry - DEBUG - µ±Ç°ÅäÖÃ: DevelopmentConfig
+2026-06-16 21:55:36,391 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-06-16 21:55:36,392 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-06-16 21:55:46,879 - app - INFO - [37247741] GET / -> 200 (72.2ms)
+2026-06-16 21:55:46,884 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:55:46] "GET / HTTP/1.1" 200 -

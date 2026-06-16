@@ -1,13 +1,20 @@
 from flask import Blueprint, request
 from services.network_service import NetworkService
 from utils.response import success_response, error_response
-from middleware.auth import require_auth, require_role
+from middleware.auth import auth_required, role_required
 
 network_bp = Blueprint('network', __name__)
 network_service = NetworkService()
 
+class NetworkController:
+    """网络控制器类"""
+    
+    def __init__(self):
+        """初始化网络控制器"""
+        self.network_service = NetworkService()
+
 @network_bp.route('/network/status', methods=['GET'])
-@require_auth
+@auth_required
 def get_network_status():
     """获取网络状态"""
     try:
@@ -17,8 +24,8 @@ def get_network_status():
         return error_response(str(e), 500)
 
 @network_bp.route('/network/devices', methods=['GET'])
-@require_auth
-@require_role(['admin', 'network'])
+@auth_required
+@role_required(['admin', 'network'])
 def get_network_devices():
     """获取网络设备列表"""
     try:
@@ -28,7 +35,7 @@ def get_network_devices():
         return error_response(str(e), 500)
 
 @network_bp.route('/network/performance', methods=['GET'])
-@require_auth
+@auth_required
 def get_network_performance():
     """获取网络性能数据"""
     try:
@@ -38,8 +45,8 @@ def get_network_performance():
         return error_response(str(e), 500)
 
 @network_bp.route('/network/optimize', methods=['POST'])
-@require_auth
-@require_role(['admin', 'network'])
+@auth_required
+@role_required(['admin', 'network'])
 def optimize_network():
     """网络优化"""
     try:
@@ -50,8 +57,8 @@ def optimize_network():
         return error_response(str(e), 500)
 
 @network_bp.route('/network/simulate', methods=['POST'])
-@require_auth
-@require_role(['admin', 'network'])
+@auth_required
+@role_required(['admin', 'network'])
 def simulate_network():
     """网络模拟"""
     try:

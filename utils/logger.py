@@ -4,7 +4,7 @@
 import logging
 import os
 from datetime import datetime
-from backend.config import current_config
+from config import current_config
 
 # 创建日志目录
 log_dir = os.path.join(os.getcwd(), 'logs')

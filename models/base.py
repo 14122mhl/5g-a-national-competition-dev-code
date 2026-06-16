@@ -1,20 +1,19 @@
 # 基础模型类
 # 所有模型的基类，包含共同的字段和方法
 
-from sqlalchemy import Column, Integer, DateTime
-from sqlalchemy.sql import func
-from sqlalchemy.ext.declarative import declarative_base
+import datetime
 
-# 创建基类
-Base = declarative_base()
-
-class BaseModel(Base):
+# 模拟SQLAlchemy的基础模型
+class BaseModel:
     """基础模型类"""
-    __abstract__ = True  # 声明为抽象类，不会创建实际的表
     
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+    def __init__(self):
+        if not hasattr(self, 'id'):
+            self.id = None
+        if not hasattr(self, 'created_at'):
+            self.created_at = datetime.datetime.now()
+        if not hasattr(self, 'updated_at'):
+            self.updated_at = datetime.datetime.now()
     
     def to_dict(self):
         """将模型转换为字典"""

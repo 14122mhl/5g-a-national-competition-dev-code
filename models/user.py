@@ -1,8 +1,6 @@
 # 用户模型
 # 包含用户相关的字段和方法
 
-from sqlalchemy import Column, String, Boolean, Enum as SQLEnum
-from sqlalchemy.orm import relationship
 import enum
 from .base import BaseModel
 
@@ -14,17 +12,17 @@ class UserRole(enum.Enum):
 
 class User(BaseModel):
     """用户模型"""
-    __tablename__ = 'users'
     
-    username = Column(String(50), unique=True, nullable=False)
-    password_hash = Column(String(255), nullable=False)
-    email = Column(String(100), unique=True, nullable=False)
-    full_name = Column(String(100), nullable=False)
-    role = Column(SQLEnum(UserRole), nullable=False, default=UserRole.VIEWER)
-    is_active = Column(Boolean, default=True)
-    
-    # 关系
-    orders = relationship('Order', back_populates='user')
+    def __init__(self, **kwargs):
+        super().__init__()
+        self.id = kwargs.get('id')
+        self.username = kwargs.get('username')
+        self.password_hash = kwargs.get('password_hash')
+        self.email = kwargs.get('email')
+        self.full_name = kwargs.get('full_name')
+        self.role = kwargs.get('role', UserRole.VIEWER)
+        self.is_active = kwargs.get('is_active', True)
+        self.orders = []
     
     def to_dict(self):
         """将模型转换为字典"""

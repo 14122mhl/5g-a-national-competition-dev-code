@@ -3,7 +3,7 @@
 
 import jwt
 from datetime import datetime, timedelta
-from backend.config import current_config
+from config import current_config
 
 def generate_token(user_id: int, role: str) -> str:
     """

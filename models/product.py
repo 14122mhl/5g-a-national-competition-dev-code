@@ -1,8 +1,6 @@
 # 产品模型
 # 包含产品相关的字段和方法
 
-from sqlalchemy import Column, String, Float, Integer, Text, Enum as SQLEnum
-from sqlalchemy.orm import relationship
 import enum
 from .base import BaseModel
 
@@ -13,18 +11,18 @@ class ProductStatus(enum.Enum):
 
 class Product(BaseModel):
     """产品模型"""
-    __tablename__ = 'products'
     
-    name = Column(String(100), nullable=False)
-    description = Column(Text)
-    sku = Column(String(50), unique=True, nullable=False)
-    price = Column(Float, nullable=False)
-    cost = Column(Float, nullable=False)
-    quantity = Column(Integer, default=0)
-    status = Column(SQLEnum(ProductStatus), nullable=False, default=ProductStatus.ACTIVE)
-    
-    # 关系
-    order_items = relationship('OrderItem', back_populates='product')
+    def __init__(self, **kwargs):
+        super().__init__()
+        self.id = kwargs.get('id')
+        self.name = kwargs.get('name')
+        self.description = kwargs.get('description')
+        self.sku = kwargs.get('sku')
+        self.price = kwargs.get('price', 0.0)
+        self.cost = kwargs.get('cost', 0.0)
+        self.quantity = kwargs.get('quantity', 0)
+        self.status = kwargs.get('status', ProductStatus.ACTIVE)
+        self.order_items = []
     
     def to_dict(self):
         """将模型转换为字典"""

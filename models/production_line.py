@@ -1,8 +1,6 @@
 # 生产线模型
 # 包含生产线相关的字段和方法
 
-from sqlalchemy import Column, String, Boolean, Enum as SQLEnum
-from sqlalchemy.orm import relationship
 import enum
 from .base import BaseModel
 
@@ -14,16 +12,16 @@ class ProductionLineStatus(enum.Enum):
 
 class ProductionLine(BaseModel):
     """生产线模型"""
-    __tablename__ = 'production_lines'
     
-    name = Column(String(100), nullable=False)
-    description = Column(String(255))
-    code = Column(String(50), unique=True, nullable=False)
-    status = Column(SQLEnum(ProductionLineStatus), nullable=False, default=ProductionLineStatus.STOPPED)
-    is_active = Column(Boolean, default=True)
-    
-    # 关系
-    devices = relationship('Device', back_populates='production_line')
+    def __init__(self, **kwargs):
+        super().__init__()
+        self.id = kwargs.get('id')
+        self.name = kwargs.get('name')
+        self.description = kwargs.get('description')
+        self.code = kwargs.get('code')
+        self.status = kwargs.get('status', ProductionLineStatus.STOPPED)
+        self.is_active = kwargs.get('is_active', True)
+        self.devices = kwargs.get('devices', [])
     
     def to_dict(self):
         """将模型转换为字典"""

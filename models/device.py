@@ -1,8 +1,6 @@
 # 设备模型
 # 包含设备相关的字段和方法
 
-from sqlalchemy import Column, String, Integer, Float, ForeignKey, Enum as SQLEnum, Boolean
-from sqlalchemy.orm import relationship
 import enum
 from .base import BaseModel
 
@@ -22,20 +20,20 @@ class DeviceStatus(enum.Enum):
 
 class Device(BaseModel):
     """设备模型"""
-    __tablename__ = 'devices'
     
-    name = Column(String(100), nullable=False)
-    description = Column(String(255))
-    device_id = Column(String(50), unique=True, nullable=False)
-    type = Column(SQLEnum(DeviceType), nullable=False)
-    status = Column(SQLEnum(DeviceStatus), nullable=False, default=DeviceStatus.OFFLINE)
-    production_line_id = Column(Integer, ForeignKey('production_lines.id'), nullable=True)
-    ip_address = Column(String(50))
-    firmware_version = Column(String(50))
-    is_active = Column(Boolean, default=True)
-    
-    # 关系
-    production_line = relationship('ProductionLine', back_populates='devices')
+    def __init__(self, **kwargs):
+        super().__init__()
+        self.id = kwargs.get('id')
+        self.name = kwargs.get('name')
+        self.description = kwargs.get('description')
+        self.device_id = kwargs.get('device_id')
+        self.type = kwargs.get('type')
+        self.status = kwargs.get('status', DeviceStatus.OFFLINE)
+        self.production_line_id = kwargs.get('production_line_id')
+        self.ip_address = kwargs.get('ip_address')
+        self.firmware_version = kwargs.get('firmware_version')
+        self.is_active = kwargs.get('is_active', True)
+        self.production_line = kwargs.get('production_line')
     
     def to_dict(self):
         """将模型转换为字典"""
@@ -44,7 +42,7 @@ class Device(BaseModel):
             'name': self.name,
             'description': self.description,
             'device_id': self.device_id,
-            'type': self.type.value,
+            'type': self.type.value if self.type else None,
             'status': self.status.value,
             'production_line_id': self.production_line_id,
             'ip_address': self.ip_address,

@@ -1,7 +1,7 @@
 # 用户控制器
 # 处理用户相关的HTTP请求
 
-from flask import request
+from flask import request, Blueprint
 from services.user_service import UserService
 from utils.response import success_response, error_response
 from middleware.auth import auth_required, role_required
@@ -142,3 +142,44 @@ class UserController:
             return success_response(message="删除用户成功")
         except Exception as e:
             return error_response(message="删除用户失败", errors=str(e))
+
+# 初始化蓝图和控制器实例
+user_bp = Blueprint('user', __name__)
+user_controller = UserController()
+
+# 路由注册
+@user_bp.route('/register', methods=['POST'])
+def register():
+    return user_controller.register()
+
+@user_bp.route('/login', methods=['POST'])
+def login():
+    return user_controller.login()
+
+@user_bp.route('/me', methods=['GET'])
+def get_current_user():
+    return user_controller.get_current_user()
+
+@user_bp.route('/me', methods=['PUT'])
+def update_current_user():
+    return user_controller.update_current_user()
+
+@user_bp.route('/all', methods=['GET'])
+def get_all_users():
+    return user_controller.get_all_users()
+
+@user_bp.route('/<int:user_id>', methods=['GET'])
+def get_user_by_id(user_id):
+    return user_controller.get_user_by_id(user_id)
+
+@user_bp.route('/', methods=['POST'])
+def create_user():
+    return user_controller.create_user()
+
+@user_bp.route('/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    return user_controller.update_user(user_id)
+
+@user_bp.route('/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    return user_controller.delete_user(user_id)

@@ -1,14 +1,21 @@
 from flask import Blueprint, request
 from services.ai_service import AIService
 from utils.response import success_response, error_response
-from middleware.auth import require_auth, require_role
+from middleware.auth import auth_required, role_required
 
 ai_bp = Blueprint('ai', __name__)
 ai_service = AIService()
 
+class AIController:
+    """AI控制器类"""
+    
+    def __init__(self):
+        """初始化AI控制器"""
+        self.ai_service = AIService()
+
 @ai_bp.route('/ai/schedule', methods=['POST'])
-@require_auth
-@require_role(['admin', 'production'])
+@auth_required
+@role_required(['admin', 'production'])
 def schedule_production():
     """生产调度优化"""
     try:
@@ -19,7 +26,7 @@ def schedule_production():
         return error_response(str(e), 500)
 
 @ai_bp.route('/ai/predict', methods=['POST'])
-@require_auth
+@auth_required
 def predict_demand():
     """需求预测"""
     try:
@@ -30,7 +37,7 @@ def predict_demand():
         return error_response(str(e), 500)
 
 @ai_bp.route('/ai/quality', methods=['POST'])
-@require_auth
+@auth_required
 def predict_quality():
     """质量预测"""
     try:
@@ -41,8 +48,8 @@ def predict_quality():
         return error_response(str(e), 500)
 
 @ai_bp.route('/ai/maintenance', methods=['POST'])
-@require_auth
-@require_role(['admin', 'maintenance'])
+@auth_required
+@role_required(['admin', 'maintenance'])
 def predict_maintenance():
     """设备维护预测"""
     try:
@@ -53,7 +60,7 @@ def predict_maintenance():
         return error_response(str(e), 500)
 
 @ai_bp.route('/ai/energy', methods=['POST'])
-@require_auth
+@auth_required
 def optimize_energy():
     """能源优化"""
     try:

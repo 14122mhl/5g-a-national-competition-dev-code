@@ -3,7 +3,7 @@
 
 import random
 import time
-from backend.config import current_config
+from config import current_config
 
 def simulate_network_response(data=None, success_rate=0.95, delay_range=(0.1, 0.5)):
     """

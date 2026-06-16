@@ -1,7 +1,7 @@
 # 产品控制器
 # 处理产品相关的HTTP请求
 
-from flask import request
+from flask import request, Blueprint
 from services.product_service import ProductService
 from utils.response import success_response, error_response
 from middleware.auth import auth_required, role_required
@@ -103,3 +103,32 @@ class ProductController:
             return success_response(data={"quantity": new_quantity}, message="更新库存成功")
         except Exception as e:
             return error_response(message="更新库存失败", errors=str(e))
+
+# 初始化蓝图和控制器实例
+product_bp = Blueprint('product', __name__)
+product_controller = ProductController()
+
+# 路由注册
+@product_bp.route('/', methods=['GET'])
+def get_all_products():
+    return product_controller.get_all_products()
+
+@product_bp.route('/<int:product_id>', methods=['GET'])
+def get_product_by_id(product_id):
+    return product_controller.get_product_by_id(product_id)
+
+@product_bp.route('/', methods=['POST'])
+def create_product():
+    return product_controller.create_product()
+
+@product_bp.route('/<int:product_id>', methods=['PUT'])
+def update_product(product_id):
+    return product_controller.update_product(product_id)
+
+@product_bp.route('/<int:product_id>', methods=['DELETE'])
+def delete_product(product_id):
+    return product_controller.delete_product(product_id)
+
+@product_bp.route('/<int:product_id>/stock', methods=['PUT'])
+def update_stock(product_id):
+    return product_controller.update_stock(product_id)
