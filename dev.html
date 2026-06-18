@@ -415,20 +415,26 @@ async function batchDeleteSlices() {
 pages.sensing = {
     render: async function() {
         return '<div class="page-title"><i class="bi bi-radar"></i>通感一体监控</div>' +
-        '<div class="row mb-4">' +
-            '<div class="col-md-2 mb-3"><div class="metric-card"><div class="label">感知精度</div><div class="value green" id="s_precision">--</div><div class="change up">高精度</div></div></div>' +
-            '<div class="col-md-2 mb-3"><div class="metric-card"><div class="label">感知距离</div><div class="value blue" id="s_distance">--</div><div class="unit">m</div></div></div>' +
-            '<div class="col-md-2 mb-3"><div class="metric-card"><div class="label">刷新率</div><div class="value yellow" id="s_refresh">--</div><div class="unit">Hz</div></div></div>' +
-            '<div class="col-md-2 mb-3"><div class="metric-card"><div class="label">覆盖率</div><div class="value green" id="s_coverage">--</div><div class="unit">%</div></div></div>' +
-            '<div class="col-md-2 mb-3"><div class="metric-card"><div class="label">设备在线率</div><div class="value" id="s_online" style="color:var(--accent)">--</div></div></div>' +
-            '<div class="col-md-2 mb-3"><div class="metric-card"><div class="label">系统负载</div><div class="value" id="s_load" style="color:var(--info)">--</div><div class="unit">%</div></div></div>' +
+        '<div class="card mb-3"><div class="card-body py-2 d-flex align-items-center gap-3">' +
+            '<span class="text-dim">当前感知类型:</span>' +
+            '<span id="sensingTypeTitle" style="font-weight:600;color:var(--accent);font-size:1.1rem">温度感知</span>' +
+            '<span class="badge-status-active" id="sensingTypeStatus">运行中</span>' +
+        '</div></div>' +
+        '<div id="sensingMetrics" class="row mb-4">' +
+            '<div class="col-md-2 mb-3"><div class="metric-card sensing-metric"><div class="label">感知精度</div><div class="value green" id="s_precision">--</div><div class="change up">高精度</div></div></div>' +
+            '<div class="col-md-2 mb-3"><div class="metric-card sensing-metric"><div class="label">感知距离</div><div class="value blue" id="s_distance">--</div></div></div>' +
+            '<div class="col-md-2 mb-3"><div class="metric-card sensing-metric"><div class="label">刷新率</div><div class="value yellow" id="s_refresh">--</div></div></div>' +
+            '<div class="col-md-2 mb-3"><div class="metric-card sensing-metric"><div class="label">覆盖率</div><div class="value green" id="s_coverage">--</div></div></div>' +
+            '<div class="col-md-2 mb-3"><div class="metric-card sensing-metric"><div class="label">设备在线率</div><div class="value" id="s_online" style="color:var(--accent)">--</div></div></div>' +
+            '<div class="col-md-2 mb-3"><div class="metric-card sensing-metric"><div class="label">系统负载</div><div class="value" id="s_load" style="color:var(--info)">--</div></div></div>' +
         '</div>' +
+        '<div id="sensingFeatures" class="card mb-3" style="display:none"><div class="card-header"><span id="featureTitle">类型特征</span></div><div class="card-body"><div class="row" id="featureContent"></div></div></div>' +
         '<div class="card mb-4"><div class="card-header"><span>感知类型筛选</span></div><div class="card-body"><div class="d-flex flex-wrap gap-2">' +
-            '<button class="btn btn-accent btn-sm" onclick="filterSensing(\'temperature\')"><i class="bi bi-thermometer"></i> 温度感知</button>' +
-            '<button class="btn btn-outline-accent btn-sm" onclick="filterSensing(\'person\')"><i class="bi bi-person"></i> 人员感知</button>' +
-            '<button class="btn btn-outline-accent btn-sm" onclick="filterSensing(\'device\')"><i class="bi bi-cpu"></i> 设备感知</button>' +
-            '<button class="btn btn-outline-accent btn-sm" onclick="filterSensing(\'environment\')"><i class="bi bi-tree"></i> 环境感知</button>' +
-            '<button class="btn btn-outline-accent btn-sm" onclick="filterSensing(\'vibration\')"><i class="bi bi-activity"></i> 振动感知</button>' +
+            '<button class="btn btn-accent btn-sm sensing-type-btn" data-type="temperature" onclick="filterSensing(\'temperature\')"><i class="bi bi-thermometer"></i> 温度感知</button>' +
+            '<button class="btn btn-outline-accent btn-sm sensing-type-btn" data-type="person" onclick="filterSensing(\'person\')"><i class="bi bi-person"></i> 人员感知</button>' +
+            '<button class="btn btn-outline-accent btn-sm sensing-type-btn" data-type="device" onclick="filterSensing(\'device\')"><i class="bi bi-cpu"></i> 设备感知</button>' +
+            '<button class="btn btn-outline-accent btn-sm sensing-type-btn" data-type="environment" onclick="filterSensing(\'environment\')"><i class="bi bi-tree"></i> 环境感知</button>' +
+            '<button class="btn btn-outline-accent btn-sm sensing-type-btn" data-type="vibration" onclick="filterSensing(\'vibration\')"><i class="bi bi-activity"></i> 振动感知</button>' +
         '</div></div></div>' +
         '<div class="row"><div class="col-md-6 mb-3"><div class="card"><div class="card-header"><span>环境监测数据</span><button class="btn btn-outline-accent btn-sm" onclick="loadEnvData()"><i class="bi bi-arrow-clockwise"></i></button></div>' +
         '<div class="card-body"><div class="row" id="envData"></div></div></div></div>' +
@@ -436,40 +442,70 @@ pages.sensing = {
         '<div class="card-body"><div class="table-scroll" style="max-height:200px"><table class="table table-hover"><thead><tr><th>ID</th><th>类型</th><th>坐标</th><th>速度</th><th>置信度</th></tr></thead><tbody id="trackingBody"></tbody></table></div></div></div></div></div>';
     },
     after: async function() {
-        await loadSensingDefault();
+        await filterSensing('temperature');
         await loadEnvData();
         await loadTracking();
     }
 };
 
-async function loadSensingDefault() {
-    try {
-        var res = await api('/api/sensing/filter', { method:'POST', body:{type:'temperature'} });
-        var d = res.data;
-        document.getElementById('s_precision').innerHTML = d.precision + '<span class="unit">%</span>';
-        document.getElementById('s_distance').innerHTML = d.distance + '<span class="unit">m</span>';
-        document.getElementById('s_refresh').innerHTML = d.refresh_rate + '<span class="unit">Hz</span>';
-        document.getElementById('s_coverage').innerHTML = d.coverage + '<span class="unit">%</span>';
-        document.getElementById('s_online').innerHTML = d.online_rate + '<span class="unit">%</span>';
-        document.getElementById('s_load').innerHTML = d.system_load + '<span class="unit">%</span>';
-    } catch(e) { toast('加载感知数据失败: '+e.message,'error'); }
-}
-
 async function filterSensing(type) {
-    document.querySelectorAll('.card-body .btn-accent').forEach(function(b) { b.classList.remove('btn-accent'); b.classList.add('btn-outline-accent'); });
-    var target = document.querySelector('[onclick="filterSensing(\'' + type + '\')"]');
-    if (target) { target.classList.remove('btn-outline-accent'); target.classList.add('btn-accent'); }
+    // 按钮高亮切换
+    document.querySelectorAll('.sensing-type-btn').forEach(function(b) {
+        b.classList.remove('btn-accent');
+        b.classList.add('btn-outline-accent');
+    });
+    var target = document.querySelector('.sensing-type-btn[data-type="' + type + '"]');
+    if (target) {
+        target.classList.remove('btn-outline-accent');
+        target.classList.add('btn-accent');
+    }
+
+    // 淡出动画
+    var metrics = document.querySelectorAll('.sensing-metric');
+    metrics.forEach(function(el) { el.style.opacity = '0.3'; el.style.transition = 'opacity 0.2s'; });
+
     try {
-        var res = await api('/api/sensing/filter', { method:'POST', body:{type:type} });
+        var res = await api('/api/sensing/filter', { method: 'POST', body: { type: type } });
         var d = res.data;
+
+        // 更新类型标题
+        document.getElementById('sensingTypeTitle').textContent = d.description;
+        document.getElementById('sensingTypeTitle').style.color = d.color || 'var(--accent)';
+
+        // 更新指标数值
         document.getElementById('s_precision').innerHTML = d.precision + '<span class="unit">%</span>';
-        document.getElementById('s_distance').innerHTML = d.distance + '<span class="unit">m</span>';
-        document.getElementById('s_refresh').innerHTML = d.refresh_rate + '<span class="unit">Hz</span>';
+        document.getElementById('s_distance').innerHTML = d.distance + '<span class="unit"> ' + d.distance_unit + '</span>';
+        document.getElementById('s_refresh').innerHTML = d.refresh_rate + '<span class="unit"> ' + d.refresh_unit + '</span>';
         document.getElementById('s_coverage').innerHTML = d.coverage + '<span class="unit">%</span>';
         document.getElementById('s_online').innerHTML = d.online_rate + '<span class="unit">%</span>';
         document.getElementById('s_load').innerHTML = d.system_load + '<span class="unit">%</span>';
-        toast('切换到: ' + d.description,'info');
-    } catch(e) { toast('切换失败: '+e.message,'error'); }
+
+        // 显示类型特征
+        var featuresCard = document.getElementById('sensingFeatures');
+        if (d.features && d.features.length > 0) {
+            featuresCard.style.display = 'block';
+            document.getElementById('featureTitle').innerHTML = '<i class="bi bi-' + (d.icon || 'radar') + '"></i> ' + d.description + ' — 技术特征';
+            var featHtml = d.features.map(function(f) {
+                return '<div class="col-md-4 mb-2"><div class="d-flex align-items-center gap-2"><i class="bi bi-check-circle" style="color:' + (d.color || 'var(--accent)') + '"></i><span>' + f + '</span></div></div>';
+            }).join('');
+            if (d.alert_types && d.alert_types.length > 0) {
+                featHtml += d.alert_types.map(function(a) {
+                    return '<div class="col-md-4 mb-2"><div class="d-flex align-items-center gap-2"><i class="bi bi-exclamation-triangle" style="color:var(--warning)"></i><span>' + a + '</span></div></div>';
+                }).join('');
+            }
+            document.getElementById('featureContent').innerHTML = featHtml;
+        } else {
+            featuresCard.style.display = 'none';
+        }
+
+        // 淡入动画
+        metrics.forEach(function(el) { el.style.opacity = '1'; });
+
+        toast('已切换到: ' + d.description, 'info');
+    } catch(e) {
+        metrics.forEach(function(el) { el.style.opacity = '1'; });
+        toast('切换失败: ' + e.message, 'error');
+    }
 }
 
 async function loadEnvData() {

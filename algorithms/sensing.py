@@ -10,11 +10,26 @@ class SensingProcessor:
 
     def __init__(self):
         self.sensing_types = {
-            "temperature": {"precision_base": 99.5, "distance_base": 500, "refresh_base": 100, "desc": "温度感知"},
-            "person": {"precision_base": 99.0, "distance_base": 300, "refresh_base": 50, "desc": "人员感知"},
-            "device": {"precision_base": 99.5, "distance_base": 400, "refresh_base": 75, "desc": "设备感知"},
-            "environment": {"precision_base": 98.8, "distance_base": 450, "refresh_base": 80, "desc": "环境感知"},
-            "vibration": {"precision_base": 99.3, "distance_base": 350, "refresh_base": 120, "desc": "振动感知"},
+            "temperature": {"precision_base": 99.5, "distance_base": 500, "refresh_base": 100, "desc": "温度感知",
+                           "icon": "thermometer", "color": "#ff6b6b",
+                           "features": ["高精度红外测温", "±0.1°C分辨率", "多点阵列覆盖"],
+                           "alert_types": ["温度过高告警", "温度骤变检测"]},
+            "person": {"precision_base": 97.5, "distance_base": 200, "refresh_base": 30, "desc": "人员感知",
+                      "icon": "person", "color": "#ffa502",
+                      "features": ["毫米波人体检测", "跌倒行为识别", "密度统计"],
+                      "alert_types": ["非法入侵检测", "人员聚集告警"]},
+            "device": {"precision_base": 99.8, "distance_base": 800, "refresh_base": 200, "desc": "设备感知",
+                      "icon": "cpu", "color": "#33b5ff",
+                      "features": ["设备振动监测", "运行状态检测", "故障预警"],
+                      "alert_types": ["设备异常振动", "运转速度异常"]},
+            "environment": {"precision_base": 96.2, "distance_base": 1200, "refresh_base": 60, "desc": "环境感知",
+                           "icon": "tree", "color": "#33ff88",
+                           "features": ["多维环境参数", "气象联合感知", "污染检测"],
+                           "alert_types": ["空气质量超标", "环境异常变化"]},
+            "vibration": {"precision_base": 99.1, "distance_base": 150, "refresh_base": 500, "desc": "振动感知",
+                         "icon": "activity", "color": "#a855f7",
+                         "features": ["亚毫米级精度", "三轴加速度", "频谱分析"],
+                         "alert_types": ["结构异常振动", "共振风险预警"]},
         }
 
     def get_sensing_data(self):
@@ -32,7 +47,7 @@ class SensingProcessor:
         return data
 
     def filter_sensing(self, sensing_type):
-        """根据感知类型筛选数据"""
+        """根据感知类型筛选数据 - 增强版"""
         if sensing_type not in self.sensing_types:
             return {"error": "不支持的感知类型", "available": list(self.sensing_types.keys())}
 
@@ -41,9 +56,16 @@ class SensingProcessor:
         distance = round(config["distance_base"] + random.uniform(-20, 20))
         refresh = round(config["refresh_base"] + random.uniform(-10, 10))
 
+        # 设备在线率根据类型差异化
+        online_rates = {"temperature": 100, "person": 95.8, "device": 100, "environment": 91.7, "vibration": 97.5}
+        # 系统负载根据类型差异化
+        load_bases = {"temperature": 25, "person": 45, "device": 30, "environment": 55, "vibration": 35}
+
         return {
             "type": sensing_type,
             "description": config["desc"],
+            "icon": config.get("icon", "radar"),
+            "color": config.get("color", "#33ff88"),
             "precision": precision,
             "precision_unit": "%",
             "distance": distance,
@@ -51,9 +73,12 @@ class SensingProcessor:
             "refresh_rate": refresh,
             "refresh_unit": "Hz",
             "coverage": round(95 + random.random() * 4.9, 1),
-            "online_rate": 100,
-            "system_load": round(25 + random.random() * 15, 1),
-            "alert_count": random.randint(0, 2),
+            "online_rate": online_rates.get(sensing_type, 100),
+            "system_load": round(load_bases.get(sensing_type, 30) + random.random() * 10, 1),
+            "alert_count": random.randint(0, 3),
+            "features": config.get("features", []),
+            "alert_types": config.get("alert_types", []),
+            "device_count": {"online": random.randint(18, 24), "total": 24},
             "timestamp": datetime.now().isoformat()
         }
 
