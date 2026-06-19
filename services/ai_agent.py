@@ -7,7 +7,7 @@ import json
 import os
 import time
 import logging
-import random
+import requests
 from datetime import datetime
 from dotenv import load_dotenv
 
@@ -30,6 +30,13 @@ class AIAgent:
 
     def _is_api_available(self):
         """检查DeepSeek API是否可用"""
+        # 测试模式下跳过API调用
+        try:
+            from flask import current_app
+            if current_app and current_app.config.get('TESTING'):
+                return False
+        except Exception:
+            pass
         return bool(self.api_key) and self.api_key != 'DEEPSEEK_API_KEY_PLACEHOLDER'
 
     def _call_deepseek_api(self, system_prompt, user_prompt):
@@ -266,11 +273,11 @@ class AIAgent:
         result = {
             "scenario": scenario,
             "metrics": {
-                "latency_improvement": f"{round(data['latency_improvement'] + random.uniform(-3, 3), 1)}%",
-                "throughput_improvement": f"{round(data['throughput_improvement'] + random.uniform(-2, 2), 1)}%",
-                "energy_saving": f"{round(data['energy_saving'] + random.uniform(-2, 2), 1)}%",
-                "cost_reduction": f"{round(random.uniform(10, 20), 1)}%",
-                "quality_improvement": f"{round(random.uniform(2, 5), 1)}%"
+                "latency_improvement": f"{data['latency_improvement']}%",
+                "throughput_improvement": f"{data['throughput_improvement']}%",
+                "energy_saving": f"{data['energy_saving']}%",
+                "cost_reduction": f"{round(data['energy_saving'] * 0.8, 1)}%",
+                "quality_improvement": f"{round(data['throughput_improvement'] * 0.15, 1)}%"
             },
             "recommendations": recommendations,
             "deepseek_analysis": api_result,
@@ -293,6 +300,167 @@ class AIAgent:
             "algorithm_modules": ["scheduler", "predictor", "sensing", "optimizer"],
             "status": "ready" if self._is_api_available() else "local_only"
         }
+
+    def generate_analysis_report(self, context):
+        """基于上下文数据生成AI分析报告（DeepSeek驱动）"""
+        analysis_type = context.get('type', 'scheduling')
+        company = context.get('company', '佳帮手集团')
+
+        # 构建提示词
+        prompts = {
+            'scheduling': f"""你是一个制造业智能调度专家。请分析以下佳帮手兴平智造基地的调度数据，给出专业的调度优化建议：
+
+当前状态：
+- 待处理任务: {context.get('pending_tasks', 0)} 个
+- 进行中任务: {context.get('in_progress_tasks', 0)} 个
+- 已完成任务: {context.get('completed_tasks', 0)} 个
+- 在线AGV: {context.get('online_agvs', 0)} 台
+- 紧急任务(优先级1-2): {context.get('urgent_tasks', 0)} 个
+
+请输出：
+1. 调度效率评估（一句话）
+2. 存在的瓶颈问题（1-2条）
+3. 优化建议（2-3条，每条不超过30字）
+4. 风险预警（如有）
+请用JSON格式返回，键名为: efficiency, bottlenecks(array), suggestions(array), risks(array)。""",
+
+            'network': f"""你是一个5G网络优化专家。请分析佳帮手兴平智造基地的网络状态：
+
+当前状态：
+- 24小时内严重事件: {context.get('critical_events_24h', 0)} 次
+- 活跃生产区域: {context.get('zones', 0)} 个
+- 网络切片: {len(context.get('slices', []))} 个
+
+请输出：
+1. 网络健康度评估
+2. 需要关注的问题
+3. 优化建议
+请用JSON格式返回，键名为: health, issues(array), suggestions(array)。""",
+
+            'production': f"""你是一个制造业生产管理专家。请分析佳帮手兴平智造基地的生产状态：
+
+当前状态：
+- 待处理订单: {context.get('pending_orders', 0)} 个
+- 活跃生产区域: {context.get('active_zones', 0)} 个
+- 设备总数: {context.get('total_devices', 0)} 台
+- 在线设备: {context.get('device_online', 0)} 台
+
+请输出：
+1. 产能利用率评估
+2. 生产瓶颈分析
+3. 优化建议
+请用JSON格式返回，键名为: utilization, bottlenecks(array), suggestions(array)。""",
+
+            'prediction': f"""你是一个工业数据分析专家。请分析佳帮手兴平智造基地的近期趋势数据：
+
+网络负载趋势: {context.get('recent_load', [])}
+AGV活跃趋势: {context.get('recent_agv', [])}
+
+请预测未来趋势并给出建议。请用JSON格式返回，键名为: trend, prediction, suggestions(array)。""",
+
+            'quick_insight': f"""你是一个制造业智能调度助手。请根据以下佳帮手兴平智造基地的实时状态，用一句话总结当前情况：
+
+- 待处理任务: {context.get('pending_tasks', 0)} 个
+- 1小时内严重网络事件: {context.get('critical_events_1h', 0)} 次
+- 在线AGV: {context.get('online_agvs', 0)} 台
+
+请直接返回一句话总结（不超过50字），不要JSON格式。"""
+        }
+
+        prompt = prompts.get(analysis_type, prompts['scheduling'])
+
+        # 尝试调用DeepSeek API
+        api_result = self._call_llm(prompt)
+
+        if api_result:
+            return {
+                "type": analysis_type,
+                "analysis": api_result,
+                "source": "deepseek",
+                "timestamp": datetime.now().isoformat()
+            }
+
+        # 本地回退分析
+        local_result = self._local_analysis(context)
+        return {
+            "type": analysis_type,
+            "analysis": local_result,
+            "source": "local",
+            "timestamp": datetime.now().isoformat()
+        }
+
+    def generate_quick_insight(self, context):
+        """生成快速洞察"""
+        result = self.generate_analysis_report(context)
+        return result.get('analysis', '系统运行正常')
+
+    def _call_llm(self, prompt):
+        """调用LLM API（DeepSeek）"""
+        if not self._is_api_available():
+            return None
+        try:
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json"
+            }
+            payload = {
+                "model": self.model,
+                "messages": [
+                    {"role": "system", "content": "你是一个专业的制造业智能调度助手，服务于佳帮手集团的确定性网络智能调度平台。请用中文回答，保持专业和简洁。"},
+                    {"role": "user", "content": prompt}
+                ],
+                "temperature": 0.3,
+                "max_tokens": 500
+            }
+            response = requests.post(
+                self.api_endpoint,
+                headers=headers,
+                json=payload,
+                timeout=30
+            )
+            if response.status_code == 200:
+                data = response.json()
+                return data['choices'][0]['message']['content'].strip()
+            return None
+        except Exception as e:
+            logger.warning(f"LLM API调用失败: {e}")
+            return None
+
+    def _local_analysis(self, context):
+        """本地分析回退"""
+        analysis_type = context.get('type', 'scheduling')
+        if analysis_type == 'scheduling':
+            pending = context.get('pending_tasks', 0)
+            urgent = context.get('urgent_tasks', 0)
+            agv = context.get('online_agvs', 0)
+            if pending > 20:
+                eff = "调度负载较高，存在任务积压风险"
+                suggestions = ["建议增加AGV调度数量", "提高紧急任务优先级", "优化任务分配算法"]
+            elif urgent > 5:
+                eff = "紧急任务较多，需要优先处理"
+                suggestions = ["优先处理紧急任务", "减少非紧急任务调度"]
+            else:
+                eff = "调度系统运行正常，效率良好"
+                suggestions = ["可适当增加调度任务量", "保持当前调度策略"]
+            return f"效率评估: {eff}。建议: {'; '.join(suggestions[:2])}"
+
+        elif analysis_type == 'network':
+            critical = context.get('critical_events_24h', 0)
+            if critical > 0:
+                return f"网络存在{critical}次严重事件，建议检查URLLC切片稳定性并优化带宽分配"
+            return "网络运行稳定，所有切片SLA达标，无需干预"
+
+        elif analysis_type == 'production':
+            pending = context.get('pending_orders', 0)
+            online = context.get('device_online', 0)
+            total = context.get('total_devices', 0)
+            rate = round(online / total * 100, 1) if total else 0
+            return f"设备在线率{rate}%，待处理订单{pending}个。{'建议启动备用产线' if pending > 50 else '产能充足，运行正常'}"
+
+        elif analysis_type == 'prediction':
+            return "基于近期趋势，预计未来2小时网络负载将保持稳定，AGV调度效率可维持当前水平"
+
+        return "系统运行正常，暂无异常"
 
     def get_analysis_logs(self, limit=20):
         """获取AI分析历史日志"""

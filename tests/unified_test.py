@@ -218,6 +218,152 @@ class TestAll(unittest.TestCase):
         data = json.loads(response.data)
         self.assertTrue(data['success'])
 
+    # ---- 仿真调度API（数据库驱动） ----
+    def test_simulation_run_with_db_tasks(self):
+        """验证仿真API从数据库获取AGV任务"""
+        with app.app_context():
+            from models.db_models import AGVTask, ProductionLine, NetworkSlice
+            zone = ProductionLine(name='仿真测试区', code='SIM-Z01', category='warehouse', status='active')
+            db.session.add(zone)
+            db.session.flush()
+            task = AGVTask(
+                task_no='SIM-TEST-001', task_type='transport',
+                source_zone_id=zone.id, target_zone_id=zone.id,
+                priority=2, latency_requirement_ms=10.0, weight_kg=25.0,
+                status='pending'
+            )
+            db.session.add(task)
+            db.session.commit()
+
+        response = self.client.post('/api/simulation/run', json={
+            "scenario": "medium", "slice_type": "industrial"
+        })
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertTrue(data['success'])
+        self.assertIn('ai_report', data['data'])
+        self.assertIn('schedule', data['data'])
+
+    def test_simulation_invalid_scenario(self):
+        response = self.client.post('/api/simulation/run', json={
+            "scenario": "invalid", "slice_type": "industrial"
+        })
+        self.assertEqual(response.status_code, 400)
+
+    # ---- 需求预测API（数据库驱动） ----
+    def test_demand_prediction(self):
+        response = self.client.post('/api/prediction/demand', json={
+            "product_type": "sensor", "horizon": 7
+        })
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertTrue(data['success'])
+        self.assertIn('historical', data['data'])
+        self.assertIn('forecast', data['data'])
+        self.assertEqual(len(data['data']['forecast']), 7)
+
+    # ---- AGV任务管理API ----
+    def test_get_agv_tasks(self):
+        response = self.client.get('/api/agv/tasks')
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertTrue(data['success'])
+        self.assertIsInstance(data['data'], list)
+
+    def test_get_agv_tasks_filtered(self):
+        response = self.client.get('/api/agv/tasks?status=pending&priority=2')
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertTrue(data['success'])
+
+    def test_get_agv_task_by_id(self):
+        with app.app_context():
+            from models.db_models import AGVTask, ProductionLine
+            zone = ProductionLine(name='AGV测试区', code='AGV-Z01', category='warehouse', status='active')
+            db.session.add(zone)
+            db.session.flush()
+            task = AGVTask(
+                task_no='AGV-DETAIL-001', task_type='transport',
+                source_zone_id=zone.id, target_zone_id=zone.id,
+                priority=1, latency_requirement_ms=5.0, weight_kg=15.0,
+                status='pending'
+            )
+            db.session.add(task)
+            db.session.commit()
+            task_id = task.id
+
+        response = self.client.get(f'/api/agv/tasks/{task_id}')
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertTrue(data['success'])
+        self.assertEqual(data['data']['task_no'], 'AGV-DETAIL-001')
+
+    def test_update_agv_task_status(self):
+        with app.app_context():
+            from models.db_models import AGVTask, ProductionLine
+            zone = ProductionLine(name='状态测试区', code='STS-Z01', category='warehouse', status='active')
+            db.session.add(zone)
+            db.session.flush()
+            task = AGVTask(
+                task_no='AGV-STATUS-001', task_type='transport',
+                source_zone_id=zone.id, target_zone_id=zone.id,
+                priority=3, latency_requirement_ms=15.0, weight_kg=30.0,
+                status='pending'
+            )
+            db.session.add(task)
+            db.session.commit()
+            task_id = task.id
+
+        response = self.client.put(f'/api/agv/tasks/{task_id}/status', json={"status": "dispatched"})
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertTrue(data['success'])
+        self.assertEqual(data['data']['status'], 'dispatched')
+
+    def test_agv_stats(self):
+        response = self.client.get('/api/agv/stats')
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertTrue(data['success'])
+        self.assertIn('by_status', data['data'])
+        self.assertIn('by_type', data['data'])
+
+    # ---- 网络负载事件API ----
+    def test_get_network_events(self):
+        response = self.client.get('/api/network/events')
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertTrue(data['success'])
+        self.assertIsInstance(data['data'], list)
+
+    def test_get_network_events_filtered(self):
+        response = self.client.get('/api/network/events?severity=critical')
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertTrue(data['success'])
+
+    # ---- 仓库概览API ----
+    def test_warehouse_overview(self):
+        response = self.client.get('/api/warehouse/overview')
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertTrue(data['success'])
+        self.assertIn('agv_tasks', data['data'])
+        self.assertIn('network_events', data['data'])
+        self.assertIn('agv_devices', data['data'])
+        self.assertIn('zones', data['data'])
+
+    # ---- 数据库状态API（含新表） ----
+    def test_db_status_with_warehouse_tables(self):
+        response = self.client.get('/api/db/status')
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertTrue(data['success'])
+        tables = data['data']['tables']
+        self.assertIn('agv_tasks', tables)
+        self.assertIn('network_load_events', tables)
+        self.assertIn('sensing_metrics', tables)
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

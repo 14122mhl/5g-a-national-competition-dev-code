@@ -37,22 +37,28 @@ class User(db.Model):
 
 
 class Product(db.Model):
-    """产品表"""
+    """物料表（原材料/半成品/成品）—— 仓库场景"""
     __tablename__ = 'products'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(100), nullable=False, index=True)
     sku = db.Column(db.String(50), unique=True, nullable=False)
-    category = db.Column(db.String(50), nullable=False)
+    category = db.Column(db.String(50), nullable=False)  # raw_material / semi_finished / finished
+    material_type = db.Column(db.String(50))  # plastic / paper / textile / chemical / metal / packaging
     price = db.Column(db.Float, nullable=False)
     quantity = db.Column(db.Integer, nullable=False, default=0)
-    unit = db.Column(db.String(20), default='台')
+    unit = db.Column(db.String(20), default='件')
     description = db.Column(db.Text)
     status = db.Column(db.String(20), default='active')  # active / inactive / discontinued
     min_stock = db.Column(db.Integer, default=10)
     max_stock = db.Column(db.Integer, default=500)
+    warehouse_zone_id = db.Column(db.Integer, db.ForeignKey('production_lines.id'))  # 存放区域
+    shelf_life_days = db.Column(db.Integer)  # 保质期(天)
+    weight_kg = db.Column(db.Float)  # 单件重量(kg)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
+
+    warehouse_zone = db.relationship('ProductionLine', foreign_keys=[warehouse_zone_id])
 
     def to_dict(self):
         return {
@@ -60,6 +66,7 @@ class Product(db.Model):
             'name': self.name,
             'sku': self.sku,
             'category': self.category,
+            'material_type': self.material_type,
             'price': round(self.price, 2),
             'quantity': self.quantity,
             'unit': self.unit,
@@ -67,33 +74,45 @@ class Product(db.Model):
             'status': self.status,
             'min_stock': self.min_stock,
             'max_stock': self.max_stock,
+            'warehouse_zone_id': self.warehouse_zone_id,
+            'warehouse_zone_name': self.warehouse_zone.name if self.warehouse_zone else None,
+            'shelf_life_days': self.shelf_life_days,
+            'weight_kg': self.weight_kg,
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
 
 
 class Order(db.Model):
-    """订单表"""
+    """出入库任务单 —— 仓库场景"""
     __tablename__ = 'orders'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     order_number = db.Column(db.String(50), unique=True, nullable=False, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    task_type = db.Column(db.String(20), nullable=False, default='outbound')  # inbound / outbound / transfer
     total_amount = db.Column(db.Float, nullable=False, default=0)
     status = db.Column(db.String(20), nullable=False, default='pending')  # pending / processing / completed / cancelled
+    priority = db.Column(db.Integer, default=3)  # 1(critical)-5(normal)
+    target_zone_id = db.Column(db.Integer, db.ForeignKey('production_lines.id'))  # 目标区域
     notes = db.Column(db.Text)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
 
     items = db.relationship('OrderItem', backref='order', lazy='dynamic', cascade='all, delete-orphan')
+    target_zone = db.relationship('ProductionLine', foreign_keys=[target_zone_id])
 
     def to_dict(self):
         return {
             'id': self.id,
             'order_number': self.order_number,
             'user_id': self.user_id,
+            'task_type': self.task_type,
             'total_amount': round(self.total_amount, 2),
             'status': self.status,
+            'priority': self.priority,
+            'target_zone_id': self.target_zone_id,
+            'target_zone_name': self.target_zone.name if self.target_zone else None,
             'notes': self.notes,
             'items': [item.to_dict() for item in self.items],
             'created_at': self.created_at.isoformat() if self.created_at else None,
@@ -129,19 +148,24 @@ class OrderItem(db.Model):
 
 
 class ProductionLine(db.Model):
-    """生产线表"""
+    """仓库区域 / 生产线表 —— 仓库场景"""
     __tablename__ = 'production_lines'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(100), nullable=False, index=True)
     code = db.Column(db.String(50), unique=True, nullable=False)
     category = db.Column(db.String(50), nullable=False)  # assembly / machining / packaging / testing
+    zone_type = db.Column(db.String(30))  # inbound_dock / storage / picking / sorting / outbound_dock / quality / returns
     status = db.Column(db.String(20), nullable=False, default='idle')  # idle / running / maintenance / offline
-    capacity = db.Column(db.Integer, nullable=False, default=100)  # 每小时产能
+    capacity = db.Column(db.Integer, nullable=False, default=100)  # 每小时产能 / 存储容量(托盘位)
     efficiency = db.Column(db.Float, nullable=False, default=100.0)  # 效率百分比
     current_task = db.Column(db.String(100))
     location = db.Column(db.String(100))
     oee = db.Column(db.Float, default=85.0)  # 设备综合效率
+    network_priority = db.Column(db.Integer, default=3)  # 1-5网络优先级
+    device_count = db.Column(db.Integer, default=0)
+    temperature = db.Column(db.Float)  # 环境温度
+    humidity = db.Column(db.Float)  # 环境湿度
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
 
@@ -153,34 +177,45 @@ class ProductionLine(db.Model):
             'name': self.name,
             'code': self.code,
             'category': self.category,
+            'zone_type': self.zone_type,
             'status': self.status,
             'capacity': self.capacity,
             'efficiency': round(self.efficiency, 1),
             'current_task': self.current_task,
             'location': self.location,
             'oee': round(self.oee, 1) if self.oee else None,
+            'network_priority': self.network_priority,
             'device_count': self.devices.count(),
+            'temperature': self.temperature,
+            'humidity': self.humidity,
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
 
 
 class Device(db.Model):
-    """设备表"""
+    """仓储设备表 —— 仓库场景"""
     __tablename__ = 'devices'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(100), nullable=False)
     code = db.Column(db.String(50), unique=True, nullable=False)
     type = db.Column(db.String(50), nullable=False)  # sensor / robot / controller / conveyor / camera
+    device_subtype = db.Column(db.String(50))  # agv / stacker / sorter / conveyor / rfid_reader / camera
     line_id = db.Column(db.Integer, db.ForeignKey('production_lines.id'), index=True)
     status = db.Column(db.String(20), nullable=False, default='online')  # online / offline / maintenance
     ip_address = db.Column(db.String(45))
     firmware_version = db.Column(db.String(20))
     last_maintenance = db.Column(db.DateTime)
+    battery_level = db.Column(db.Float)  # 电池电量(AGV)
+    load_capacity_kg = db.Column(db.Float)  # 载重(kg)
+    speed_mps = db.Column(db.Float)  # 速度(m/s)
+    associated_slice_id = db.Column(db.Integer, db.ForeignKey('network_slices.id'))  # 关联网络切片
     metrics_json = db.Column(db.Text)  # JSON格式存储设备运行指标
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
+
+    associated_slice = db.relationship('NetworkSlice', foreign_keys=[associated_slice_id])
 
     def to_dict(self):
         import json
@@ -195,12 +230,18 @@ class Device(db.Model):
             'name': self.name,
             'code': self.code,
             'type': self.type,
+            'device_subtype': self.device_subtype,
             'line_id': self.line_id,
             'line_name': self.production_line.name if self.production_line else None,
             'status': self.status,
             'ip_address': self.ip_address,
             'firmware_version': self.firmware_version,
             'last_maintenance': self.last_maintenance.isoformat() if self.last_maintenance else None,
+            'battery_level': self.battery_level,
+            'load_capacity_kg': self.load_capacity_kg,
+            'speed_mps': self.speed_mps,
+            'associated_slice_id': self.associated_slice_id,
+            'associated_slice_name': self.associated_slice.name if self.associated_slice else None,
             'metrics': metrics,
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
@@ -395,6 +436,12 @@ class DashboardMetric(db.Model):
     slices_active = db.Column(db.Integer, default=0)
     edges_online = db.Column(db.Integer, default=0)
     alerts_count = db.Column(db.Integer, default=0)
+    # 仓库场景新增字段
+    active_agvs = db.Column(db.Integer, default=0)
+    bandwidth_usage_mbps = db.Column(db.Float)
+    network_load_pct = db.Column(db.Float)
+    pending_tasks = db.Column(db.Integer, default=0)
+    completed_tasks = db.Column(db.Integer, default=0)
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.now, index=True)
 
     def to_dict(self):
@@ -410,5 +457,107 @@ class DashboardMetric(db.Model):
             'slices_active': self.slices_active,
             'edges_online': self.edges_online,
             'alerts_count': self.alerts_count,
+            'active_agvs': self.active_agvs,
+            'bandwidth_usage_mbps': self.bandwidth_usage_mbps,
+            'network_load_pct': self.network_load_pct,
+            'pending_tasks': self.pending_tasks,
+            'completed_tasks': self.completed_tasks,
             'timestamp': self.timestamp.isoformat() if self.timestamp else None
+        }
+
+
+# ============================================
+# 仓库场景新增表
+# ============================================
+
+class AGVTask(db.Model):
+    """AGV调度任务表 —— 网络调度核心"""
+    __tablename__ = 'agv_tasks'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    task_no = db.Column(db.String(50), unique=True, nullable=False, index=True)
+    task_type = db.Column(db.String(30), nullable=False)  # transport / retrieve / store / charge / sort
+    source_zone_id = db.Column(db.Integer, db.ForeignKey('production_lines.id'))
+    target_zone_id = db.Column(db.Integer, db.ForeignKey('production_lines.id'))
+    device_id = db.Column(db.Integer, db.ForeignKey('devices.id'))  # 执行的AGV
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))  # 关联订单
+    priority = db.Column(db.Integer, default=3)  # 1(critical)-5(normal)
+    network_slice_id = db.Column(db.Integer, db.ForeignKey('network_slices.id'))  # 关联URLLC切片
+    latency_requirement_ms = db.Column(db.Float, default=10.0)  # 时延要求(ms)
+    actual_latency_ms = db.Column(db.Float)  # 实际时延(ms)
+    distance_m = db.Column(db.Float)  # 搬运距离(米)
+    weight_kg = db.Column(db.Float)  # 货物重量(kg)
+    status = db.Column(db.String(20), default='pending')  # pending / dispatched / in_progress / completed / failed
+    dispatched_at = db.Column(db.DateTime)
+    completed_at = db.Column(db.DateTime)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now, index=True)
+
+    source_zone = db.relationship('ProductionLine', foreign_keys=[source_zone_id])
+    target_zone = db.relationship('ProductionLine', foreign_keys=[target_zone_id])
+    device = db.relationship('Device', foreign_keys=[device_id])
+    order = db.relationship('Order', foreign_keys=[order_id])
+    network_slice = db.relationship('NetworkSlice', foreign_keys=[network_slice_id])
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'task_no': self.task_no,
+            'task_type': self.task_type,
+            'source_zone_id': self.source_zone_id,
+            'source_zone_name': self.source_zone.name if self.source_zone else None,
+            'target_zone_id': self.target_zone_id,
+            'target_zone_name': self.target_zone.name if self.target_zone else None,
+            'device_id': self.device_id,
+            'device_name': self.device.name if self.device else None,
+            'order_id': self.order_id,
+            'priority': self.priority,
+            'network_slice_id': self.network_slice_id,
+            'network_slice_name': self.network_slice.name if self.network_slice else None,
+            'latency_requirement_ms': self.latency_requirement_ms,
+            'actual_latency_ms': self.actual_latency_ms,
+            'distance_m': self.distance_m,
+            'weight_kg': self.weight_kg,
+            'status': self.status,
+            'dispatched_at': self.dispatched_at.isoformat() if self.dispatched_at else None,
+            'completed_at': self.completed_at.isoformat() if self.completed_at else None,
+            'created_at': self.created_at.isoformat() if self.created_at else None
+        }
+
+
+class NetworkLoadEvent(db.Model):
+    """网络负载事件表 —— 网络调度监控"""
+    __tablename__ = 'network_load_events'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    event_type = db.Column(db.String(30), nullable=False)  # peak / congestion / normal / failure / recovery
+    zone_id = db.Column(db.Integer, db.ForeignKey('production_lines.id'))
+    slice_id = db.Column(db.Integer, db.ForeignKey('network_slices.id'))
+    active_agvs = db.Column(db.Integer, default=0)
+    bandwidth_usage_mbps = db.Column(db.Float)
+    latency_ms = db.Column(db.Float)
+    packet_loss_rate = db.Column(db.Float)
+    severity = db.Column(db.String(20), default='normal')  # critical / warning / normal
+    description = db.Column(db.Text)
+    triggered_at = db.Column(db.DateTime, nullable=False, default=datetime.now, index=True)
+    resolved_at = db.Column(db.DateTime)
+
+    zone = db.relationship('ProductionLine', foreign_keys=[zone_id])
+    slice = db.relationship('NetworkSlice', foreign_keys=[slice_id])
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'event_type': self.event_type,
+            'zone_id': self.zone_id,
+            'zone_name': self.zone.name if self.zone else None,
+            'slice_id': self.slice_id,
+            'slice_name': self.slice.name if self.slice else None,
+            'active_agvs': self.active_agvs,
+            'bandwidth_usage_mbps': self.bandwidth_usage_mbps,
+            'latency_ms': self.latency_ms,
+            'packet_loss_rate': self.packet_loss_rate,
+            'severity': self.severity,
+            'description': self.description,
+            'triggered_at': self.triggered_at.isoformat() if self.triggered_at else None,
+            'resolved_at': self.resolved_at.isoformat() if self.resolved_at else None
         }

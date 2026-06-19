@@ -4,8 +4,7 @@
 # ============================================
 
 import logging
-import random
-from datetime import datetime
+from datetime import datetime, timedelta
 from database import db
 from models.db_models import NetworkSlice, EdgeNode, SimulationRecord, DashboardMetric
 
@@ -91,27 +90,22 @@ class NetworkService:
     # --- 边缘节点 ---
     def get_all_edge_nodes(self):
         nodes = EdgeNode.query.all()
-        # 实时更新CPU/内存（模拟真实设备波动）
-        for node in nodes:
-            if node.status == 'online':
-                node.cpu = round(min(100, node.cpu + random.uniform(-5, 5)), 1)
-                node.memory = round(min(100, node.memory + random.uniform(-3, 3)), 1)
-        db.session.commit()
         return [n.to_dict() for n in nodes]
 
     def get_edge_node_tasks(self, node_id):
         node = EdgeNode.query.get(node_id)
         if not node:
             return None
-        tasks = [
-            {"id": i + 1, "name": f"推理任务-{i + 1}",
-             "model": random.choice(["YOLOv8", "ResNet", "BERT", "LSTM"]),
-             "status": random.choice(["running", "completed", "queued"]),
-             "latency": round(random.uniform(2, 15), 1),
-             "throughput": random.randint(10, 200)}
-            for i in range(random.randint(3, 8))
-        ]
-        return {"node": node.to_dict(), "tasks": tasks}
+        # 从数据库获取该节点区域的AGV任务
+        from models.db_models import AGVTask
+        tasks = AGVTask.query.filter(
+            AGVTask.status.in_(['dispatched', 'in_progress']),
+            AGVTask.created_at >= datetime.now() - timedelta(hours=24)
+        ).order_by(AGVTask.priority).limit(8).all()
+        return {
+            "node": node.to_dict(),
+            "tasks": [t.to_dict() for t in tasks] if tasks else []
+        }
 
     # --- 仿真记录 ---
     def get_simulation_history(self, limit=20):
@@ -140,50 +134,89 @@ class NetworkService:
 
     # --- 仪表盘指标 ---
     def get_dashboard_metrics(self):
-        slices = NetworkSlice.query.filter_by(status='active').all()
-        edges = EdgeNode.query.filter_by(status='online').all()
+        # 从数据库读取最新仪表盘数据
+        latest = DashboardMetric.query.order_by(DashboardMetric.timestamp.desc()).first()
+        slices_active = NetworkSlice.query.filter_by(status='active').count()
+        edges_online = EdgeNode.query.filter_by(status='online').count()
+        agv_tasks_pending = 0
+        try:
+            from models.db_models import AGVTask
+            agv_tasks_pending = AGVTask.query.filter_by(status='pending').count()
+        except Exception:
+            pass
 
-        metric = DashboardMetric(
-            air_peak_rate=f"{round(random.uniform(9.5, 10.5), 1)} Gbps",
-            uplink_peak_rate=f"{round(random.uniform(0.9, 1.1), 1)} Gbps",
-            urllc_latency=f"{round(random.uniform(0.8, 1.2), 1)} ms",
-            v2x_latency=f"{round(random.uniform(4.5, 5.5), 1)} ms",
-            sla_compliance=f"{round(99.95 + random.random() * 0.04, 2)}%",
-            sensing_accuracy=f"{round(98.0 + random.random() * 2, 1)}%",
-            reliability=f"{round(99.99 + random.random() * 0.009, 4)}%",
-            slices_active=len(slices),
-            edges_online=len(edges),
-            alerts_count=random.randint(0, 3)
-        )
-        db.session.add(metric)
-        db.session.commit()
+        if latest:
+            metric_data = latest.to_dict()
+        else:
+            # 无历史数据，从真实切片计算
+            urllc = NetworkSlice.query.filter_by(slice_type='industrial').first()
+            metric_data = {
+                'air_peak_rate': '10.0 Gbps',
+                'uplink_peak_rate': '1.0 Gbps',
+                'urllc_latency': f'{urllc.latency} ms' if urllc else '1.0 ms',
+                'v2x_latency': '5.0 ms',
+                'sla_compliance': f'{urllc.sla_compliance}%' if urllc else '99.9%',
+                'sensing_accuracy': '98.0%',
+                'reliability': '99.99%',
+                'slices_active': slices_active,
+                'edges_online': edges_online,
+                'alerts_count': 0,
+                'active_agvs': agv_tasks_pending,
+                'bandwidth_usage_mbps': 250,
+                'network_load_pct': 35,
+                'pending_tasks': agv_tasks_pending,
+                'completed_tasks': 0,
+            }
 
         return {
             "network": {
-                "air_peak_rate": metric.air_peak_rate,
-                "uplink_peak_rate": metric.uplink_peak_rate,
-                "urllc_latency": metric.urllc_latency,
-                "v2x_latency": metric.v2x_latency,
-                "sla_compliance": metric.sla_compliance,
-                "sensing_accuracy": metric.sensing_accuracy,
-                "reliability": metric.reliability
+                "air_peak_rate": metric_data.get('air_peak_rate', '10.0 Gbps'),
+                "uplink_peak_rate": metric_data.get('uplink_peak_rate', '1.0 Gbps'),
+                "urllc_latency": metric_data.get('urllc_latency', '1.0 ms'),
+                "v2x_latency": metric_data.get('v2x_latency', '5.0 ms'),
+                "sla_compliance": metric_data.get('sla_compliance', '99.9%'),
+                "sensing_accuracy": metric_data.get('sensing_accuracy', '98.0%'),
+                "reliability": metric_data.get('reliability', '99.99%')
             },
-            "slices": {"total": NetworkSlice.query.count(), "active": metric.slices_active},
-            "edge_nodes": {"total": EdgeNode.query.count(), "online": metric.edges_online},
-            "alerts": metric.alerts_count,
+            "slices": {"total": NetworkSlice.query.count(), "active": slices_active},
+            "edge_nodes": {"total": EdgeNode.query.count(), "online": edges_online},
+            "alerts": metric_data.get('alerts_count', 0),
+            "warehouse": {
+                "active_agvs": metric_data.get('active_agvs', 0),
+                "bandwidth_usage_mbps": metric_data.get('bandwidth_usage_mbps', 0),
+                "network_load_pct": metric_data.get('network_load_pct', 0),
+                "pending_tasks": metric_data.get('pending_tasks', 0),
+                "completed_tasks": metric_data.get('completed_tasks', 0),
+            },
             "timestamp": datetime.now().isoformat()
         }
 
     def get_network_status(self):
         slices = NetworkSlice.query.filter_by(status='active').all()
         edges = EdgeNode.query.filter_by(status='online').all()
+        # 从真实切片数据计算网络状态
+        avg_latency = sum(s.latency for s in slices) / len(slices) if slices else 2.0
+        avg_bandwidth = sum(s.bandwidth for s in slices) / len(slices) if slices else 300
+        avg_sla = sum(s.sla_compliance for s in slices) / len(slices) if slices else 99.9
+
+        # 从网络负载事件获取最新丢包率
+        pkt_loss = 0.01
+        try:
+            from models.db_models import NetworkLoadEvent
+            last_event = NetworkLoadEvent.query.order_by(NetworkLoadEvent.triggered_at.desc()).first()
+            if last_event and last_event.packet_loss_rate:
+                pkt_loss = last_event.packet_loss_rate
+        except Exception:
+            pass
+
         return {
             "network_nodes": len(edges),
             "online_nodes": len(edges),
             "active_slices": len(slices),
-            "packet_loss_rate": round(random.uniform(0.01, 0.08), 3),
-            "average_latency": round(random.uniform(1.5, 3.5), 1),
-            "bandwidth_utilization": round(random.uniform(45, 75), 1)
+            "packet_loss_rate": round(pkt_loss, 4),
+            "average_latency": round(avg_latency, 1),
+            "bandwidth_utilization": round(min(95, avg_bandwidth / 10), 1),
+            "sla_compliance": round(avg_sla, 2)
         }
 
 

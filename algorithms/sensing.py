@@ -1,9 +1,10 @@
 # 通感一体感知数据处理算法
-# 模拟5G-A通感融合感知环境下的数据采集和处理
+# 从数据库SensingMetric表读取真实感知数据，数据库无数据时使用模拟算法
 
 import math
 import random
 from datetime import datetime
+from database import db
 
 class SensingProcessor:
     """通感一体感知数据处理器"""
@@ -33,28 +34,82 @@ class SensingProcessor:
         }
 
     def get_sensing_data(self):
-        """获取通感一体感知数据"""
+        """获取通感一体感知数据 - 优先从数据库读取"""
+        from models.db_models import SensingMetric
+        from sqlalchemy import func
+
+        # 尝试从数据库获取最新感知数据
+        try:
+            latest_metrics = SensingMetric.query.filter(
+                SensingMetric.timestamp >= datetime.now().replace(minute=0, second=0, microsecond=0)
+            ).all()
+
+            if latest_metrics:
+                data = {}
+                for stype in self.sensing_types:
+                    type_metrics = [m for m in latest_metrics if m.sensor_type == stype]
+                    if type_metrics:
+                        precision_m = next((m for m in type_metrics if m.metric_name == 'precision'), None)
+                        distance_m = next((m for m in type_metrics if m.metric_name == 'distance'), None)
+                        refresh_m = next((m for m in type_metrics if m.metric_name == 'refresh_rate'), None)
+                        data[stype] = {
+                            "precision": precision_m.value if precision_m else round(self.sensing_types[stype]["precision_base"] + random.uniform(-0.3, 0.5), 2),
+                            "distance": distance_m.value if distance_m else round(self.sensing_types[stype]["distance_base"] + random.uniform(-20, 20)),
+                            "refresh_rate": refresh_m.value if refresh_m else round(self.sensing_types[stype]["refresh_base"] + random.uniform(-10, 10)),
+                            "online_devices": random.randint(22, 24),
+                            "total_devices": 24,
+                            "signal_strength": round(-40 + random.uniform(-10, 5), 1),
+                        }
+                    else:
+                        data[stype] = self._simulate_sensing(stype)
+                return data
+        except Exception as e:
+            pass  # 数据库不可用时回退到模拟
+
+        # 回退：模拟数据
         data = {}
-        for stype, config in self.sensing_types.items():
-            data[stype] = {
-                "precision": round(config["precision_base"] + random.uniform(-0.3, 0.5), 2),
-                "distance": round(config["distance_base"] + random.uniform(-20, 20)),
-                "refresh_rate": round(config["refresh_base"] + random.uniform(-10, 10)),
-                "online_devices": random.randint(22, 24),
-                "total_devices": 24,
-                "signal_strength": round(-40 + random.uniform(-10, 5), 1),
-            }
+        for stype in self.sensing_types:
+            data[stype] = self._simulate_sensing(stype)
         return data
 
+    def _simulate_sensing(self, stype):
+        """模拟单个感知类型数据"""
+        config = self.sensing_types[stype]
+        return {
+            "precision": round(config["precision_base"] + random.uniform(-0.3, 0.5), 2),
+            "distance": round(config["distance_base"] + random.uniform(-20, 20)),
+            "refresh_rate": round(config["refresh_base"] + random.uniform(-10, 10)),
+            "online_devices": random.randint(22, 24),
+            "total_devices": 24,
+            "signal_strength": round(-40 + random.uniform(-10, 5), 1),
+        }
+
     def filter_sensing(self, sensing_type):
-        """根据感知类型筛选数据 - 增强版"""
+        """根据感知类型筛选数据 - 优先从数据库读取"""
         if sensing_type not in self.sensing_types:
             return {"error": "不支持的感知类型", "available": list(self.sensing_types.keys())}
 
         config = self.sensing_types[sensing_type]
-        precision = round(config["precision_base"] + random.uniform(-0.3, 0.5), 2)
-        distance = round(config["distance_base"] + random.uniform(-20, 20))
-        refresh = round(config["refresh_base"] + random.uniform(-10, 10))
+
+        # 尝试从数据库获取
+        try:
+            from models.db_models import SensingMetric
+            type_metrics = SensingMetric.query.filter(
+                SensingMetric.sensor_type == sensing_type,
+                SensingMetric.timestamp >= datetime.now().replace(minute=0, second=0, microsecond=0)
+            ).all()
+
+            if type_metrics:
+                precision_m = next((m for m in type_metrics if m.metric_name == 'precision'), None)
+                distance_m = next((m for m in type_metrics if m.metric_name == 'distance'), None)
+                refresh_m = next((m for m in type_metrics if m.metric_name == 'refresh_rate'), None)
+                precision = precision_m.value if precision_m else round(config["precision_base"] + random.uniform(-0.3, 0.5), 2)
+                distance = distance_m.value if distance_m else round(config["distance_base"] + random.uniform(-20, 20))
+                refresh = refresh_m.value if refresh_m else round(config["refresh_base"] + random.uniform(-10, 10))
+        except Exception:
+            precision = round(config["precision_base"] + random.uniform(-0.3, 0.5), 2)
+            distance = round(config["distance_base"] + random.uniform(-20, 20))
+            refresh = round(config["refresh_base"] + random.uniform(-10, 10))
 
         # 设备在线率根据类型差异化
         online_rates = {"temperature": 100, "person": 95.8, "device": 100, "environment": 91.7, "vibration": 97.5}
