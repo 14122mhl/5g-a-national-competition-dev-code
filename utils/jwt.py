@@ -1,35 +1,29 @@
 # JWT工具
-# 生成和验证JWT令牌
-
 import jwt
-from datetime import datetime, timedelta
-from config import current_config
+import os
+from datetime import datetime, timedelta, timezone
+from dotenv import load_dotenv
+
+load_dotenv()
+
+JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'default-jwt-secret')
+
 
 def generate_token(user_id: int, role: str) -> str:
-    """
-    生成JWT令牌
-    :param user_id: 用户ID
-    :param role: 用户角色
-    :return: JWT令牌
-    """
+    """生成JWT令牌"""
     payload = {
         "user_id": user_id,
         "role": role,
-        "exp": datetime.utcnow() + timedelta(hours=24),  # 令牌有效期24小时
-        "iat": datetime.utcnow()
+        "exp": datetime.now(timezone.utc) + timedelta(hours=24),
+        "iat": datetime.now(timezone.utc)
     }
-    token = jwt.encode(payload, current_config.JWT_SECRET_KEY, algorithm="HS256")
-    return token
+    return jwt.encode(payload, JWT_SECRET_KEY, algorithm="HS256")
+
 
 def verify_token(token: str) -> dict:
-    """
-    验证JWT令牌
-    :param token: JWT令牌
-    :return: 令牌负载
-    """
+    """验证JWT令牌"""
     try:
-        payload = jwt.decode(token, current_config.JWT_SECRET_KEY, algorithms=["HS256"])
-        return payload
+        return jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS256"])
     except jwt.ExpiredSignatureError:
         raise Exception("令牌已过期")
     except jwt.InvalidTokenError:

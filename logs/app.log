@@ -1,0 +1,1408 @@
+2026-06-19 14:16:11,670 [INFO] 5G-A-Industry - 日志系统初始化完成
+2026-06-19 14:16:12,444 [INFO] services.device_service - 创建设备: 测试设备 (ID:1)
+2026-06-19 14:16:12,448 [INFO] app - [bb4dc82d] POST /api/devices -> 201 (25.4ms)
+2026-06-19 14:16:12,453 [INFO] app - [24741e9f] GET /api/devices -> 200 (2.2ms)
+2026-06-19 14:16:13,400 [INFO] services.order_service - 创建订单: ORD-0113DE05 (ID:1)
+2026-06-19 14:16:13,405 [INFO] app - [ebe5b9ea] POST /api/orders -> 201 (21.5ms)
+2026-06-19 14:16:13,413 [INFO] app - [838011ff] GET /api/orders -> 200 (4.5ms)
+2026-06-19 14:16:13,418 [INFO] app - [e6728fff] POST /api/orders -> 400 (1.5ms)
+2026-06-19 14:16:15,527 [INFO] services.product_service - 创建产品: 测试传感器 (ID:1)
+2026-06-19 14:16:15,530 [INFO] app - [60100c90] POST /api/products -> 201 (7.8ms)
+2026-06-19 14:16:15,536 [INFO] services.product_service - 创建产品: 产品A (ID:2)
+2026-06-19 14:16:15,538 [INFO] app - [6cb7542a] POST /api/products -> 201 (5.0ms)
+2026-06-19 14:16:15,542 [INFO] app - [b899ee5b] POST /api/products -> 400 (1.5ms)
+2026-06-19 14:16:15,547 [INFO] app - [3349ef35] GET /api/products -> 200 (2.3ms)
+2026-06-19 14:16:16,045 [INFO] services.production_service - 创建生产线: 测试产线 (ID:1)
+2026-06-19 14:16:16,052 [INFO] app - [5653c9d4] POST /api/production/lines -> 201 (11.1ms)
+2026-06-19 14:16:16,058 [INFO] app - [e73e471f] GET /api/production/lines -> 200 (2.6ms)
+2026-06-19 14:16:16,062 [INFO] app - [6d68856f] GET /api/production/stats -> 200 (1.0ms)
+2026-06-19 14:16:16,986 [INFO] services.user_service - 创建用户: testuser (ID:1)
+2026-06-19 14:16:16,988 [INFO] app - [04daed16] POST /api/users -> 201 (405.2ms)
+2026-06-19 14:16:16,993 [INFO] app - [d642b560] GET /api/users -> 200 (1.4ms)
+2026-06-19 14:16:16,997 [INFO] app - [906937fd] GET /health -> 200 (1.1ms)
+2026-06-19 14:16:17,389 [INFO] services.user_service - 创建用户: loginuser (ID:2)
+2026-06-19 14:16:17,391 [INFO] app - [1e913b9c] POST /api/users -> 201 (391.7ms)
+2026-06-19 14:16:17,797 [INFO] services.user_service - 用户登录成功: loginuser
+2026-06-19 14:16:17,800 [INFO] app - [7fb31aad] POST /api/auth/login -> 200 (405.3ms)
+2026-06-19 14:16:17,804 [INFO] app - [22251b28] POST /api/auth/login -> 401 (1.4ms)
+2026-06-19 14:16:41,742 [INFO] 5G-A-Industry - 日志系统初始化完成
+2026-06-19 14:16:41,912 [INFO] database - 数据库 '5g_a_industry' 已就绪
+2026-06-19 14:16:41,929 [INFO] database - 所有数据库表已创建/验证完成
+2026-06-19 14:16:41,929 [INFO] __main__ - 数据库初始化完成
+2026-06-19 14:16:41,960 [INFO] seed_data - 已创建 8 个默认产品
+2026-06-19 14:16:41,969 [INFO] seed_data - 已创建 5 条生产线
+2026-06-19 14:16:41,978 [INFO] seed_data - 已创建 8 个设备
+2026-06-19 14:16:41,986 [INFO] seed_data - 已创建 4 个网络切片
+2026-06-19 14:16:41,995 [INFO] seed_data - 已创建 3 个边缘节点
+2026-06-19 14:16:43,372 [INFO] seed_data - 已创建 30240 条感知指标数据
+2026-06-19 14:16:43,521 [INFO] seed_data - 已创建 2016 条仪表盘指标数据
+2026-06-19 14:16:43,523 [INFO] seed_data - 所有种子数据已插入完成
+2026-06-19 14:16:43,523 [INFO] __main__ - ==================================================
+2026-06-19 14:16:43,523 [INFO] __main__ - 5G-A 确定性网络智能调度平台 v3.0
+2026-06-19 14:16:43,523 [INFO] __main__ - 数据库: MySQL (pymysql)
+2026-06-19 14:16:43,524 [INFO] __main__ - AI引擎: DeepSeek
+2026-06-19 14:16:43,524 [INFO] __main__ - 启动成功，访问 http://127.0.0.1:5000
+2026-06-19 14:16:43,524 [INFO] __main__ - ==================================================
+2026-06-19 14:16:45,153 [INFO] werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.3.42:5000
+2026-06-19 14:16:45,153 [INFO] werkzeug - [33mPress CTRL+C to quit[0m
+2026-06-19 14:17:12,996 [INFO] 5G-A-Industry - 日志系统初始化完成
+2026-06-19 14:17:13,167 [INFO] database - 数据库 '5g_a_industry' 已就绪
+2026-06-19 14:17:13,184 [INFO] database - 所有数据库表已创建/验证完成
+2026-06-19 14:17:13,184 [INFO] __main__ - 数据库初始化完成
+2026-06-19 14:17:13,235 [INFO] seed_data - 所有种子数据已插入完成
+2026-06-19 14:17:13,235 [INFO] __main__ - ==================================================
+2026-06-19 14:17:13,235 [INFO] __main__ - 5G-A 确定性网络智能调度平台 v3.0
+2026-06-19 14:17:13,235 [INFO] __main__ - 数据库: MySQL (pymysql)
+2026-06-19 14:17:13,235 [INFO] __main__ - AI引擎: DeepSeek
+2026-06-19 14:17:13,235 [INFO] __main__ - 启动成功，访问 http://127.0.0.1:5000
+2026-06-19 14:17:13,235 [INFO] __main__ - ==================================================
+2026-06-19 14:17:14,560 [INFO] werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.3.42:5000
+2026-06-19 14:17:14,560 [INFO] werkzeug - [33mPress CTRL+C to quit[0m
+2026-06-19 14:19:14,722 [INFO] 5G-A-Industry - 日志系统初始化完成
+2026-06-19 14:19:14,900 [INFO] database - 数据库 '5g_a_industry' 已就绪
+2026-06-19 14:19:14,919 [INFO] database - 所有数据库表已创建/验证完成
+2026-06-19 14:19:14,919 [INFO] __main__ - 数据库初始化完成
+2026-06-19 14:19:14,975 [INFO] seed_data - 所有种子数据已插入完成
+2026-06-19 14:19:14,976 [INFO] __main__ - ==================================================
+2026-06-19 14:19:14,976 [INFO] __main__ - 5G-A 确定性网络智能调度平台 v3.0
+2026-06-19 14:19:14,976 [INFO] __main__ - 数据库: MySQL (pymysql)
+2026-06-19 14:19:14,976 [INFO] __main__ - AI引擎: DeepSeek
+2026-06-19 14:19:14,976 [INFO] __main__ - 启动成功，访问 http://127.0.0.1:5000
+2026-06-19 14:19:14,976 [INFO] __main__ - ==================================================
+2026-06-19 14:19:16,324 [INFO] werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.3.42:5000
+2026-06-19 14:19:16,325 [INFO] werkzeug - [33mPress CTRL+C to quit[0m
+2026-06-19 14:19:28,548 [INFO] __main__ - [3c0423b7] GET /health -> 200 (1.4ms)
+2026-06-19 14:19:28,548 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:19:28] "GET /health HTTP/1.1" 200 -
+2026-06-19 14:19:34,261 [INFO] __main__ - [622a9c12] GET /api/dashboard/metrics -> 200 (14.8ms)
+2026-06-19 14:19:34,262 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:19:34] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-19 14:19:40,384 [INFO] __main__ - [da9c5f67] GET /api/db/status -> 200 (23.5ms)
+2026-06-19 14:19:40,384 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:19:40] "GET /api/db/status HTTP/1.1" 200 -
+2026-06-19 14:20:30,641 [INFO] __main__ - [308ee61c] GET /api/products -> 200 (3.3ms)
+2026-06-19 14:20:30,641 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:20:30] "GET /api/products HTTP/1.1" 200 -
+2026-06-19 14:20:36,652 [INFO] __main__ - [e9c62473] GET /api/slices -> 200 (1.8ms)
+2026-06-19 14:20:36,653 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:20:36] "GET /api/slices HTTP/1.1" 200 -
+2026-06-19 14:20:42,874 [INFO] __main__ - [ad574ee5] GET /api/production/lines -> 200 (8.3ms)
+2026-06-19 14:20:42,875 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:20:42] "GET /api/production/lines HTTP/1.1" 200 -
+2026-06-19 14:20:59,526 [INFO] __main__ - [82db0fc7] GET / -> 200 (69.3ms)
+2026-06-19 14:20:59,526 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:20:59] "GET / HTTP/1.1" 200 -
+2026-06-19 14:21:14,255 [INFO] services.ai_agent - DeepSeek API调用成功, 耗时=8.12s, tokens=312
+2026-06-19 14:21:14,267 [INFO] __main__ - [23c545b2] POST /api/simulation/run -> 200 (8635.0ms)
+2026-06-19 14:21:14,268 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:21:14] "POST /api/simulation/run HTTP/1.1" 200 -
+2026-06-19 14:21:20,429 [INFO] __main__ - [4060cef7] POST /api/auth/login -> 401 (2.5ms)
+2026-06-19 14:21:20,430 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:21:20] "[31m[1mPOST /api/auth/login HTTP/1.1[0m" 401 -
+2026-06-19 14:21:26,536 [INFO] services.order_service - 创建订单: ORD-0634CF52 (ID:1)
+2026-06-19 14:21:26,542 [INFO] __main__ - [d5598eef] POST /api/orders -> 201 (18.7ms)
+2026-06-19 14:21:26,543 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:21:26] "[35m[1mPOST /api/orders HTTP/1.1[0m" 201 -
+2026-06-19 14:30:17,712 [INFO] __main__ - [1900fa5f] GET /api/users -> 200 (1.9ms)
+2026-06-19 14:30:17,713 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:30:17] "GET /api/users HTTP/1.1" 200 -
+2026-06-19 14:33:41,550 [INFO] 5G-A-Industry - 日志系统初始化完成
+2026-06-19 14:34:15,090 [INFO] 5G-A-Industry - 日志系统初始化完成
+2026-06-19 14:34:15,395 [INFO] services.device_service - 创建设备: 测试设备 (ID:1)
+2026-06-19 14:34:15,396 [INFO] app - [686cf9b4] POST /api/devices -> 201 (19.0ms)
+2026-06-19 14:34:15,400 [INFO] app - [d7ca662a] GET /api/devices -> 200 (1.9ms)
+2026-06-19 14:35:09,400 [INFO] 5G-A-Industry - 日志系统初始化完成
+2026-06-19 14:35:09,680 [INFO] services.device_service - 创建设备: 测试设备 (ID:1)
+2026-06-19 14:35:09,682 [INFO] app - [da554b37] POST /api/devices -> 201 (17.2ms)
+2026-06-19 14:35:09,686 [INFO] services.production_service - 创建生产线: 测试产线 (ID:1)
+2026-06-19 14:35:09,703 [INFO] app - [c22b4dab] POST /api/production/lines -> 201 (19.6ms)
+2026-06-19 14:35:10,126 [INFO] services.order_service - 创建订单: ORD-8F3B5E49 (ID:1)
+2026-06-19 14:35:10,129 [INFO] app - [ac7536bc] POST /api/orders -> 201 (16.5ms)
+2026-06-19 14:35:10,132 [INFO] services.product_service - 创建产品: 测试传感器 (ID:2)
+2026-06-19 14:35:10,133 [INFO] app - [d68b24c8] POST /api/products -> 201 (2.7ms)
+2026-06-19 14:35:10,522 [INFO] services.user_service - 创建用户: testuser (ID:2)
+2026-06-19 14:35:10,523 [INFO] app - [21a8d4a5] POST /api/users -> 201 (389.2ms)
+2026-06-19 14:35:10,525 [INFO] services.product_service - 创建产品: 产品A (ID:3)
+2026-06-19 14:35:10,525 [INFO] app - [fd91606d] POST /api/products -> 201 (1.5ms)
+2026-06-19 14:35:10,527 [INFO] app - [a4792bd0] POST /api/products -> 400 (0.7ms)
+2026-06-19 14:35:10,529 [INFO] app - [8a0b1abc] GET /api/devices -> 200 (1.0ms)
+2026-06-19 14:35:10,532 [INFO] app - [a27f7057] GET /api/production/lines -> 200 (1.5ms)
+2026-06-19 14:35:10,536 [INFO] app - [cbb845f4] GET /api/orders -> 200 (3.0ms)
+2026-06-19 14:35:10,538 [INFO] app - [37834055] GET /api/products -> 200 (1.0ms)
+2026-06-19 14:35:10,539 [INFO] app - [00cc9ccd] GET /api/users -> 200 (0.7ms)
+2026-06-19 14:35:10,962 [INFO] app - [7a35f885] GET /health -> 200 (0.7ms)
+2026-06-19 14:35:11,000 [INFO] app - [3309cddd] POST /api/auth/login -> 401 (0.9ms)
+2026-06-19 14:35:11,431 [INFO] services.user_service - 创建用户: loginuser (ID:3)
+2026-06-19 14:35:11,432 [INFO] app - [452d7b93] POST /api/users -> 201 (430.5ms)
+2026-06-19 14:35:11,826 [INFO] services.user_service - 用户登录成功: loginuser
+2026-06-19 14:35:11,827 [INFO] app - [767dc4d0] POST /api/auth/login -> 200 (393.8ms)
+2026-06-19 14:35:11,829 [INFO] app - [98bc9a87] GET /api/production/stats -> 200 (0.5ms)
+2026-06-19 14:35:43,202 [INFO] 5G-A-Industry - 日志系统初始化完成
+2026-06-19 14:35:43,490 [INFO] services.device_service - 创建设备: 测试设备 (ID:1)
+2026-06-19 14:35:43,492 [INFO] app - [16bebda1] POST /api/devices -> 201 (18.2ms)
+2026-06-19 14:35:43,497 [INFO] services.production_service - 创建生产线: 测试产线 (ID:1)
+2026-06-19 14:35:43,501 [INFO] app - [16545242] POST /api/production/lines -> 201 (7.8ms)
+2026-06-19 14:35:43,944 [INFO] services.order_service - 创建订单: ORD-2EE5CFFE (ID:1)
+2026-06-19 14:35:43,946 [INFO] app - [9ea327c2] POST /api/orders -> 201 (14.8ms)
+2026-06-19 14:35:43,949 [INFO] services.product_service - 创建产品: 测试传感器 (ID:2)
+2026-06-19 14:35:43,962 [INFO] app - [c37c062c] POST /api/products -> 201 (14.6ms)
+2026-06-19 14:35:44,359 [INFO] services.user_service - 创建用户: testuser (ID:2)
+2026-06-19 14:35:44,360 [INFO] app - [24705c56] POST /api/users -> 201 (396.9ms)
+2026-06-19 14:35:44,362 [INFO] services.product_service - 创建产品: 产品A (ID:3)
+2026-06-19 14:35:44,363 [INFO] app - [fc29e99c] POST /api/products -> 201 (1.7ms)
+2026-06-19 14:35:44,364 [INFO] app - [948784d4] POST /api/products -> 400 (0.6ms)
+2026-06-19 14:35:44,366 [INFO] app - [8698d7f1] GET /api/devices -> 200 (0.9ms)
+2026-06-19 14:35:44,368 [INFO] app - [5af4bc09] GET /api/production/lines -> 200 (1.4ms)
+2026-06-19 14:35:44,372 [INFO] app - [36500360] GET /api/orders -> 200 (2.8ms)
+2026-06-19 14:35:44,374 [INFO] app - [8ba9c0b4] GET /api/products -> 200 (0.8ms)
+2026-06-19 14:35:44,376 [INFO] app - [b930d959] GET /api/users -> 200 (0.9ms)
+2026-06-19 14:35:44,780 [INFO] app - [ea2c3294] GET /health -> 200 (0.7ms)
+2026-06-19 14:35:44,782 [INFO] app - [971fd6fd] POST /api/orders -> 400 (0.5ms)
+2026-06-19 14:35:44,784 [INFO] app - [453c37d3] POST /api/auth/login -> 401 (0.5ms)
+2026-06-19 14:35:45,177 [INFO] services.user_service - 创建用户: loginuser (ID:3)
+2026-06-19 14:35:45,178 [INFO] app - [f5f09475] POST /api/users -> 201 (393.7ms)
+2026-06-19 14:35:45,603 [INFO] services.user_service - 用户登录成功: loginuser
+2026-06-19 14:35:45,604 [INFO] app - [cccef899] POST /api/auth/login -> 200 (424.7ms)
+2026-06-19 14:35:45,606 [INFO] app - [2c3893a9] GET /api/production/stats -> 200 (0.5ms)
+2026-06-19 14:35:57,612 [INFO] 5G-A-Industry - 日志系统初始化完成
+2026-06-19 14:35:57,927 [INFO] database - 数据库 '5g_a_industry' 已就绪
+2026-06-19 14:35:58,352 [INFO] database - 所有数据库表已创建/验证完成
+2026-06-19 14:35:58,352 [INFO] __main__ - 数据库初始化完成
+2026-06-19 14:35:59,933 [INFO] seed_data - 已创建 4 个默认用户
+2026-06-19 14:35:59,943 [INFO] seed_data - 已创建 8 个默认产品
+2026-06-19 14:35:59,951 [INFO] seed_data - 已创建 5 条生产线
+2026-06-19 14:35:59,964 [INFO] seed_data - 已创建 8 个设备
+2026-06-19 14:35:59,970 [INFO] seed_data - 已创建 4 个网络切片
+2026-06-19 14:35:59,976 [INFO] seed_data - 已创建 3 个边缘节点
+2026-06-19 14:36:01,338 [INFO] seed_data - 已创建 30240 条感知指标数据
+2026-06-19 14:36:01,498 [INFO] seed_data - 已创建 2016 条仪表盘指标数据
+2026-06-19 14:36:01,502 [INFO] seed_data - 所有种子数据已插入完成
+2026-06-19 14:36:01,502 [INFO] __main__ - ==================================================
+2026-06-19 14:36:01,503 [INFO] __main__ - 5G-A 确定性网络智能调度平台 v3.0
+2026-06-19 14:36:01,503 [INFO] __main__ - 数据库: MySQL (pymysql)
+2026-06-19 14:36:01,503 [INFO] __main__ - AI引擎: DeepSeek
+2026-06-19 14:36:01,503 [INFO] __main__ - 启动成功，访问 http://127.0.0.1:5000
+2026-06-19 14:36:01,503 [INFO] __main__ - ==================================================
+2026-06-19 14:36:03,385 [INFO] werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.3.42:5000
+2026-06-19 14:36:03,385 [INFO] werkzeug - [33mPress CTRL+C to quit[0m
+2026-06-19 14:36:18,916 [INFO] 5G-A-Industry - 日志系统初始化完成
+2026-06-19 14:36:19,207 [INFO] database - 数据库 '5g_a_industry' 已就绪
+2026-06-19 14:36:19,225 [INFO] database - 所有数据库表已创建/验证完成
+2026-06-19 14:36:19,226 [INFO] __main__ - 数据库初始化完成
+2026-06-19 14:36:19,275 [INFO] seed_data - 所有种子数据已插入完成
+2026-06-19 14:36:19,275 [INFO] __main__ - ==================================================
+2026-06-19 14:36:19,276 [INFO] __main__ - 5G-A 确定性网络智能调度平台 v3.0
+2026-06-19 14:36:19,276 [INFO] __main__ - 数据库: MySQL (pymysql)
+2026-06-19 14:36:19,276 [INFO] __main__ - AI引擎: DeepSeek
+2026-06-19 14:36:19,276 [INFO] __main__ - 启动成功，访问 http://127.0.0.1:5000
+2026-06-19 14:36:19,276 [INFO] __main__ - ==================================================
+2026-06-19 14:36:20,557 [INFO] werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.3.42:5000
+2026-06-19 14:36:20,558 [INFO] werkzeug - [33mPress CTRL+C to quit[0m
+2026-06-19 14:36:31,184 [INFO] __main__ - [d90e4194] GET /api/db/status -> 200 (15.2ms)
+2026-06-19 14:36:31,185 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:36:31] "GET /api/db/status HTTP/1.1" 200 -
+2026-06-19 14:36:37,774 [INFO] services.user_service - 用户登录成功: admin
+2026-06-19 14:36:37,788 [INFO] __main__ - [e24c2828] POST /api/auth/login -> 200 (394.7ms)
+2026-06-19 14:36:37,788 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:36:37] "POST /api/auth/login HTTP/1.1" 200 -
+2026-06-19 14:37:41,848 [INFO] 5G-A-Industry - 日志系统初始化完成
+2026-06-19 14:37:42,049 [INFO] werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-06-19 14:37:42,049 [INFO] werkzeug - [33mPress CTRL+C to quit[0m
+2026-06-19 14:37:45,616 [INFO] app - [8bfacf48] GET / -> 304 (103.5ms)
+2026-06-19 14:37:45,616 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:37:45] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-19 14:37:45,751 [ERROR] app - 未捕获异常: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 414, in get_dashboard_metrics
+    metrics = network_service.get_dashboard_metrics()
+  File "D:\python_chuangxin\5G-A\services\network_service.py", line 143, in get_dashboard_metrics
+    slices = NetworkSlice.query.filter_by(status='active').all()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2237, in _execute_internal
+    bind = self.get_bind(**bind_arguments)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\session.py", line 53, in get_bind
+    engines = self._db.engines
+              ^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\extension.py", line 690, in engines
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:37:45,765 [INFO] app - [4e046f52] GET /api/dashboard/metrics -> 500 (14.1ms)
+2026-06-19 14:37:45,766 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:37:45] "[35m[1mGET /api/dashboard/metrics HTTP/1.1[0m" 500 -
+2026-06-19 14:37:45,838 [ERROR] app - 未捕获异常: 405 Method Not Allowed: The method is not allowed for the requested URL.
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+  File "D:\ANAC\envs\5ga\Lib\site-packages\werkzeug\routing\map.py", line 624, in match
+    raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not allowed for the requested URL.
+2026-06-19 14:37:45,853 [INFO] app - [5f55d67b] GET /favicon.ico -> 500 (14.9ms)
+2026-06-19 14:37:45,854 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:37:45] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2026-06-19 14:37:47,848 [ERROR] app - 未捕获异常: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 431, in get_slices
+    slices = network_service.get_all_slices(slice_type, status, search)
+  File "D:\python_chuangxin\5G-A\services\network_service.py", line 24, in get_all_slices
+    slices = query.all()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2237, in _execute_internal
+    bind = self.get_bind(**bind_arguments)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\session.py", line 53, in get_bind
+    engines = self._db.engines
+              ^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\extension.py", line 690, in engines
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:37:47,851 [INFO] app - [3f6a8a33] GET /api/slices -> 500 (3.4ms)
+2026-06-19 14:37:47,851 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:37:47] "[35m[1mGET /api/slices HTTP/1.1[0m" 500 -
+2026-06-19 14:37:49,247 [ERROR] app - 未捕获异常: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 431, in get_slices
+    slices = network_service.get_all_slices(slice_type, status, search)
+  File "D:\python_chuangxin\5G-A\services\network_service.py", line 24, in get_all_slices
+    slices = query.all()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2237, in _execute_internal
+    bind = self.get_bind(**bind_arguments)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\session.py", line 53, in get_bind
+    engines = self._db.engines
+              ^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\extension.py", line 690, in engines
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:37:49,250 [INFO] app - [494d2c64] GET /api/slices -> 500 (3.3ms)
+2026-06-19 14:37:49,251 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:37:49] "[35m[1mGET /api/slices HTTP/1.1[0m" 500 -
+2026-06-19 14:37:49,661 [ERROR] app - 未捕获异常: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 431, in get_slices
+    slices = network_service.get_all_slices(slice_type, status, search)
+  File "D:\python_chuangxin\5G-A\services\network_service.py", line 24, in get_all_slices
+    slices = query.all()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2237, in _execute_internal
+    bind = self.get_bind(**bind_arguments)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\session.py", line 53, in get_bind
+    engines = self._db.engines
+              ^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\extension.py", line 690, in engines
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:37:49,664 [INFO] app - [1fdc3a2e] GET /api/slices -> 500 (3.3ms)
+2026-06-19 14:37:49,664 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:37:49] "[35m[1mGET /api/slices HTTP/1.1[0m" 500 -
+2026-06-19 14:37:49,810 [ERROR] app - 未捕获异常: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 431, in get_slices
+    slices = network_service.get_all_slices(slice_type, status, search)
+  File "D:\python_chuangxin\5G-A\services\network_service.py", line 24, in get_all_slices
+    slices = query.all()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2237, in _execute_internal
+    bind = self.get_bind(**bind_arguments)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\session.py", line 53, in get_bind
+    engines = self._db.engines
+              ^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\extension.py", line 690, in engines
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:37:49,814 [INFO] app - [e213f4ee] GET /api/slices -> 500 (3.2ms)
+2026-06-19 14:37:49,814 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:37:49] "[35m[1mGET /api/slices HTTP/1.1[0m" 500 -
+2026-06-19 14:37:49,968 [ERROR] app - 未捕获异常: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 431, in get_slices
+    slices = network_service.get_all_slices(slice_type, status, search)
+  File "D:\python_chuangxin\5G-A\services\network_service.py", line 24, in get_all_slices
+    slices = query.all()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2237, in _execute_internal
+    bind = self.get_bind(**bind_arguments)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\session.py", line 53, in get_bind
+    engines = self._db.engines
+              ^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\extension.py", line 690, in engines
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:37:49,972 [INFO] app - [afc29129] GET /api/slices -> 500 (4.1ms)
+2026-06-19 14:37:49,972 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:37:49] "[35m[1mGET /api/slices HTTP/1.1[0m" 500 -
+2026-06-19 14:37:50,119 [ERROR] app - 未捕获异常: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 431, in get_slices
+    slices = network_service.get_all_slices(slice_type, status, search)
+  File "D:\python_chuangxin\5G-A\services\network_service.py", line 24, in get_all_slices
+    slices = query.all()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2237, in _execute_internal
+    bind = self.get_bind(**bind_arguments)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\session.py", line 53, in get_bind
+    engines = self._db.engines
+              ^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\extension.py", line 690, in engines
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:37:50,122 [INFO] app - [2b25200e] GET /api/slices -> 500 (3.3ms)
+2026-06-19 14:37:50,122 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:37:50] "[35m[1mGET /api/slices HTTP/1.1[0m" 500 -
+2026-06-19 14:37:50,252 [ERROR] app - 未捕获异常: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 431, in get_slices
+    slices = network_service.get_all_slices(slice_type, status, search)
+  File "D:\python_chuangxin\5G-A\services\network_service.py", line 24, in get_all_slices
+    slices = query.all()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2237, in _execute_internal
+    bind = self.get_bind(**bind_arguments)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\session.py", line 53, in get_bind
+    engines = self._db.engines
+              ^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\extension.py", line 690, in engines
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:37:50,255 [INFO] app - [00a234f6] GET /api/slices -> 500 (3.1ms)
+2026-06-19 14:37:50,256 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:37:50] "[35m[1mGET /api/slices HTTP/1.1[0m" 500 -
+2026-06-19 14:37:50,402 [ERROR] app - 未捕获异常: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 431, in get_slices
+    slices = network_service.get_all_slices(slice_type, status, search)
+  File "D:\python_chuangxin\5G-A\services\network_service.py", line 24, in get_all_slices
+    slices = query.all()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2237, in _execute_internal
+    bind = self.get_bind(**bind_arguments)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\session.py", line 53, in get_bind
+    engines = self._db.engines
+              ^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\extension.py", line 690, in engines
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:37:50,405 [INFO] app - [2634d68e] GET /api/slices -> 500 (3.0ms)
+2026-06-19 14:37:50,406 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:37:50] "[35m[1mGET /api/slices HTTP/1.1[0m" 500 -
+2026-06-19 14:37:50,550 [ERROR] app - 未捕获异常: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 431, in get_slices
+    slices = network_service.get_all_slices(slice_type, status, search)
+  File "D:\python_chuangxin\5G-A\services\network_service.py", line 24, in get_all_slices
+    slices = query.all()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2237, in _execute_internal
+    bind = self.get_bind(**bind_arguments)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\session.py", line 53, in get_bind
+    engines = self._db.engines
+              ^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\extension.py", line 690, in engines
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:37:50,554 [INFO] app - [646d744e] GET /api/slices -> 500 (3.2ms)
+2026-06-19 14:37:50,554 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:37:50] "[35m[1mGET /api/slices HTTP/1.1[0m" 500 -
+2026-06-19 14:40:27,550 [INFO] 5G-A-Industry - 日志系统初始化完成
+2026-06-19 14:40:27,704 [INFO] werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-06-19 14:40:27,704 [INFO] werkzeug - [33mPress CTRL+C to quit[0m
+2026-06-19 14:40:30,150 [INFO] app - [cea6c4a7] GET / -> 304 (90.4ms)
+2026-06-19 14:40:30,151 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:30] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-19 14:40:30,275 [ERROR] app - 未捕获异常: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 414, in get_dashboard_metrics
+    metrics = network_service.get_dashboard_metrics()
+  File "D:\python_chuangxin\5G-A\services\network_service.py", line 143, in get_dashboard_metrics
+    slices = NetworkSlice.query.filter_by(status='active').all()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2237, in _execute_internal
+    bind = self.get_bind(**bind_arguments)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\session.py", line 53, in get_bind
+    engines = self._db.engines
+              ^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\extension.py", line 690, in engines
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:40:30,288 [INFO] app - [1be2cd99] GET /api/dashboard/metrics -> 500 (12.7ms)
+2026-06-19 14:40:30,288 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:30] "[35m[1mGET /api/dashboard/metrics HTTP/1.1[0m" 500 -
+2026-06-19 14:40:30,349 [ERROR] app - 未捕获异常: 405 Method Not Allowed: The method is not allowed for the requested URL.
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+  File "D:\ANAC\envs\5ga\Lib\site-packages\werkzeug\routing\map.py", line 624, in match
+    raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not allowed for the requested URL.
+2026-06-19 14:40:30,352 [INFO] app - [9696ee1c] GET /favicon.ico -> 500 (2.8ms)
+2026-06-19 14:40:30,352 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:30] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2026-06-19 14:40:32,033 [ERROR] app - 未捕获异常: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 431, in get_slices
+    slices = network_service.get_all_slices(slice_type, status, search)
+  File "D:\python_chuangxin\5G-A\services\network_service.py", line 24, in get_all_slices
+    slices = query.all()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2237, in _execute_internal
+    bind = self.get_bind(**bind_arguments)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\session.py", line 53, in get_bind
+    engines = self._db.engines
+              ^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\extension.py", line 690, in engines
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:40:32,036 [INFO] app - [3e057695] GET /api/slices -> 500 (3.6ms)
+2026-06-19 14:40:32,037 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:32] "[35m[1mGET /api/slices HTTP/1.1[0m" 500 -
+2026-06-19 14:40:33,313 [INFO] app - [fa5aea0f] POST /api/sensing/filter -> 200 (0.3ms)
+2026-06-19 14:40:33,313 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:33] "POST /api/sensing/filter HTTP/1.1" 200 -
+2026-06-19 14:40:33,330 [INFO] app - [0ff19690] GET /api/sensing/data -> 200 (0.3ms)
+2026-06-19 14:40:33,331 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:33] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:33,338 [INFO] app - [15c33d2a] GET /api/sensing/tracking -> 200 (0.2ms)
+2026-06-19 14:40:33,338 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:33] "GET /api/sensing/tracking HTTP/1.1" 200 -
+2026-06-19 14:40:36,651 [INFO] app - [abc94c7d] POST /api/sensing/filter -> 200 (0.3ms)
+2026-06-19 14:40:36,652 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:36] "POST /api/sensing/filter HTTP/1.1" 200 -
+2026-06-19 14:40:40,298 [INFO] app - [ed1ff8ed] GET /api/sensing/data -> 200 (0.3ms)
+2026-06-19 14:40:40,299 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:40] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:41,074 [INFO] app - [3d5a319c] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:41,074 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:41] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:41,694 [INFO] app - [0346b3d6] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:41,695 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:41] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:42,115 [INFO] app - [dca0a9c9] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:42,116 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:42] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:42,286 [INFO] app - [fa659142] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:42,286 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:42] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:42,450 [INFO] app - [5180bb15] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:42,450 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:42] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:42,614 [INFO] app - [9dc7b408] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:42,614 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:42] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:42,785 [INFO] app - [35d73a36] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:42,785 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:42] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:42,948 [INFO] app - [aa81bb08] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:42,948 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:42] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:43,119 [INFO] app - [fa49364e] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:43,120 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:43] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:43,289 [INFO] app - [af93543c] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:43,290 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:43] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:43,439 [INFO] app - [1595bf8e] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:43,439 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:43] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:43,601 [INFO] app - [481de0c6] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:43,602 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:43] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:43,766 [INFO] app - [ae8ee17d] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:43,766 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:43] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:43,922 [INFO] app - [f0b5c61b] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:43,922 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:43] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:44,072 [INFO] app - [e7c46468] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:44,073 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:44] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:44,230 [INFO] app - [707fea42] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:44,230 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:44] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:44,395 [INFO] app - [231b0571] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:44,396 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:44] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:44,560 [INFO] app - [6ac45aec] GET /api/sensing/data -> 200 (0.3ms)
+2026-06-19 14:40:44,560 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:44] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:44,745 [INFO] app - [698b364b] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:44,746 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:44] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:44,917 [INFO] app - [09025abe] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:44,918 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:44] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:45,097 [INFO] app - [5677a421] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:45,097 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:45] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:45,261 [INFO] app - [078afb06] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:45,262 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:45] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:45,427 [INFO] app - [ba9f44f9] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:45,427 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:45] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:45,591 [INFO] app - [02a0900f] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:45,591 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:45] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:45,811 [INFO] app - [d58de2bc] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 14:40:45,811 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:45] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 14:40:51,458 [ERROR] app - 未捕获异常: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 589, in get_edge_nodes
+    nodes = network_service.get_all_edge_nodes()
+  File "D:\python_chuangxin\5G-A\services\network_service.py", line 93, in get_all_edge_nodes
+    nodes = EdgeNode.query.all()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2237, in _execute_internal
+    bind = self.get_bind(**bind_arguments)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\session.py", line 53, in get_bind
+    engines = self._db.engines
+              ^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\extension.py", line 690, in engines
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:40:51,461 [INFO] app - [d4e79142] GET /api/edge/nodes -> 500 (3.4ms)
+2026-06-19 14:40:51,462 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:51] "[35m[1mGET /api/edge/nodes HTTP/1.1[0m" 500 -
+2026-06-19 14:40:53,194 [ERROR] app - 未捕获异常: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 537, in get_simulation_history
+    records = network_service.get_simulation_history(limit)
+  File "D:\python_chuangxin\5G-A\services\network_service.py", line 118, in get_simulation_history
+    records = SimulationRecord.query.order_by(SimulationRecord.created_at.desc()).limit(limit).all()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2237, in _execute_internal
+    bind = self.get_bind(**bind_arguments)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\session.py", line 53, in get_bind
+    engines = self._db.engines
+              ^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\extension.py", line 690, in engines
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:40:53,198 [INFO] app - [4a541a6d] GET /api/simulation/history -> 500 (3.3ms)
+2026-06-19 14:40:53,198 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:53] "[35m[1mGET /api/simulation/history HTTP/1.1[0m" 500 -
+2026-06-19 14:40:56,096 [ERROR] services.ai_agent - DeepSeek API调用失败: No module named 'requests'
+2026-06-19 14:40:56,097 [WARNING] services.ai_agent - 记录AI分析日志失败: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:40:56,097 [ERROR] app - 未捕获异常: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 521, in run_simulation
+    network_service.save_simulation_record(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        scenario=scenario,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        energy_saving=float(report.get('metrics', {}).get('energy_saving', '0').replace('%', ''))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\python_chuangxin\5G-A\services\network_service.py", line 138, in save_simulation_record
+    db.session.commit()
+    ~~~~~~~~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\scoping.py", line 597, in commit
+    return self._proxied.commit()
+           ~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\persistence.py", line 68, in save_obj
+    ) in _organize_states_for_save(base_mapper, states, uowtransaction):
+         ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\persistence.py", line 223, in _organize_states_for_save
+    for state, dict_, mapper, connection in _connections_for_states(
+                                            ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper, uowtransaction, states
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1759, in _connections_for_states
+    connection = uowtransaction.transaction.connection(base_mapper)
+  File "<string>", line 2, in connection
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 1036, in connection
+    bind = self.session.get_bind(bindkey, **kwargs)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\session.py", line 53, in get_bind
+    engines = self._db.engines
+              ^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\extension.py", line 690, in engines
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:40:56,136 [INFO] app - [3936f195] POST /api/simulation/run -> 500 (40.8ms)
+2026-06-19 14:40:56,136 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:56] "[35m[1mPOST /api/simulation/run HTTP/1.1[0m" 500 -
+2026-06-19 14:40:57,215 [ERROR] services.ai_agent - DeepSeek API调用失败: No module named 'requests'
+2026-06-19 14:40:57,216 [WARNING] services.ai_agent - 记录AI分析日志失败: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:40:57,217 [ERROR] app - 未捕获异常: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 521, in run_simulation
+    network_service.save_simulation_record(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        scenario=scenario,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        energy_saving=float(report.get('metrics', {}).get('energy_saving', '0').replace('%', ''))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\python_chuangxin\5G-A\services\network_service.py", line 138, in save_simulation_record
+    db.session.commit()
+    ~~~~~~~~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\scoping.py", line 597, in commit
+    return self._proxied.commit()
+           ~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\persistence.py", line 68, in save_obj
+    ) in _organize_states_for_save(base_mapper, states, uowtransaction):
+         ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\persistence.py", line 223, in _organize_states_for_save
+    for state, dict_, mapper, connection in _connections_for_states(
+                                            ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper, uowtransaction, states
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1759, in _connections_for_states
+    connection = uowtransaction.transaction.connection(base_mapper)
+  File "<string>", line 2, in connection
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 1036, in connection
+    bind = self.session.get_bind(bindkey, **kwargs)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\session.py", line 53, in get_bind
+    engines = self._db.engines
+              ^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\extension.py", line 690, in engines
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:40:57,238 [INFO] app - [3aa5f019] POST /api/simulation/run -> 500 (25.2ms)
+2026-06-19 14:40:57,239 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:57] "[35m[1mPOST /api/simulation/run HTTP/1.1[0m" 500 -
+2026-06-19 14:40:58,596 [INFO] app - [65ff3c1d] POST /api/prediction/performance -> 200 (0.7ms)
+2026-06-19 14:40:58,597 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:40:58] "POST /api/prediction/performance HTTP/1.1" 200 -
+2026-06-19 14:41:00,105 [INFO] app - [dbda2c46] GET /api/ai/status -> 200 (0.1ms)
+2026-06-19 14:41:00,106 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:41:00] "GET /api/ai/status HTTP/1.1" 200 -
+2026-06-19 14:41:02,198 [ERROR] app - 未捕获异常: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\python_chuangxin\5G-A\app.py", line 640, in ai_analyze
+    net_data = network_service.get_network_status()
+  File "D:\python_chuangxin\5G-A\services\network_service.py", line 178, in get_network_status
+    slices = NetworkSlice.query.filter_by(status='active').all()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\sqlalchemy\orm\session.py", line 2237, in _execute_internal
+    bind = self.get_bind(**bind_arguments)
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\session.py", line 53, in get_bind
+    engines = self._db.engines
+              ^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask_sqlalchemy\extension.py", line 690, in engines
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+2026-06-19 14:41:02,201 [INFO] app - [4c847c2f] POST /api/ai/analyze -> 500 (3.4ms)
+2026-06-19 14:41:02,201 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:41:02] "[35m[1mPOST /api/ai/analyze HTTP/1.1[0m" 500 -
+2026-06-19 14:53:20,847 [INFO] 5G-A-Industry - 日志系统初始化完成
+2026-06-19 14:54:51,746 [INFO] 5G-A-Industry - 日志系统初始化完成
+2026-06-19 14:54:51,973 [INFO] services.device_service - 创建设备: 测试设备 (ID:1)
+2026-06-19 14:54:51,975 [INFO] app - [2a88d912] POST /api/devices -> 201 (20.3ms)
+2026-06-19 14:54:51,979 [INFO] services.production_service - 创建生产线: 测试产线 (ID:1)
+2026-06-19 14:54:51,983 [INFO] app - [c8ec6814] POST /api/production/lines -> 201 (7.3ms)
+2026-06-19 14:54:52,393 [INFO] services.order_service - 创建订单: ORD-C5841E0A (ID:1)
+2026-06-19 14:54:52,395 [INFO] app - [3c432b06] POST /api/orders -> 201 (9.9ms)
+2026-06-19 14:54:52,398 [INFO] services.product_service - 创建产品: 测试传感器 (ID:2)
+2026-06-19 14:54:52,399 [INFO] app - [5ab8c759] POST /api/products -> 201 (2.3ms)
+2026-06-19 14:54:52,819 [INFO] services.user_service - 创建用户: testuser (ID:2)
+2026-06-19 14:54:52,820 [INFO] app - [378db944] POST /api/users -> 201 (420.5ms)
+2026-06-19 14:54:52,822 [INFO] services.product_service - 创建产品: 产品A (ID:3)
+2026-06-19 14:54:52,834 [INFO] app - [d05098be] POST /api/products -> 201 (13.2ms)
+2026-06-19 14:54:52,836 [INFO] app - [aae50ac7] POST /api/products -> 400 (0.6ms)
+2026-06-19 14:54:52,838 [INFO] app - [441d0219] GET /api/devices -> 200 (1.0ms)
+2026-06-19 14:54:52,841 [INFO] app - [59196ae5] GET /api/production/lines -> 200 (1.5ms)
+2026-06-19 14:54:52,844 [INFO] app - [5d7a2c4b] GET /api/orders -> 200 (2.8ms)
+2026-06-19 14:54:52,846 [INFO] app - [c0668bc0] GET /api/products -> 200 (0.8ms)
+2026-06-19 14:54:52,848 [INFO] app - [09f19035] GET /api/users -> 200 (1.0ms)
+2026-06-19 14:54:53,246 [INFO] app - [70eff6b2] GET /health -> 200 (0.7ms)
+2026-06-19 14:54:53,248 [INFO] app - [e71972dc] POST /api/orders -> 400 (0.5ms)
+2026-06-19 14:54:53,250 [INFO] app - [92595077] POST /api/auth/login -> 401 (0.6ms)
+2026-06-19 14:54:53,638 [INFO] services.user_service - 创建用户: loginuser (ID:3)
+2026-06-19 14:54:53,638 [INFO] app - [d43f077e] POST /api/users -> 201 (387.4ms)
+2026-06-19 14:54:54,019 [INFO] services.user_service - 用户登录成功: loginuser
+2026-06-19 14:54:54,020 [INFO] app - [6856a6e5] POST /api/auth/login -> 200 (380.4ms)
+2026-06-19 14:54:54,022 [INFO] app - [a8089ad4] GET /api/production/stats -> 200 (0.7ms)
+2026-06-19 14:55:34,968 [INFO] 5G-A-Industry - 日志系统初始化完成
+2026-06-19 14:55:35,139 [INFO] database - 数据库 '5g_a_industry' 已就绪
+2026-06-19 14:55:35,560 [INFO] database - 所有数据库表已创建/验证完成
+2026-06-19 14:55:35,561 [INFO] __main__ - 数据库初始化完成
+2026-06-19 14:55:37,125 [INFO] seed_data - 已创建 4 个默认用户
+2026-06-19 14:55:37,135 [INFO] seed_data - 已创建 8 个默认产品
+2026-06-19 14:55:37,144 [INFO] seed_data - 已创建 5 条生产线
+2026-06-19 14:55:37,153 [INFO] seed_data - 已创建 8 个设备
+2026-06-19 14:55:37,163 [INFO] seed_data - 已创建 4 个网络切片
+2026-06-19 14:55:37,169 [INFO] seed_data - 已创建 3 个边缘节点
+2026-06-19 14:55:38,421 [INFO] seed_data - 已创建 30240 条感知指标数据
+2026-06-19 14:55:38,567 [INFO] seed_data - 已创建 2016 条仪表盘指标数据
+2026-06-19 14:55:38,569 [INFO] seed_data - 所有种子数据已插入完成
+2026-06-19 14:55:38,570 [INFO] __main__ - ==================================================
+2026-06-19 14:55:38,570 [INFO] __main__ - 5G-A 确定性网络智能调度平台 v3.0
+2026-06-19 14:55:38,570 [INFO] __main__ - 数据库: MySQL (pymysql)
+2026-06-19 14:55:38,570 [INFO] __main__ - AI引擎: DeepSeek
+2026-06-19 14:55:38,570 [INFO] __main__ - 启动成功，访问 http://127.0.0.1:5000
+2026-06-19 14:55:38,570 [INFO] __main__ - ==================================================
+2026-06-19 14:55:40,179 [INFO] werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.3.42:5000
+2026-06-19 14:55:40,179 [INFO] werkzeug - [33mPress CTRL+C to quit[0m
+2026-06-19 14:55:43,225 [INFO] __main__ - [a12c468b] GET / -> 200 (56.0ms)
+2026-06-19 14:55:43,226 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:55:43] "GET / HTTP/1.1" 200 -
+2026-06-19 14:55:43,428 [INFO] __main__ - [7ad447e2] GET /api/dashboard/metrics -> 200 (11.5ms)
+2026-06-19 14:55:43,429 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:55:43] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-19 14:55:43,600 [ERROR] __main__ - 未捕获异常: 405 Method Not Allowed: The method is not allowed for the requested URL.
+Traceback (most recent call last):
+  File "D:\ANAC\Lib\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\Lib\site-packages\flask\app.py", line 1458, in dispatch_request
+    self.raise_routing_exception(req)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ANAC\Lib\site-packages\flask\app.py", line 1440, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ANAC\Lib\site-packages\flask\ctx.py", line 353, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+  File "D:\ANAC\Lib\site-packages\werkzeug\routing\map.py", line 624, in match
+    raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not allowed for the requested URL.
+2026-06-19 14:55:43,606 [INFO] __main__ - [059d2415] GET /@vite/client -> 500 (3.6ms)
+2026-06-19 14:55:43,607 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:55:43] "[35m[1mGET /@vite/client HTTP/1.1[0m" 500 -
+2026-06-19 14:55:48,349 [INFO] __main__ - [421c2d8a] GET /health -> 200 (1.0ms)
+2026-06-19 14:55:48,350 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:55:48] "GET /health HTTP/1.1" 200 -
+2026-06-19 14:55:54,320 [INFO] __main__ - [2f66604c] GET /api/db/status -> 200 (21.3ms)
+2026-06-19 14:55:54,321 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:55:54] "GET /api/db/status HTTP/1.1" 200 -
+2026-06-19 14:56:10,087 [INFO] __main__ - [9429f40c] GET /api/dashboard/metrics -> 200 (22.4ms)
+2026-06-19 14:56:10,087 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:56:10] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-19 14:56:21,204 [ERROR] services.ai_agent - DeepSeek API调用失败: ('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None))
+2026-06-19 14:56:21,216 [INFO] __main__ - [f272c205] POST /api/simulation/run -> 200 (5385.3ms)
+2026-06-19 14:56:21,217 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:56:21] "POST /api/simulation/run HTTP/1.1" 200 -
+2026-06-19 14:56:27,392 [ERROR] services.ai_agent - DeepSeek API调用失败: ('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None))
+2026-06-19 14:56:27,412 [INFO] __main__ - [abed679d] POST /api/ai/analyze -> 200 (5021.6ms)
+2026-06-19 14:56:27,412 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:56:27] "POST /api/ai/analyze HTTP/1.1" 200 -
+2026-06-19 14:56:56,872 [INFO] __main__ - [6a1cc972] GET / -> 200 (0.9ms)
+2026-06-19 14:56:56,873 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:56:56] "GET / HTTP/1.1" 200 -
+2026-06-19 14:57:03,065 [INFO] services.user_service - 用户登录成功: admin
+2026-06-19 14:57:03,081 [INFO] __main__ - [5d2f3f24] POST /api/auth/login -> 200 (388.8ms)
+2026-06-19 14:57:03,081 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:57:03] "POST /api/auth/login HTTP/1.1" 200 -
+2026-06-19 14:57:08,797 [INFO] __main__ - [a78b6860] GET /api/slices -> 200 (2.0ms)
+2026-06-19 14:57:08,798 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:57:08] "GET /api/slices HTTP/1.1" 200 -
+2026-06-19 14:57:08,826 [INFO] __main__ - [ad74f23a] GET /api/edge/nodes -> 200 (8.8ms)
+2026-06-19 14:57:08,827 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:57:08] "GET /api/edge/nodes HTTP/1.1" 200 -
+2026-06-19 14:57:08,840 [INFO] __main__ - [ed303a24] GET /api/simulation/history -> 200 (2.2ms)
+2026-06-19 14:57:08,840 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:57:08] "GET /api/simulation/history HTTP/1.1" 200 -
+2026-06-19 14:57:08,848 [INFO] __main__ - [e64e6698] GET /api/ai/logs -> 200 (2.0ms)
+2026-06-19 14:57:08,848 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:57:08] "GET /api/ai/logs HTTP/1.1" 200 -
+2026-06-19 14:58:00,262 [INFO] 5G-A-Industry - 日志系统初始化完成
+2026-06-19 14:58:00,485 [INFO] database - 数据库 '5g_a_industry' 已就绪
+2026-06-19 14:58:00,527 [INFO] database - 所有数据库表已创建/验证完成
+2026-06-19 14:58:00,527 [INFO] __main__ - 数据库初始化完成
+2026-06-19 14:58:00,579 [INFO] seed_data - 所有种子数据已插入完成
+2026-06-19 14:58:00,579 [INFO] __main__ - ==================================================
+2026-06-19 14:58:00,579 [INFO] __main__ - 5G-A 确定性网络智能调度平台 v3.0
+2026-06-19 14:58:00,579 [INFO] __main__ - 数据库: MySQL (pymysql)
+2026-06-19 14:58:00,579 [INFO] __main__ - AI引擎: DeepSeek
+2026-06-19 14:58:00,579 [INFO] __main__ - 启动成功，访问 http://127.0.0.1:5000
+2026-06-19 14:58:00,580 [INFO] __main__ - ==================================================
+2026-06-19 14:58:01,883 [INFO] werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.3.42:5000
+2026-06-19 14:58:01,883 [INFO] werkzeug - [33mPress CTRL+C to quit[0m
+2026-06-19 14:58:33,807 [INFO] __main__ - [2efbe538] GET /health -> 200 (1.3ms)
+2026-06-19 14:58:33,808 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:58:33] "GET /health HTTP/1.1" 200 -
+2026-06-19 14:58:55,194 [INFO] __main__ - [b4cc6c0c] GET /api/db/status -> 200 (14.8ms)
+2026-06-19 14:58:55,195 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:58:55] "GET /api/db/status HTTP/1.1" 200 -
+2026-06-19 14:58:55,222 [INFO] __main__ - [b18a2b54] GET /api/dashboard/metrics -> 200 (8.6ms)
+2026-06-19 14:58:55,223 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:58:55] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-19 14:58:55,230 [INFO] __main__ - [6d32be2a] GET /api/slices -> 200 (1.4ms)
+2026-06-19 14:58:55,230 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:58:55] "GET /api/slices HTTP/1.1" 200 -
+2026-06-19 14:58:55,241 [INFO] __main__ - [b1d5e6a1] GET /api/edge/nodes -> 200 (5.7ms)
+2026-06-19 14:58:55,242 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:58:55] "GET /api/edge/nodes HTTP/1.1" 200 -
+2026-06-19 14:58:55,249 [INFO] __main__ - [c3974b9a] GET /api/simulation/history -> 200 (1.6ms)
+2026-06-19 14:58:55,249 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:58:55] "GET /api/simulation/history HTTP/1.1" 200 -
+2026-06-19 14:58:55,256 [INFO] __main__ - [d6ff556d] GET /api/ai/logs -> 200 (1.4ms)
+2026-06-19 14:58:55,257 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:58:55] "GET /api/ai/logs HTTP/1.1" 200 -
+2026-06-19 14:58:55,265 [INFO] __main__ - [f5c2c57b] GET /api/logs/access -> 200 (2.1ms)
+2026-06-19 14:58:55,265 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 14:58:55] "GET /api/logs/access HTTP/1.1" 200 -
+2026-06-19 14:59:12,695 [INFO] 5G-A-Industry - 日志系统初始化完成
+2026-06-19 14:59:12,930 [INFO] services.device_service - 创建设备: 测试设备 (ID:1)
+2026-06-19 14:59:12,931 [INFO] app - [875b9d9f] POST /api/devices -> 201 (24.8ms)
+2026-06-19 14:59:12,935 [INFO] services.production_service - 创建生产线: 测试产线 (ID:1)
+2026-06-19 14:59:12,940 [INFO] app - [f8d3d2af] POST /api/production/lines -> 201 (7.3ms)
+2026-06-19 14:59:13,337 [INFO] services.order_service - 创建订单: ORD-8DF35449 (ID:1)
+2026-06-19 14:59:13,339 [INFO] app - [c6db46b8] POST /api/orders -> 201 (9.8ms)
+2026-06-19 14:59:13,342 [INFO] services.product_service - 创建产品: 测试传感器 (ID:2)
+2026-06-19 14:59:13,342 [INFO] app - [a206dd15] POST /api/products -> 201 (2.7ms)
+2026-06-19 14:59:13,762 [INFO] services.user_service - 创建用户: testuser (ID:2)
+2026-06-19 14:59:13,762 [INFO] app - [893ca901] POST /api/users -> 201 (419.0ms)
+2026-06-19 14:59:13,764 [INFO] services.product_service - 创建产品: 产品A (ID:3)
+2026-06-19 14:59:13,765 [INFO] app - [4250b7c0] POST /api/products -> 201 (1.6ms)
+2026-06-19 14:59:13,766 [INFO] app - [2301510b] POST /api/products -> 400 (0.5ms)
+2026-06-19 14:59:13,768 [INFO] app - [cc456036] GET /api/devices -> 200 (0.9ms)
+2026-06-19 14:59:13,770 [INFO] app - [7184565a] GET /api/production/lines -> 200 (1.3ms)
+2026-06-19 14:59:13,774 [INFO] app - [1aab7059] GET /api/orders -> 200 (3.0ms)
+2026-06-19 14:59:13,776 [INFO] app - [c9562b54] GET /api/products -> 200 (1.0ms)
+2026-06-19 14:59:13,778 [INFO] app - [c0ece5e3] GET /api/users -> 200 (0.8ms)
+2026-06-19 14:59:14,168 [INFO] app - [13cdfe54] GET /health -> 200 (0.7ms)
+2026-06-19 14:59:14,171 [INFO] app - [18228a68] POST /api/orders -> 400 (0.6ms)
+2026-06-19 14:59:14,172 [INFO] app - [0b8b13e4] POST /api/auth/login -> 401 (0.5ms)
+2026-06-19 14:59:14,559 [INFO] services.user_service - 创建用户: loginuser (ID:3)
+2026-06-19 14:59:14,560 [INFO] app - [e5076ae9] POST /api/users -> 201 (386.9ms)
+2026-06-19 14:59:14,960 [INFO] services.user_service - 用户登录成功: loginuser
+2026-06-19 14:59:14,961 [INFO] app - [5257ce1a] POST /api/auth/login -> 200 (399.9ms)
+2026-06-19 14:59:14,964 [INFO] app - [98ebe5e3] GET /api/production/stats -> 200 (0.8ms)
+2026-06-19 15:01:08,977 [INFO] 5G-A-Industry - 日志系统初始化完成
+2026-06-19 15:01:09,089 [INFO] werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-06-19 15:01:09,089 [INFO] werkzeug - [33mPress CTRL+C to quit[0m
+2026-06-19 15:01:12,703 [INFO] app - [d4f82b04] GET / -> 304 (98.3ms)
+2026-06-19 15:01:12,704 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 15:01:12] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-19 15:01:12,882 [INFO] app - [203ce617] GET /api/dashboard/metrics -> 200 (35.2ms)
+2026-06-19 15:01:12,883 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 15:01:12] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-19 15:01:12,958 [INFO] app - [058a810b] GET /favicon.ico -> 405 (0.1ms)
+2026-06-19 15:01:12,958 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 15:01:12] "[31m[1mGET /favicon.ico HTTP/1.1[0m" 405 -
+2026-06-19 15:01:17,139 [INFO] app - [0b1380b3] GET /api/slices -> 200 (2.1ms)
+2026-06-19 15:01:17,140 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 15:01:17] "GET /api/slices HTTP/1.1" 200 -
+2026-06-19 15:01:29,241 [INFO] app - [2822a9af] POST /api/sensing/filter -> 200 (0.4ms)
+2026-06-19 15:01:29,241 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 15:01:29] "POST /api/sensing/filter HTTP/1.1" 200 -
+2026-06-19 15:01:29,252 [INFO] app - [d7742942] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-19 15:01:29,253 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 15:01:29] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-19 15:01:29,264 [INFO] app - [0f4dc61a] GET /api/sensing/tracking -> 200 (0.3ms)
+2026-06-19 15:01:29,264 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 15:01:29] "GET /api/sensing/tracking HTTP/1.1" 200 -
+2026-06-19 15:01:31,208 [INFO] app - [df601508] GET /api/simulation/history -> 200 (5.2ms)
+2026-06-19 15:01:31,208 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 15:01:31] "GET /api/simulation/history HTTP/1.1" 200 -
+2026-06-19 15:01:32,580 [INFO] app - [4a1cb953] GET /api/edge/nodes -> 200 (15.0ms)
+2026-06-19 15:01:32,580 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 15:01:32] "GET /api/edge/nodes HTTP/1.1" 200 -
+2026-06-19 15:01:34,165 [INFO] app - [6c16435b] GET /api/simulation/history -> 200 (1.9ms)
+2026-06-19 15:01:34,165 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 15:01:34] "GET /api/simulation/history HTTP/1.1" 200 -
+2026-06-19 15:01:36,118 [ERROR] services.ai_agent - DeepSeek API调用失败: No module named 'requests'
+2026-06-19 15:01:36,144 [INFO] app - [0b156b51] POST /api/simulation/run -> 200 (25.2ms)
+2026-06-19 15:01:36,144 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 15:01:36] "POST /api/simulation/run HTTP/1.1" 200 -
+2026-06-19 15:01:36,155 [INFO] app - [a4c3d115] GET /api/simulation/history -> 200 (1.9ms)
+2026-06-19 15:01:36,155 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 15:01:36] "GET /api/simulation/history HTTP/1.1" 200 -
+2026-06-19 15:01:38,722 [INFO] app - [e2306e04] POST /api/prediction/performance -> 200 (0.4ms)
+2026-06-19 15:01:38,723 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 15:01:38] "POST /api/prediction/performance HTTP/1.1" 200 -
+2026-06-19 15:01:40,352 [INFO] app - [27389607] POST /api/prediction/performance -> 200 (0.5ms)
+2026-06-19 15:01:40,352 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 15:01:40] "POST /api/prediction/performance HTTP/1.1" 200 -
+2026-06-19 15:01:42,007 [INFO] app - [daf183de] GET /api/ai/status -> 200 (0.1ms)
+2026-06-19 15:01:42,008 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 15:01:42] "GET /api/ai/status HTTP/1.1" 200 -
+2026-06-19 15:01:44,579 [ERROR] services.ai_agent - DeepSeek API调用失败: No module named 'requests'
+2026-06-19 15:01:44,599 [INFO] app - [2720f61d] POST /api/ai/analyze -> 200 (18.2ms)
+2026-06-19 15:01:44,599 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 15:01:44] "POST /api/ai/analyze HTTP/1.1" 200 -
+2026-06-19 15:01:48,889 [ERROR] services.ai_agent - DeepSeek API调用失败: No module named 'requests'
+2026-06-19 15:01:48,907 [INFO] app - [aa799c13] POST /api/ai/analyze -> 200 (19.8ms)
+2026-06-19 15:01:48,907 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 15:01:48] "POST /api/ai/analyze HTTP/1.1" 200 -
+2026-06-19 15:01:55,041 [INFO] app - [1fa62d34] GET /api/dashboard/metrics -> 200 (21.8ms)
+2026-06-19 15:01:55,041 [INFO] werkzeug - 127.0.0.1 - - [19/Jun/2026 15:01:55] "GET /api/dashboard/metrics HTTP/1.1" 200 -

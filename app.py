@@ -1,21 +1,28 @@
-# 5G-A 确定性网络智能调度仿真平台
-# 主应用程序入口
+# ============================================
+# 5G-A 确定性网络智能调度平台 v3.0
+# 主应用程序入口 - 集成MySQL数据库和DeepSeek AI
+# ============================================
 
 from flask import Flask, request, jsonify, send_file, g
 import time
 import random
 import uuid
+import json
 import logging
+import os
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# 数据库 - 必须在创建app后立即初始化
+from database import db, init_database, check_db_connection
 
 # 导入算法模块
 from algorithms.scheduler import ProductionScheduler
 from algorithms.predictor import PerformancePredictor
 from algorithms.sensing import SensingProcessor
 from algorithms.optimizer import NetworkOptimizer
-
-# 导入AI服务
-from services.ai_agent import ai_agent
 
 # 配置日志
 logging.basicConfig(
@@ -32,45 +39,37 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
 app.config['JSONIFY_MIMETYPE'] = 'application/json; charset=utf-8'
+app.config['START_TIME'] = time.time()
+
+# 数据库配置
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+    f"mysql+pymysql://{os.getenv('DB_USER', 'root')}:{os.getenv('DB_PASSWORD', 'root')}"
+    f"@{os.getenv('DB_HOST', '127.0.0.1')}:{os.getenv('DB_PORT', '3306')}"
+    f"/{os.getenv('DB_NAME', '5g_a_industry')}?charset=utf8mb4"
+)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_size': 10, 'max_overflow': 20,
+    'pool_recycle': 3600, 'pool_pre_ping': True,
+}
+
+# ===== 关键修复：创建app后立即注册db，确保所有线程和请求中db._app_engines可用 =====
+db.init_app(app)
+
+# 导入服务层（在db.init_app之后，确保model的metadata正确绑定）
+from services.user_service import user_service
+from services.product_service import product_service
+from services.order_service import order_service
+from services.production_service import production_service
+from services.device_service import device_service
+from services.network_service import network_service
+from services.ai_agent import ai_agent
 
 # 初始化算法模块
 production_scheduler = ProductionScheduler()
 performance_predictor = PerformancePredictor()
 sensing_processor = SensingProcessor()
 network_optimizer = NetworkOptimizer()
-
-# ============================================
-# 数据存储（内存）
-# ============================================
-network_slices = [
-    {"id": 1, "name": "工业控制切片", "type": "industrial", "size": 100,
-     "description": "用于工业生产控制的URLLC切片，保障超低时延", "status": "active",
-     "latency": 1.0, "bandwidth": 1000, "created_at": "2026-01-15 09:00:00"},
-    {"id": 2, "name": "车联网切片", "type": "vehicle", "size": 200,
-     "description": "智能交通车联网切片，支持V2X通信", "status": "active",
-     "latency": 5.0, "bandwidth": 500, "created_at": "2026-01-15 09:30:00"},
-    {"id": 3, "name": "民生服务切片", "type": "civil", "size": 150,
-     "description": "公共服务民生切片，保障基础通信需求", "status": "active",
-     "latency": 10.0, "bandwidth": 200, "created_at": "2026-01-15 10:00:00"},
-]
-
-simulation_history = []
-algorithm_params = {
-    "priority_weight": 0.4,
-    "load_weight": 0.35,
-    "efficiency_weight": 0.25,
-    "max_iterations": 100,
-    "convergence_threshold": 0.01,
-    "enable_ai_optimization": True
-}
-edge_nodes = [
-    {"id": 1, "name": "边缘节点-01", "location": "车间A", "cpu": 45.2, "memory": 62.1,
-     "status": "online", "tasks": 12, "ip": "192.168.10.101"},
-    {"id": 2, "name": "边缘节点-02", "location": "车间B", "cpu": 32.8, "memory": 48.5,
-     "status": "online", "tasks": 8, "ip": "192.168.10.102"},
-    {"id": 3, "name": "边缘节点-03", "location": "数据中心", "cpu": 78.5, "memory": 85.3,
-     "status": "online", "tasks": 25, "ip": "192.168.10.103"},
-]
 
 # ============================================
 # 中间件
@@ -91,8 +90,39 @@ def after_request_handler(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+
+    # 记录API访问日志到数据库
+    try:
+        from models.db_models import APIAccessLog
+        log = APIAccessLog(
+            endpoint=request.path,
+            method=request.method,
+            request_id=g.get('request_id', ''),
+            response_time=round(elapsed, 2),
+            status_code=response.status_code,
+            ip_address=request.remote_addr
+        )
+        db.session.add(log)
+        db.session.commit()
+    except Exception as e:
+        try:
+            db.session.rollback()
+        except Exception:
+            pass
+        logger.debug(f"API日志记录失败: {e}")
+
     logger.info(f"[{g.get('request_id', '?')}] {request.method} {request.path} -> {response.status_code} ({elapsed:.1f}ms)")
     return response
+
+
+@app.errorhandler(405)
+def method_not_allowed_handler(e):
+    return jsonify({"success": False, "message": "请求方法不允许"}), 405
+
+
+@app.errorhandler(404)
+def not_found_handler(e):
+    return jsonify({"success": False, "message": "请求的资源不存在"}), 404
 
 
 @app.errorhandler(Exception)
@@ -117,45 +147,289 @@ def index():
 
 @app.route('/health')
 def health_check():
+    db_ok, db_msg = check_db_connection()
     return jsonify({
         "status": "healthy",
-        "version": "2.0.0",
+        "version": "3.0.0",
+        "database": {"connected": db_ok, "message": db_msg},
+        "ai": ai_agent.get_ai_status(),
         "timestamp": datetime.now().isoformat(),
         "uptime": round(time.time() - app.config.get('START_TIME', time.time()), 1)
     })
 
-# ============================================# 核心仪表盘 API
+
+# ============================================
+# 用户认证 API
+# ============================================
+@app.route('/api/auth/login', methods=['POST'])
+def auth_login():
+    data = request.get_json(silent=True) or {}
+    username = data.get('username', '')
+    password = data.get('password', '')
+    if not username or not password:
+        return jsonify({"success": False, "message": "用户名和密码不能为空"}), 400
+    try:
+        result = user_service.login(username, password)
+        return jsonify({"success": True, "data": result, "message": "登录成功"})
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 401
+
+
+@app.route('/api/users', methods=['GET'])
+def get_users():
+    users = user_service.get_all_users()
+    return jsonify({"success": True, "data": users, "total": len(users)})
+
+
+@app.route('/api/users', methods=['POST'])
+def create_user():
+    data = request.get_json(silent=True) or {}
+    if not data.get('username') or not data.get('password'):
+        return jsonify({"success": False, "message": "用户名和密码不能为空"}), 400
+    try:
+        user = user_service.create_user(data)
+        return jsonify({"success": True, "data": user, "message": "用户创建成功"}), 201
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 400
+
+
+@app.route('/api/users/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    user = user_service.get_user_by_id(user_id)
+    if not user:
+        return jsonify({"success": False, "message": "用户不存在"}), 404
+    return jsonify({"success": True, "data": user})
+
+
+@app.route('/api/users/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    data = request.get_json(silent=True) or {}
+    user = user_service.update_user(user_id, data)
+    if not user:
+        return jsonify({"success": False, "message": "用户不存在"}), 404
+    return jsonify({"success": True, "data": user, "message": "用户更新成功"})
+
+
+@app.route('/api/users/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    if not user_service.delete_user(user_id):
+        return jsonify({"success": False, "message": "用户不存在"}), 404
+    return jsonify({"success": True, "message": "用户删除成功"})
+
+
+# ============================================
+# 产品管理 API
+# ============================================
+@app.route('/api/products', methods=['GET'])
+def get_products():
+    category = request.args.get('category')
+    status = request.args.get('status')
+    products = product_service.get_all_products(category, status)
+    return jsonify({"success": True, "data": products, "total": len(products)})
+
+
+@app.route('/api/products', methods=['POST'])
+def create_product():
+    data = request.get_json(silent=True) or {}
+    if not data.get('name') or not data.get('sku'):
+        return jsonify({"success": False, "message": "产品名称和SKU不能为空"}), 400
+    try:
+        product = product_service.create_product(data)
+        return jsonify({"success": True, "data": product, "message": "产品创建成功"}), 201
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 400
+
+
+@app.route('/api/products/<int:product_id>', methods=['GET'])
+def get_product(product_id):
+    product = product_service.get_product_by_id(product_id)
+    if not product:
+        return jsonify({"success": False, "message": "产品不存在"}), 404
+    return jsonify({"success": True, "data": product})
+
+
+@app.route('/api/products/<int:product_id>', methods=['PUT'])
+def update_product(product_id):
+    data = request.get_json(silent=True) or {}
+    product = product_service.update_product(product_id, data)
+    if not product:
+        return jsonify({"success": False, "message": "产品不存在"}), 404
+    return jsonify({"success": True, "data": product, "message": "产品更新成功"})
+
+
+@app.route('/api/products/<int:product_id>', methods=['DELETE'])
+def delete_product(product_id):
+    if not product_service.delete_product(product_id):
+        return jsonify({"success": False, "message": "产品不存在"}), 404
+    return jsonify({"success": True, "message": "产品删除成功"})
+
+
+# ============================================
+# 订单管理 API
+# ============================================
+@app.route('/api/orders', methods=['GET'])
+def get_orders():
+    status = request.args.get('status')
+    orders = order_service.get_all_orders(status)
+    return jsonify({"success": True, "data": orders, "total": len(orders)})
+
+
+@app.route('/api/orders', methods=['POST'])
+def create_order():
+    data = request.get_json(silent=True) or {}
+    user_id = data.get('user_id', 1)
+    items = data.get('items', [])
+    if not items:
+        return jsonify({"success": False, "message": "订单项不能为空"}), 400
+    try:
+        order = order_service.create_order(user_id, items)
+        return jsonify({"success": True, "data": order, "message": "订单创建成功"}), 201
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 400
+
+
+@app.route('/api/orders/<int:order_id>', methods=['GET'])
+def get_order(order_id):
+    order = order_service.get_order_by_id(order_id)
+    if not order:
+        return jsonify({"success": False, "message": "订单不存在"}), 404
+    return jsonify({"success": True, "data": order})
+
+
+@app.route('/api/orders/<int:order_id>/status', methods=['PUT'])
+def update_order_status(order_id):
+    data = request.get_json(silent=True) or {}
+    status = data.get('status')
+    if not status:
+        return jsonify({"success": False, "message": "状态不能为空"}), 400
+    order = order_service.update_order_status(order_id, status)
+    if not order:
+        return jsonify({"success": False, "message": "订单不存在"}), 404
+    return jsonify({"success": True, "data": order, "message": "订单状态更新成功"})
+
+
+@app.route('/api/orders/<int:order_id>/cancel', methods=['POST'])
+def cancel_order(order_id):
+    try:
+        if not order_service.cancel_order(order_id):
+            return jsonify({"success": False, "message": "订单不存在"}), 404
+        return jsonify({"success": True, "message": "订单取消成功"})
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 400
+
+
+# ============================================
+# 生产线管理 API
+# ============================================
+@app.route('/api/production/lines', methods=['GET'])
+def get_production_lines():
+    status = request.args.get('status')
+    category = request.args.get('category')
+    lines = production_service.get_all_lines(status, category)
+    return jsonify({"success": True, "data": lines, "total": len(lines)})
+
+
+@app.route('/api/production/lines', methods=['POST'])
+def create_production_line():
+    data = request.get_json(silent=True) or {}
+    if not data.get('name') or not data.get('code'):
+        return jsonify({"success": False, "message": "名称和编码不能为空"}), 400
+    line = production_service.create_line(data)
+    return jsonify({"success": True, "data": line, "message": "生产线创建成功"}), 201
+
+
+@app.route('/api/production/lines/<int:line_id>', methods=['GET'])
+def get_production_line(line_id):
+    line = production_service.get_line_by_id(line_id)
+    if not line:
+        return jsonify({"success": False, "message": "生产线不存在"}), 404
+    return jsonify({"success": True, "data": line})
+
+
+@app.route('/api/production/lines/<int:line_id>', methods=['PUT'])
+def update_production_line(line_id):
+    data = request.get_json(silent=True) or {}
+    line = production_service.update_line(line_id, data)
+    if not line:
+        return jsonify({"success": False, "message": "生产线不存在"}), 404
+    return jsonify({"success": True, "data": line, "message": "生产线更新成功"})
+
+
+@app.route('/api/production/lines/<int:line_id>', methods=['DELETE'])
+def delete_production_line(line_id):
+    if not production_service.delete_line(line_id):
+        return jsonify({"success": False, "message": "生产线不存在"}), 404
+    return jsonify({"success": True, "message": "生产线删除成功"})
+
+
+@app.route('/api/production/stats', methods=['GET'])
+def get_production_stats():
+    stats = production_service.get_production_stats()
+    return jsonify({"success": True, "data": stats})
+
+
+# ============================================
+# 设备管理 API
+# ============================================
+@app.route('/api/devices', methods=['GET'])
+def get_devices():
+    device_type = request.args.get('type')
+    status = request.args.get('status')
+    line_id = request.args.get('line_id', type=int)
+    devices = device_service.get_all_devices(device_type, status, line_id)
+    return jsonify({"success": True, "data": devices, "total": len(devices)})
+
+
+@app.route('/api/devices/<int:device_id>', methods=['GET'])
+def get_device(device_id):
+    device = device_service.get_device_by_id(device_id)
+    if not device:
+        return jsonify({"success": False, "message": "设备不存在"}), 404
+    return jsonify({"success": True, "data": device})
+
+
+@app.route('/api/devices', methods=['POST'])
+def create_device():
+    data = request.get_json(silent=True) or {}
+    if not data.get('name') or not data.get('code'):
+        return jsonify({"success": False, "message": "名称和编码不能为空"}), 400
+    device = device_service.create_device(data)
+    return jsonify({"success": True, "data": device, "message": "设备创建成功"}), 201
+
+
+@app.route('/api/devices/<int:device_id>', methods=['PUT'])
+def update_device(device_id):
+    data = request.get_json(silent=True) or {}
+    device = device_service.update_device(device_id, data)
+    if not device:
+        return jsonify({"success": False, "message": "设备不存在"}), 404
+    return jsonify({"success": True, "data": device, "message": "设备更新成功"})
+
+
+@app.route('/api/devices/<int:device_id>', methods=['DELETE'])
+def delete_device(device_id):
+    if not device_service.delete_device(device_id):
+        return jsonify({"success": False, "message": "设备不存在"}), 404
+    return jsonify({"success": True, "message": "设备删除成功"})
+
+
+@app.route('/api/devices/stats', methods=['GET'])
+def get_device_stats():
+    stats = device_service.get_device_stats()
+    return jsonify({"success": True, "data": stats})
+
+
+# ============================================
+# 核心仪表盘 API
 # ============================================
 @app.route('/api/dashboard/metrics', methods=['GET'])
 def get_dashboard_metrics():
-    """获取核心仪表盘实时指标"""
-    net_status = network_optimizer.get_network_status()
-    slices_active = sum(1 for s in network_slices if s["status"] == "active")
-    edges_online = sum(1 for e in edge_nodes if e["status"] == "online")
-
-    return jsonify({
-        "success": True,
-        "data": {
-            "network": {
-                "air_peak_rate": f"{round(random.uniform(9.5, 10.5), 1)} Gbps",
-                "uplink_peak_rate": f"{round(random.uniform(0.9, 1.1), 1)} Gbps",
-                "urllc_latency": f"{round(random.uniform(0.8, 1.2), 1)} ms",
-                "v2x_latency": f"{round(random.uniform(4.5, 5.5), 1)} ms",
-                "sla_compliance": f"{round(99.95 + random.random() * 0.04, 2)}%",
-                "sensing_accuracy": f"{round(98.0 + random.random() * 2, 1)}%",
-                "reliability": f"{round(99.99 + random.random() * 0.009, 4)}%"
-            },
-            "slices": {"total": len(network_slices), "active": slices_active},
-            "edge_nodes": {"total": len(edge_nodes), "online": edges_online},
-            "alerts": random.randint(0, 3),
-            "timestamp": datetime.now().isoformat()
-        }
-    })
+    metrics = network_service.get_dashboard_metrics()
+    return jsonify({"success": True, "data": metrics})
 
 
 @app.route('/api/dashboard/refresh', methods=['POST'])
 def refresh_dashboard():
-    """刷新仪表盘数据"""
     return get_dashboard_metrics()
 
 
@@ -164,92 +438,46 @@ def refresh_dashboard():
 # ============================================
 @app.route('/api/slices', methods=['GET'])
 def get_slices():
-    """获取所有网络切片"""
     slice_type = request.args.get('type')
     status = request.args.get('status')
-    search = request.args.get('search', '').lower()
-
-    result = network_slices
-    if slice_type:
-        result = [s for s in result if s["type"] == slice_type]
-    if status:
-        result = [s for s in result if s["status"] == status]
-    if search:
-        result = [s for s in result if search in s["name"].lower() or search in s["description"].lower()]
-
-    return jsonify({"success": True, "data": result, "total": len(result)})
+    search = request.args.get('search')
+    slices = network_service.get_all_slices(slice_type, status, search)
+    return jsonify({"success": True, "data": slices, "total": len(slices)})
 
 
 @app.route('/api/slices', methods=['POST'])
 def create_slice():
-    """创建网络切片"""
     data = request.get_json(silent=True) or {}
-    if not data or not data.get('name'):
+    if not data.get('name'):
         return jsonify({"success": False, "message": "切片名称不能为空"}), 400
-
-    new_slice = {
-        "id": len(network_slices) + 1,
-        "name": data['name'],
-        "type": data.get('type', 'civil'),
-        "size": int(data.get('size', 100)),
-        "description": data.get('description', ''),
-        "status": "active",
-        "latency": float(data.get('latency', 10.0)),
-        "bandwidth": int(data.get('bandwidth', 200)),
-        "created_at": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    }
-    network_slices.append(new_slice)
-    logger.info(f"创建切片: {new_slice['name']} (ID:{new_slice['id']})")
-    return jsonify({"success": True, "data": new_slice, "message": "切片创建成功"}), 201
+    s = network_service.create_slice(data)
+    return jsonify({"success": True, "data": s, "message": "切片创建成功"}), 201
 
 
 @app.route('/api/slices/<int:slice_id>', methods=['PUT'])
 def update_slice(slice_id):
-    """更新网络切片"""
     data = request.get_json(silent=True) or {}
-    for s in network_slices:
-        if s["id"] == slice_id:
-            if 'name' in data: s['name'] = data['name']
-            if 'type' in data: s['type'] = data['type']
-            if 'size' in data: s['size'] = int(data['size'])
-            if 'description' in data: s['description'] = data['description']
-            if 'status' in data: s['status'] = data['status']
-            if 'latency' in data: s['latency'] = float(data['latency'])
-            if 'bandwidth' in data: s['bandwidth'] = int(data['bandwidth'])
-            logger.info(f"更新切片: {s['name']} (ID:{slice_id})")
-            return jsonify({"success": True, "data": s, "message": "切片更新成功"})
-    return jsonify({"success": False, "message": "切片不存在"}), 404
+    s = network_service.update_slice(slice_id, data)
+    if not s:
+        return jsonify({"success": False, "message": "切片不存在"}), 404
+    return jsonify({"success": True, "data": s, "message": "切片更新成功"})
 
 
 @app.route('/api/slices/<int:slice_id>', methods=['DELETE'])
 def delete_slice(slice_id):
-    """删除网络切片"""
-    global network_slices
-    for i, s in enumerate(network_slices):
-        if s["id"] == slice_id:
-            name = s["name"]
-            network_slices.pop(i)
-            logger.info(f"删除切片: {name} (ID:{slice_id})")
-            return jsonify({"success": True, "message": f"切片 '{name}' 删除成功"})
-    return jsonify({"success": False, "message": "切片不存在"}), 404
+    name = network_service.delete_slice(slice_id)
+    if not name:
+        return jsonify({"success": False, "message": "切片不存在"}), 404
+    return jsonify({"success": True, "message": f"切片 '{name}' 删除成功"})
 
 
 @app.route('/api/slices/batch-delete', methods=['POST'])
 def batch_delete_slices():
-    """批量删除网络切片"""
     data = request.get_json(silent=True) or {}
     ids = data.get('ids', [])
     if not ids:
         return jsonify({"success": False, "message": "请选择要删除的切片"}), 400
-
-    global network_slices
-    deleted = []
-    for sid in ids:
-        for i, s in enumerate(network_slices):
-            if s["id"] == sid:
-                deleted.append(network_slices.pop(i)["name"])
-                break
-    logger.info(f"批量删除切片: {deleted}")
+    deleted = network_service.batch_delete_slices(ids)
     return jsonify({"success": True, "message": f"成功删除 {len(deleted)} 个切片", "deleted": deleted})
 
 
@@ -258,7 +486,6 @@ def batch_delete_slices():
 # ============================================
 @app.route('/api/sensing/data', methods=['GET'])
 def get_sensing_data():
-    """获取通感一体感知数据"""
     data = sensing_processor.get_sensing_data()
     env = sensing_processor.get_environment_data()
     return jsonify({"success": True, "data": {"sensing": data, "environment": env}})
@@ -266,7 +493,6 @@ def get_sensing_data():
 
 @app.route('/api/sensing/filter', methods=['POST'])
 def filter_sensing():
-    """筛选感知类型"""
     req_data = request.get_json(silent=True) or {}
     sensing_type = req_data.get('type', 'temperature')
     result = sensing_processor.filter_sensing(sensing_type)
@@ -277,7 +503,6 @@ def filter_sensing():
 
 @app.route('/api/sensing/tracking', methods=['GET'])
 def get_target_tracking():
-    """获取目标追踪数据"""
     data = sensing_processor.get_target_tracking()
     return jsonify({"success": True, "data": data})
 
@@ -287,7 +512,6 @@ def get_target_tracking():
 # ============================================
 @app.route('/api/simulation/run', methods=['POST'])
 def run_simulation():
-    """运行仿真调度"""
     req_data = request.get_json(silent=True) or {}
     scenario = req_data.get('scenario', 'medium')
     slice_type = req_data.get('slice_type', 'industrial')
@@ -297,44 +521,39 @@ def run_simulation():
 
     opt_result = network_optimizer.optimize_slice(slice_type, scenario)
     tasks = [
-        {"id": i+1, "name": f"任务-{i+1}", "type": random.choice(["sensor","robot","controller","conveyor"]),
-         "workload": round(random.uniform(5, 30), 1), "priority": random.choice([1,2,3])}
+        {"id": i + 1, "name": f"任务-{i + 1}", "type": random.choice(["sensor", "robot", "controller", "conveyor"]),
+         "workload": round(random.uniform(5, 30), 1), "priority": random.choice([1, 2, 3])}
         for i in range(random.randint(8, 15))
     ]
     schedule = production_scheduler.schedule(tasks)
     report = ai_agent.get_optimization_report(scenario)
 
-    result = {
-        **opt_result,
-        "schedule": schedule,
-        "ai_report": report
-    }
+    result = {**opt_result, "schedule": schedule, "ai_report": report}
 
-    simulation_history.append({
-        "id": len(simulation_history) + 1,
-        "scenario": scenario,
-        "slice_type": slice_type,
-        "result": result,
-        "timestamp": datetime.now().isoformat()
-    })
-    if len(simulation_history) > 100:
-        simulation_history.pop(0)
+    # 保存仿真记录到数据库
+    network_service.save_simulation_record(
+        scenario=scenario,
+        slice_type=slice_type,
+        result_json=json.dumps(result, ensure_ascii=False),
+        task_count=len(tasks),
+        latency_improvement=float(report.get('metrics', {}).get('latency_improvement', '0').replace('%', '')),
+        throughput_improvement=float(report.get('metrics', {}).get('throughput_improvement', '0').replace('%', '')),
+        energy_saving=float(report.get('metrics', {}).get('energy_saving', '0').replace('%', ''))
+    )
 
     return jsonify({"success": True, "data": result})
 
 
 @app.route('/api/simulation/history', methods=['GET'])
 def get_simulation_history():
-    """获取仿真历史记录"""
     limit = request.args.get('limit', 20, type=int)
-    return jsonify({"success": True, "data": simulation_history[-limit:], "total": len(simulation_history)})
+    records = network_service.get_simulation_history(limit)
+    return jsonify({"success": True, "data": records, "total": len(records)})
 
 
 @app.route('/api/simulation/history', methods=['DELETE'])
 def clear_simulation_history():
-    """清空仿真历史"""
-    global simulation_history
-    simulation_history = []
+    network_service.clear_simulation_history()
     return jsonify({"success": True, "message": "历史记录已清空"})
 
 
@@ -343,7 +562,6 @@ def clear_simulation_history():
 # ============================================
 @app.route('/api/prediction/performance', methods=['POST'])
 def predict_performance():
-    """性能预测"""
     req_data = request.get_json(silent=True) or {}
     duration = req_data.get('duration', 30)
     metric = req_data.get('metric', 'latency')
@@ -353,7 +571,6 @@ def predict_performance():
 
 @app.route('/api/prediction/demand', methods=['POST'])
 def predict_demand():
-    """需求预测"""
     req_data = request.get_json(silent=True) or {}
     product_type = req_data.get('product_type', 'sensor')
     horizon = req_data.get('horizon', 7)
@@ -382,41 +599,38 @@ def predict_demand():
 # ============================================
 @app.route('/api/edge/nodes', methods=['GET'])
 def get_edge_nodes():
-    """获取边缘节点列表"""
-    for node in edge_nodes:
-        if node["status"] == "online":
-            node["cpu"] = round(min(100, node["cpu"] + random.uniform(-5, 5)), 1)
-            node["memory"] = round(min(100, node["memory"] + random.uniform(-3, 3)), 1)
-    return jsonify({"success": True, "data": edge_nodes})
+    nodes = network_service.get_all_edge_nodes()
+    return jsonify({"success": True, "data": nodes})
 
 
 @app.route('/api/edge/nodes/<int:node_id>/tasks', methods=['GET'])
 def get_edge_tasks(node_id):
-    """获取边缘节点任务列表"""
-    for node in edge_nodes:
-        if node["id"] == node_id:
-            tasks = [
-                {"id": i+1, "name": f"推理任务-{i+1}", "model": random.choice(["YOLOv8","ResNet","BERT","LSTM"]),
-                 "status": random.choice(["running","completed","queued"]),
-                 "latency": round(random.uniform(2, 15), 1), "throughput": random.randint(10, 200)}
-                for i in range(random.randint(3, 8))
-            ]
-            return jsonify({"success": True, "data": {"node": node, "tasks": tasks}})
-    return jsonify({"success": False, "message": "节点不存在"}), 404
+    result = network_service.get_edge_node_tasks(node_id)
+    if not result:
+        return jsonify({"success": False, "message": "节点不存在"}), 404
+    return jsonify({"success": True, "data": result})
 
 
 # ============================================
 # 算法参数管理 API
 # ============================================
+algorithm_params = {
+    "priority_weight": 0.4,
+    "load_weight": 0.35,
+    "efficiency_weight": 0.25,
+    "max_iterations": 100,
+    "convergence_threshold": 0.01,
+    "enable_ai_optimization": True
+}
+
+
 @app.route('/api/algorithm/params', methods=['GET'])
 def get_algorithm_params():
-    """获取算法参数"""
     return jsonify({"success": True, "data": algorithm_params})
 
 
 @app.route('/api/algorithm/params', methods=['PUT'])
 def update_algorithm_params():
-    """更新算法参数"""
     data = request.get_json(silent=True) or {}
     for key in data:
         if key in algorithm_params:
@@ -430,14 +644,13 @@ def update_algorithm_params():
 # ============================================
 @app.route('/api/ai/analyze', methods=['POST'])
 def ai_analyze():
-    """AI智能分析"""
     req_data = request.get_json(silent=True) or {}
     analysis_type = req_data.get('type', 'production')
 
     if analysis_type == 'production':
         result = ai_agent.analyze_production(req_data.get('data', {}))
     elif analysis_type == 'risk':
-        net_data = network_optimizer.get_network_status()
+        net_data = network_service.get_network_status()
         result = ai_agent.analyze_risk(net_data)
     elif analysis_type == 'report':
         result = ai_agent.get_optimization_report(req_data.get('scenario', 'medium'))
@@ -449,13 +662,55 @@ def ai_analyze():
 
 @app.route('/api/ai/status', methods=['GET'])
 def ai_status():
-    """检查AI服务状态"""
+    status = ai_agent.get_ai_status()
+    return jsonify({"success": True, "data": status})
+
+
+@app.route('/api/ai/logs', methods=['GET'])
+def get_ai_logs():
+    limit = request.args.get('limit', 20, type=int)
+    logs = ai_agent.get_analysis_logs(limit)
+    return jsonify({"success": True, "data": logs, "total": len(logs)})
+
+
+# ============================================
+# API访问日志 API
+# ============================================
+@app.route('/api/logs/access', methods=['GET'])
+def get_access_logs():
+    from models.db_models import APIAccessLog
+    limit = request.args.get('limit', 50, type=int)
+    logs = APIAccessLog.query.order_by(APIAccessLog.timestamp.desc()).limit(limit).all()
+    return jsonify({"success": True, "data": [l.to_dict() for l in logs], "total": len(logs)})
+
+
+# ============================================
+# 数据库状态 API
+# ============================================
+@app.route('/api/db/status', methods=['GET'])
+def db_status():
+    from models.db_models import (User, Product, Order, ProductionLine,
+                                  Device, NetworkSlice, EdgeNode, SimulationRecord,
+                                  AIAnalysisLog, DashboardMetric, APIAccessLog)
+    db_ok, db_msg = check_db_connection()
     return jsonify({
         "success": True,
         "data": {
-            "deepseek_enabled": ai_agent._is_api_available(),
-            "algorithm_modules": ["scheduler", "predictor", "sensing", "optimizer"],
-            "status": "ready"
+            "connected": db_ok,
+            "message": db_msg,
+            "tables": {
+                "users": User.query.count(),
+                "products": Product.query.count(),
+                "orders": Order.query.count(),
+                "production_lines": ProductionLine.query.count(),
+                "devices": Device.query.count(),
+                "network_slices": NetworkSlice.query.count(),
+                "edge_nodes": EdgeNode.query.count(),
+                "simulation_records": SimulationRecord.query.count(),
+                "ai_analysis_logs": AIAnalysisLog.query.count(),
+                "dashboard_metrics": DashboardMetric.query.count(),
+                "api_access_logs": APIAccessLog.query.count()
+            }
         }
     })
 
@@ -464,9 +719,29 @@ def ai_status():
 # 应用启动
 # ============================================
 if __name__ == '__main__':
+    # db.init_app(app) 已在模块级调用，此处不再重复
     app.config['START_TIME'] = time.time()
+
+    # 初始化数据库
+    try:
+        init_database(app)
+        logger.info("数据库初始化完成")
+    except Exception as e:
+        logger.error(f"数据库初始化失败: {e}")
+        logger.warning("将使用降级模式运行（部分功能不可用）")
+
+    # 插入种子数据
+    try:
+        from seed_data import seed_all
+        with app.app_context():
+            seed_all()
+    except Exception as e:
+        logger.warning(f"种子数据插入失败: {e}")
+
     logger.info("=" * 50)
-    logger.info("5G-A 确定性网络智能调度仿真平台 v2.0")
+    logger.info("5G-A 确定性网络智能调度平台 v3.0")
+    logger.info("数据库: MySQL (pymysql)")
+    logger.info("AI引擎: DeepSeek")
     logger.info("启动成功，访问 http://127.0.0.1:5000")
     logger.info("=" * 50)
     app.run(debug=False, host='0.0.0.0', port=5000, threaded=True)

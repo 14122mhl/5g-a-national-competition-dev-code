@@ -458,3 +458,137 @@ werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not 
 2026-06-16 21:55:36,392 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
 2026-06-16 21:55:46,879 - app - INFO - [37247741] GET / -> 200 (72.2ms)
 2026-06-16 21:55:46,884 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:55:46] "GET / HTTP/1.1" 200 -
+2026-06-16 21:57:25,362 - 5G-A-Industry - INFO - ÈÕÖ¾ÏµÍ³³õÊ¼»¯Íê³É
+2026-06-16 21:57:25,362 - 5G-A-Industry - DEBUG - µ±Ç°ÅäÖÃ: DevelopmentConfig
+2026-06-16 21:57:25,473 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-06-16 21:57:25,474 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-06-16 21:57:28,446 - app - INFO - [58800f6a] GET / -> 304 (74.3ms)
+2026-06-16 21:57:28,447 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:28] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-16 21:57:39,655 - app - INFO - [785dd558] GET /api/dashboard/metrics -> 200 (0.2ms)
+2026-06-16 21:57:39,655 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:39] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:57:40,234 - app - ERROR - Î´²¶»ñÒì³£: 405 Method Not Allowed: The method is not allowed for the requested URL.
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+  File "D:\ANAC\envs\5ga\Lib\site-packages\werkzeug\routing\map.py", line 624, in match
+    raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not allowed for the requested URL.
+2026-06-16 21:57:40,292 - app - INFO - [c7294da6] GET /favicon.ico -> 500 (58.0ms)
+2026-06-16 21:57:40,292 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:40] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2026-06-16 21:57:42,265 - app - INFO - [8c28aa10] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:57:42,265 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:42] "GET /api/slices HTTP/1.1" 200 -
+2026-06-16 21:57:46,154 - app - INFO - [dee30cdb] GET /api/slices -> 200 (12.9ms)
+2026-06-16 21:57:46,155 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:46] "GET /api/slices?search=go HTTP/1.1" 200 -
+2026-06-16 21:57:46,228 - app - INFO - [e77aff83] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:57:46,228 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:46] "GET /api/slices?search=go HTTP/1.1" 200 -
+2026-06-16 21:57:46,379 - app - INFO - [c15ce6bb] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:57:46,379 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:46] "GET /api/slices?search=gon HTTP/1.1" 200 -
+2026-06-16 21:57:46,497 - app - INFO - [1dec9cc4] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:57:46,497 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:46] "GET /api/slices?search=gong HTTP/1.1" 200 -
+2026-06-16 21:57:46,725 - app - INFO - [5fc4e9a0] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:57:46,725 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:46] "GET /api/slices?search=gongy HTTP/1.1" 200 -
+2026-06-16 21:57:46,973 - app - INFO - [9dda0d46] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:57:46,973 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:46] "GET /api/slices?search=gongyr HTTP/1.1" 200 -
+2026-06-16 21:57:49,210 - app - INFO - [c7af4db7] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:57:49,210 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:49] "GET /api/slices HTTP/1.1" 200 -
+2026-06-16 21:57:49,613 - app - INFO - [439dc976] GET /api/slices -> 200 (0.1ms)
+2026-06-16 21:57:49,613 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:49] "GET /api/slices HTTP/1.1" 200 -
+2026-06-16 21:57:50,552 - app - INFO - [a0e8d1f0] GET /api/slices -> 200 (0.1ms)
+2026-06-16 21:57:50,552 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:50] "GET /api/slices HTTP/1.1" 200 -
+2026-06-16 21:57:50,842 - app - INFO - [10c881bc] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:57:50,842 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:50] "GET /api/slices HTTP/1.1" 200 -
+2026-06-16 21:57:51,580 - app - INFO - [dcaf2497] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:57:51,580 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:51] "GET /api/slices?search=g HTTP/1.1" 200 -
+2026-06-16 21:57:51,582 - app - INFO - [dca9b396] GET /api/slices -> 200 (0.1ms)
+2026-06-16 21:57:51,582 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:51] "GET /api/slices?search=g HTTP/1.1" 200 -
+2026-06-16 21:57:51,700 - app - INFO - [a2e78e45] GET /api/slices -> 200 (0.1ms)
+2026-06-16 21:57:51,700 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:51] "GET /api/slices?search=go HTTP/1.1" 200 -
+2026-06-16 21:57:51,702 - app - INFO - [1b7a17b8] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:57:51,702 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:51] "GET /api/slices?search=go HTTP/1.1" 200 -
+2026-06-16 21:57:51,843 - app - INFO - [2ac422bb] GET /api/slices -> 200 (0.1ms)
+2026-06-16 21:57:51,844 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:51] "GET /api/slices?search=gong HTTP/1.1" 200 -
+2026-06-16 21:57:51,846 - app - INFO - [db1f0ad0] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:57:51,846 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:51] "GET /api/slices?search=gong HTTP/1.1" 200 -
+2026-06-16 21:57:51,941 - app - INFO - [92a8b80d] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:57:51,941 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:51] "GET /api/slices?search=gong HTTP/1.1" 200 -
+2026-06-16 21:57:51,943 - app - INFO - [fbfa2e49] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:57:51,944 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:51] "GET /api/slices?search=gong HTTP/1.1" 200 -
+2026-06-16 21:57:52,220 - app - INFO - [296913c5] GET /api/slices -> 200 (11.5ms)
+2026-06-16 21:57:52,221 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:52] "GET /api/slices?search=gong'y HTTP/1.1" 200 -
+2026-06-16 21:57:52,223 - app - INFO - [679d6df7] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:57:52,223 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:52] "GET /api/slices?search=gong'y HTTP/1.1" 200 -
+2026-06-16 21:57:52,370 - app - INFO - [44b15012] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:57:52,371 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:52] "GET /api/slices?search=gong'ye HTTP/1.1" 200 -
+2026-06-16 21:57:52,372 - app - INFO - [a10b59f7] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:57:52,373 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:52] "GET /api/slices?search=gong'ye HTTP/1.1" 200 -
+2026-06-16 21:57:52,994 - app - INFO - [d00d40fb] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:57:52,995 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:52] "GET /api/slices?search=¹¤Òµ HTTP/1.1" 200 -
+2026-06-16 21:57:52,996 - app - INFO - [e9d99fdb] GET /api/slices -> 200 (0.1ms)
+2026-06-16 21:57:52,996 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:52] "GET /api/slices?search=¹¤Òµ HTTP/1.1" 200 -
+2026-06-16 21:57:56,329 - app - INFO - [b286eaae] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:57:56,330 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:57:56] "GET /api/slices HTTP/1.1" 200 -
+2026-06-16 21:58:06,689 - app - INFO - [b3018958] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:58:06,689 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:58:06] "GET /api/slices?search=¹¤ HTTP/1.1" 200 -
+2026-06-16 21:58:06,854 - app - INFO - [78c06881] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:58:06,854 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:58:06] "GET /api/slices HTTP/1.1" 200 -
+2026-06-16 21:58:06,995 - app - INFO - [26edf218] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:58:06,995 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:58:06] "GET /api/slices HTTP/1.1" 200 -
+2026-06-16 21:58:08,809 - app - DEBUG - [0624793e] POST /api/sensing/filter body={'type': 'temperature'}
+2026-06-16 21:58:08,809 - app - INFO - [0624793e] POST /api/sensing/filter -> 200 (0.5ms)
+2026-06-16 21:58:08,809 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:58:08] "POST /api/sensing/filter HTTP/1.1" 200 -
+2026-06-16 21:58:08,835 - app - INFO - [ba610db0] GET /api/sensing/data -> 200 (0.2ms)
+2026-06-16 21:58:08,836 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:58:08] "GET /api/sensing/data HTTP/1.1" 200 -
+2026-06-16 21:58:08,845 - app - INFO - [441e4202] GET /api/sensing/tracking -> 200 (0.2ms)
+2026-06-16 21:58:08,845 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:58:08] "GET /api/sensing/tracking HTTP/1.1" 200 -
+2026-06-16 21:58:12,195 - app - INFO - [f348ffb8] GET /api/dashboard/metrics -> 200 (0.2ms)
+2026-06-16 21:58:12,195 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:58:12] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:58:14,985 - app - DEBUG - [21a9d020] POST /api/prediction/performance body={'duration': 30, 'metric': 'latency'}
+2026-06-16 21:58:14,986 - app - INFO - [21a9d020] POST /api/prediction/performance -> 200 (0.9ms)
+2026-06-16 21:58:14,986 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:58:14] "POST /api/prediction/performance HTTP/1.1" 200 -
+2026-06-16 21:58:17,885 - app - INFO - [defe4356] GET /api/ai/status -> 200 (0.1ms)
+2026-06-16 21:58:17,886 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:58:17] "GET /api/ai/status HTTP/1.1" 200 -
+2026-06-16 21:58:20,418 - app - INFO - [fd1bca8b] GET /api/dashboard/metrics -> 200 (0.1ms)
+2026-06-16 21:58:20,418 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:58:20] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 21:58:24,382 - app - INFO - [906af9ae] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:58:24,382 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:58:24] "GET /api/slices HTTP/1.1" 200 -
+2026-06-16 21:58:44,061 - app - DEBUG - [14f8d1c0] PUT /api/slices/1 body={'name': 'test', 'type': 'civil', 'size': 87, 'description': ''}
+2026-06-16 21:58:44,061 - app - INFO - ¸üÐÂÇÐÆ¬: test (ID:1)
+2026-06-16 21:58:44,115 - app - INFO - [14f8d1c0] PUT /api/slices/1 -> 200 (54.2ms)
+2026-06-16 21:58:44,115 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:58:44] "PUT /api/slices/1 HTTP/1.1" 200 -
+2026-06-16 21:58:44,123 - app - INFO - [368d16ff] GET /api/slices -> 200 (0.2ms)
+2026-06-16 21:58:44,123 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 21:58:44] "GET /api/slices HTTP/1.1" 200 -
+2026-06-16 22:36:36,145 - 5G-A-Industry - INFO - ÈÕÖ¾ÏµÍ³³õÊ¼»¯Íê³É
+2026-06-16 22:36:36,146 - 5G-A-Industry - DEBUG - µ±Ç°ÅäÖÃ: DevelopmentConfig
+2026-06-16 22:36:36,314 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-06-16 22:36:36,315 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-06-16 22:36:38,500 - app - INFO - [7c8bc329] GET / -> 304 (70.0ms)
+2026-06-16 22:36:38,500 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 22:36:38] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-16 22:36:38,636 - app - INFO - [7f9e78cd] GET /api/dashboard/metrics -> 200 (0.3ms)
+2026-06-16 22:36:38,637 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 22:36:38] "GET /api/dashboard/metrics HTTP/1.1" 200 -
+2026-06-16 22:36:38,783 - app - ERROR - Î´²¶»ñÒì³£: 405 Method Not Allowed: The method is not allowed for the requested URL.
+Traceback (most recent call last):
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ANAC\envs\5ga\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+  File "D:\ANAC\envs\5ga\Lib\site-packages\werkzeug\routing\map.py", line 624, in match
+    raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not allowed for the requested URL.
+2026-06-16 22:36:38,790 - app - INFO - [2373d159] GET /favicon.ico -> 500 (6.2ms)
+2026-06-16 22:36:38,790 - werkzeug - INFO - 127.0.0.1 - - [16/Jun/2026 22:36:38] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -

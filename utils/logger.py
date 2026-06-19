@@ -28,4 +28,4 @@ logger = logging.getLogger('5G-A-Industry')
 
 # 测试日志
 logger.info("日志系统初始化完成")
-logger.debug(f"当前配置: {current_config.__name__}")
+logger.debug(f"当前配置: {current_config.__class__.__name__}")

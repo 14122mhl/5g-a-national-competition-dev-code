@@ -1,18 +1,13 @@
-# Services package initialization
-from .user_service import UserService
-from .product_service import ProductService
-from .order_service import OrderService
-from .production_service import ProductionService
-from .device_service import DeviceService
-from .ai_service import AIService
-from .network_service import NetworkService
+# Services package
+from .user_service import user_service
+from .product_service import product_service
+from .order_service import order_service
+from .production_service import production_service
+from .device_service import device_service
+from .network_service import network_service
+from .ai_agent import ai_agent
 
 __all__ = [
-    'UserService',
-    'ProductService',
-    'OrderService',
-    'ProductionService',
-    'DeviceService',
-    'AIService',
-    'NetworkService'
+    'user_service', 'product_service', 'order_service',
+    'production_service', 'device_service', 'network_service', 'ai_agent'
 ]
