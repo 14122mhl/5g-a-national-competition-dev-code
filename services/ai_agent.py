@@ -302,13 +302,14 @@ class AIAgent:
         }
 
     def generate_analysis_report(self, context):
-        """基于上下文数据生成AI分析报告（DeepSeek驱动）"""
+        """基于上下文数据生成AI分析报告（DeepSeek驱动）—— 返回JSON数据块 + 简短建议"""
+        import time as time_module
         analysis_type = context.get('type', 'scheduling')
         company = context.get('company', '佳帮手集团')
 
-        # 构建提示词
+        # 构建提示词：要求DeepSeek严格返回JSON格式
         prompts = {
-            'scheduling': f"""你是一个制造业智能调度专家。请分析以下佳帮手兴平智造基地的调度数据，给出专业的调度优化建议：
+            'scheduling': f"""你是一个制造业智能调度专家。请分析以下佳帮手兴平智造基地的调度数据，给出专业分析。
 
 当前状态：
 - 待处理任务: {context.get('pending_tasks', 0)} 个
@@ -317,46 +318,64 @@ class AIAgent:
 - 在线AGV: {context.get('online_agvs', 0)} 台
 - 紧急任务(优先级1-2): {context.get('urgent_tasks', 0)} 个
 
-请输出：
-1. 调度效率评估（一句话）
-2. 存在的瓶颈问题（1-2条）
-3. 优化建议（2-3条，每条不超过30字）
-4. 风险预警（如有）
-请用JSON格式返回，键名为: efficiency, bottlenecks(array), suggestions(array), risks(array)。""",
+请严格按以下JSON格式返回（不要包含任何其他文字）：
+{{
+  "efficiency": "调度效率评估（一句话，不超过30字）",
+  "load_status": "正常/偏高/严重",
+  "bottlenecks": ["瓶颈1", "瓶颈2"],
+  "suggestions": ["建议1（不超过30字）", "建议2（不超过30字）", "建议3（不超过30字）"],
+  "risks": ["风险预警1", "风险预警2"],
+  "score": 85
+}}""",
 
-            'network': f"""你是一个5G网络优化专家。请分析佳帮手兴平智造基地的网络状态：
+            'network': f"""你是一个5G网络优化专家。请分析佳帮手兴平智造基地的网络状态。
 
 当前状态：
 - 24小时内严重事件: {context.get('critical_events_24h', 0)} 次
 - 活跃生产区域: {context.get('zones', 0)} 个
-- 网络切片: {len(context.get('slices', []))} 个
+- 网络切片数: {len(context.get('slices', []))} 个
+- 切片详情: {json.dumps(context.get('slices', []), ensure_ascii=False)}
 
-请输出：
-1. 网络健康度评估
-2. 需要关注的问题
-3. 优化建议
-请用JSON格式返回，键名为: health, issues(array), suggestions(array)。""",
+请严格按以下JSON格式返回：
+{{
+  "health": "网络健康度评估（一句话）",
+  "health_status": "优秀/良好/一般/需关注",
+  "issues": ["问题1", "问题2"],
+  "suggestions": ["建议1（不超过30字）", "建议2（不超过30字）"],
+  "score": 85
+}}""",
 
-            'production': f"""你是一个制造业生产管理专家。请分析佳帮手兴平智造基地的生产状态：
+            'production': f"""你是一个制造业生产管理专家。请分析佳帮手兴平智造基地的生产状态。
 
 当前状态：
 - 待处理订单: {context.get('pending_orders', 0)} 个
 - 活跃生产区域: {context.get('active_zones', 0)} 个
 - 设备总数: {context.get('total_devices', 0)} 台
 - 在线设备: {context.get('device_online', 0)} 台
+- 设备在线率: {round(context.get('device_online', 0) / max(context.get('total_devices', 1), 1) * 100, 1)}%
 
-请输出：
-1. 产能利用率评估
-2. 生产瓶颈分析
-3. 优化建议
-请用JSON格式返回，键名为: utilization, bottlenecks(array), suggestions(array)。""",
+请严格按以下JSON格式返回：
+{{
+  "utilization": "产能利用率评估（一句话）",
+  "utilization_status": "充足/适中/紧张/严重不足",
+  "bottlenecks": ["瓶颈1", "瓶颈2"],
+  "suggestions": ["建议1（不超过30字）", "建议2（不超过30字）"],
+  "score": 80
+}}""",
 
-            'prediction': f"""你是一个工业数据分析专家。请分析佳帮手兴平智造基地的近期趋势数据：
+            'prediction': f"""你是一个工业数据分析专家。请分析佳帮手兴平智造基地的数据趋势。
 
-网络负载趋势: {context.get('recent_load', [])}
-AGV活跃趋势: {context.get('recent_agv', [])}
+网络负载趋势（最近24个采样点）: {context.get('recent_load', [])[-6:]}
+AGV活跃趋势: {context.get('recent_agv', [])[-6:]}
+带宽趋势: {context.get('recent_bandwidth', [])[-6:]}
 
-请预测未来趋势并给出建议。请用JSON格式返回，键名为: trend, prediction, suggestions(array)。""",
+请严格按以下JSON格式返回：
+{{
+  "trend": "趋势判断（上升/稳定/下降，一句话）",
+  "prediction": "未来2小时预测（一句话）",
+  "suggestions": ["建议1（不超过30字）", "建议2（不超过30字）"],
+  "score": 75
+}}""",
 
             'quick_insight': f"""你是一个制造业智能调度助手。请根据以下佳帮手兴平智造基地的实时状态，用一句话总结当前情况：
 
@@ -369,33 +388,35 @@ AGV活跃趋势: {context.get('recent_agv', [])}
 
         prompt = prompts.get(analysis_type, prompts['scheduling'])
 
+        # 模拟1秒分析时间（让用户感知到AI正在分析）
+        time_module.sleep(1.0)
+
         # 尝试调用DeepSeek API
-        api_result = self._call_llm(prompt)
+        api_result = self._call_llm_structured(prompt)
 
         if api_result:
             return {
                 "type": analysis_type,
-                "analysis": api_result,
+                "data": api_result,
+                "suggestions": api_result.get("suggestions", []),
                 "source": "deepseek",
+                "score": api_result.get("score", 85),
                 "timestamp": datetime.now().isoformat()
             }
 
-        # 本地回退分析
-        local_result = self._local_analysis(context)
+        # 本地回退分析（JSON格式）
+        local = self._local_analysis_structured(context)
         return {
             "type": analysis_type,
-            "analysis": local_result,
+            "data": local,
+            "suggestions": local.get("suggestions", []),
             "source": "local",
+            "score": local.get("score", 70),
             "timestamp": datetime.now().isoformat()
         }
 
-    def generate_quick_insight(self, context):
-        """生成快速洞察"""
-        result = self.generate_analysis_report(context)
-        return result.get('analysis', '系统运行正常')
-
-    def _call_llm(self, prompt):
-        """调用LLM API（DeepSeek）"""
+    def _call_llm_structured(self, prompt):
+        """调用LLM API并尝试解析JSON结果"""
         if not self._is_api_available():
             return None
         try:
@@ -406,11 +427,11 @@ AGV活跃趋势: {context.get('recent_agv', [])}
             payload = {
                 "model": self.model,
                 "messages": [
-                    {"role": "system", "content": "你是一个专业的制造业智能调度助手，服务于佳帮手集团的确定性网络智能调度平台。请用中文回答，保持专业和简洁。"},
+                    {"role": "system", "content": "你是一个专业的制造业智能调度助手，服务于佳帮手集团的确定性网络智能调度平台。请严格按JSON格式输出，不要包含任何其他文字或markdown标记。"},
                     {"role": "user", "content": prompt}
                 ],
                 "temperature": 0.3,
-                "max_tokens": 500
+                "max_tokens": 800
             }
             response = requests.post(
                 self.api_endpoint,
@@ -420,47 +441,165 @@ AGV活跃趋势: {context.get('recent_agv', [])}
             )
             if response.status_code == 200:
                 data = response.json()
-                return data['choices'][0]['message']['content'].strip()
+                content = data['choices'][0]['message']['content'].strip()
+                # 尝试解析JSON
+                # 去掉可能的markdown代码块标记
+                if content.startswith('```'):
+                    lines = content.split('\n')
+                    content = '\n'.join(lines[1:-1]) if len(lines) > 2 else content
+                    content = content.strip()
+                result = json.loads(content)
+                return result
+            return None
+        except json.JSONDecodeError:
+            logger.warning(f"DeepSeek返回非JSON格式: {content[:200]}")
             return None
         except Exception as e:
             logger.warning(f"LLM API调用失败: {e}")
             return None
 
-    def _local_analysis(self, context):
-        """本地分析回退"""
+    def _local_analysis_structured(self, context):
+        """本地分析回退（结构化JSON格式）"""
         analysis_type = context.get('type', 'scheduling')
         if analysis_type == 'scheduling':
             pending = context.get('pending_tasks', 0)
             urgent = context.get('urgent_tasks', 0)
+            in_progress = context.get('in_progress_tasks', 0)
             agv = context.get('online_agvs', 0)
-            if pending > 20:
-                eff = "调度负载较高，存在任务积压风险"
-                suggestions = ["建议增加AGV调度数量", "提高紧急任务优先级", "优化任务分配算法"]
+            completed = context.get('completed_tasks', 0)
+
+            if pending > 100:
+                eff = "调度负载严重偏高，存在大量任务积压"
+                load = "严重"
+                bottlenecks = [f"待处理任务{pending}个严重积压", f"在线AGV仅{agv}台，运力不足"]
+                suggestions = ["立即增加AGV调度数量", "启动备用运输通道", "提高紧急任务优先级至最高", "暂停非关键任务调度"]
+                risks = [f"任务积压可能导致产线停线", "紧急任务延迟交付风险"]
+                score = 45
+            elif pending > 50:
+                eff = "调度负载偏高，存在任务积压风险"
+                load = "偏高"
+                bottlenecks = [f"待处理任务{pending}个超过安全线", f"紧急任务{urgent}个需优先处理"]
+                suggestions = ["增加AGV调度批次", "优化任务分配算法", "提高紧急任务优先级"]
+                risks = ["持续积压可能影响交付周期"]
+                score = 65
             elif urgent > 5:
-                eff = "紧急任务较多，需要优先处理"
-                suggestions = ["优先处理紧急任务", "减少非紧急任务调度"]
+                eff = "紧急任务较多，调度系统正在优先处理"
+                load = "正常"
+                bottlenecks = [f"紧急任务{urgent}个需关注"]
+                suggestions = ["优先处理紧急任务", "合理安排非紧急任务"]
+                risks = []
+                score = 78
             else:
-                eff = "调度系统运行正常，效率良好"
-                suggestions = ["可适当增加调度任务量", "保持当前调度策略"]
-            return f"效率评估: {eff}。建议: {'; '.join(suggestions[:2])}"
+                eff = "调度系统运行正常，任务流转顺畅"
+                load = "正常"
+                bottlenecks = []
+                suggestions = ["保持当前调度策略", "可适当增加任务投放量"]
+                risks = []
+                score = 92
+
+            return {
+                "efficiency": eff,
+                "load_status": load,
+                "bottlenecks": bottlenecks,
+                "suggestions": suggestions,
+                "risks": risks,
+                "score": score
+            }
 
         elif analysis_type == 'network':
             critical = context.get('critical_events_24h', 0)
-            if critical > 0:
-                return f"网络存在{critical}次严重事件，建议检查URLLC切片稳定性并优化带宽分配"
-            return "网络运行稳定，所有切片SLA达标，无需干预"
+            if critical > 5:
+                health = f"网络存在{critical}次严重事件，稳定性堪忧"
+                status = "需关注"
+                issues = [f"24小时内{critical}次严重事件", "URLLC切片SLA可能不达标"]
+                suggestions = ["检查URLLC切片配置", "优化带宽分配策略", "排查网络设备故障"]
+                score = 50
+            elif critical > 0:
+                health = f"网络出现{critical}次严重事件，需持续监控"
+                status = "一般"
+                issues = [f"24小时内{critical}次严重事件"]
+                suggestions = ["加强网络监控", "检查高危节点"]
+                score = 70
+            else:
+                health = "网络运行稳定，所有切片SLA达标"
+                status = "优秀"
+                issues = []
+                suggestions = ["保持当前网络配置", "定期巡检关键设备"]
+                score = 95
+            return {
+                "health": health,
+                "health_status": status,
+                "issues": issues,
+                "suggestions": suggestions,
+                "score": score
+            }
 
         elif analysis_type == 'production':
             pending = context.get('pending_orders', 0)
             online = context.get('device_online', 0)
-            total = context.get('total_devices', 0)
-            rate = round(online / total * 100, 1) if total else 0
-            return f"设备在线率{rate}%，待处理订单{pending}个。{'建议启动备用产线' if pending > 50 else '产能充足，运行正常'}"
+            total = context.get('total_devices', 1)
+            rate = round(online / max(total, 1) * 100, 1)
+            if rate < 80:
+                utilization = f"设备在线率仅{rate}%，产能利用率不足"
+                status = "严重不足"
+                bottlenecks = [f"设备在线率{rate}%偏低", f"待处理订单{pending}个"]
+                suggestions = ["排查离线设备原因", "启动备用设备", "优先处理积压订单"]
+                score = 50
+            elif pending > 100:
+                utilization = f"设备在线率{rate}%，但订单积压{pending}个"
+                status = "紧张"
+                bottlenecks = [f"待处理订单{pending}个积压"]
+                suggestions = ["增加产线班次", "提高设备利用率", "优化排产计划"]
+                score = 65
+            else:
+                utilization = f"设备在线率{rate}%，产能充足"
+                status = "充足"
+                bottlenecks = []
+                suggestions = ["保持当前产能", "关注设备维护计划"]
+                score = 88
+            return {
+                "utilization": utilization,
+                "utilization_status": status,
+                "bottlenecks": bottlenecks,
+                "suggestions": suggestions,
+                "score": score
+            }
 
         elif analysis_type == 'prediction':
-            return "基于近期趋势，预计未来2小时网络负载将保持稳定，AGV调度效率可维持当前水平"
+            loads = context.get('recent_load', [])
+            if loads:
+                avg = sum(loads) / len(loads)
+                if avg > 80:
+                    trend = "网络负载持续偏高，呈上升趋势"
+                    prediction = "预计未来2小时网络负载将继续上升，建议提前扩容"
+                    suggestions = ["提前申请带宽扩容", "优化非关键业务流量", "准备应急降级方案"]
+                    score = 55
+                else:
+                    trend = "网络负载处于正常范围，趋势稳定"
+                    prediction = "预计未来2小时网络负载将保持稳定"
+                    suggestions = ["保持当前网络配置", "按计划执行常规维护"]
+                    score = 82
+            else:
+                trend = "数据不足，趋势待观察"
+                prediction = "需更多数据点进行趋势预测"
+                suggestions = ["增加数据采集密度", "建立基线数据模型"]
+                score = 60
+            return {
+                "trend": trend,
+                "prediction": prediction,
+                "suggestions": suggestions,
+                "score": score
+            }
 
-        return "系统运行正常，暂无异常"
+        return {"message": "系统运行正常，暂无异常", "suggestions": ["保持当前策略"], "score": 75}
+
+    def generate_quick_insight(self, context):
+        """生成快速洞察"""
+        result = self.generate_analysis_report(context)
+        data = result.get('data', {})
+        if isinstance(data, dict):
+            return data.get('efficiency', data.get('health', data.get('utilization', data.get('message', '系统运行正常'))))
+        return str(data) if data else '系统运行正常'
 
     def get_analysis_logs(self, limit=20):
         """获取AI分析历史日志"""

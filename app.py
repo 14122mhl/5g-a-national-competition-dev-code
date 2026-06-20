@@ -432,6 +432,165 @@ def refresh_dashboard():
     return get_dashboard_metrics()
 
 
+@app.route('/api/dashboard/details', methods=['GET'])
+def get_dashboard_details():
+    """获取生产总览指标详情数据（支持检索）"""
+    detail_type = request.args.get('type', '')  # pending_tasks/completed_tasks/alerts/agvs/network_load
+    search = request.args.get('search', '').strip()
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 20, type=int)
+
+    from models.db_models import AGVTask, ProductionLine, Device, DashboardMetric, NetworkSlice, EdgeNode
+
+    result = {"type": detail_type, "items": [], "total": 0, "page": page, "per_page": per_page}
+
+    if detail_type == 'pending_tasks':
+        query = AGVTask.query.filter_by(status='pending')
+        if search:
+            query = query.filter(
+                db.or_(
+                    AGVTask.task_no.ilike(f'%{search}%')
+                )
+            )
+        total = query.count()
+        items = query.order_by(AGVTask.created_at.desc()).offset((page - 1) * per_page).limit(per_page).all()
+        result['items'] = [t.to_dict() for t in items]
+        result['total'] = total
+
+    elif detail_type == 'completed_tasks':
+        query = AGVTask.query.filter_by(status='completed')
+        if search:
+            query = query.filter(
+                db.or_(
+                    AGVTask.task_no.ilike(f'%{search}%')
+                )
+            )
+        total = query.count()
+        items = query.order_by(AGVTask.created_at.desc()).offset((page - 1) * per_page).limit(per_page).all()
+        result['items'] = [t.to_dict() for t in items]
+        result['total'] = total
+
+    elif detail_type == 'alerts':
+        # 告警：从DashboardMetric读取最近记录中的alerts_count，同时显示网络负载事件
+        from models.db_models import NetworkLoadEvent
+        query = NetworkLoadEvent.query
+        if search:
+            query = query.filter(
+                db.or_(
+                    NetworkLoadEvent.event_type.ilike(f'%{search}%'),
+                    NetworkLoadEvent.description.ilike(f'%{search}%')
+                )
+            )
+        total = query.count()
+        items = query.order_by(NetworkLoadEvent.triggered_at.desc()).offset((page - 1) * per_page).limit(per_page).all()
+        result['items'] = [{
+            'id': e.id, 'event_type': e.event_type, 'description': e.description,
+            'severity': getattr(e, 'severity', 'warning'),
+            'timestamp': e.triggered_at.isoformat() if e.triggered_at else None
+        } for e in items]
+        result['total'] = total
+
+    elif detail_type == 'agvs':
+        # 活跃AGV：从Device表查询（device_subtype为agv或type为robot）
+        query = Device.query.filter(
+            db.or_(Device.device_subtype == 'agv', Device.type == 'robot')
+        )
+        if search:
+            query = query.filter(
+                db.or_(
+                    Device.name.ilike(f'%{search}%'),
+                    Device.code.ilike(f'%{search}%')
+                )
+            )
+        total = query.count()
+        items = query.order_by(Device.id).offset((page - 1) * per_page).limit(per_page).all()
+        result['items'] = [d.to_dict() for d in items]
+        result['total'] = total
+
+    elif detail_type == 'network_load':
+        # 网络负载：从DashboardMetric历史记录
+        query = DashboardMetric.query
+        total = query.count()
+        items = query.order_by(DashboardMetric.timestamp.desc()).offset((page - 1) * per_page).limit(per_page).all()
+        result['items'] = [{
+            'id': m.id, 'network_load_pct': m.network_load_pct,
+            'bandwidth_usage_mbps': m.bandwidth_usage_mbps,
+            'sla_compliance': m.sla_compliance,
+            'timestamp': m.timestamp.isoformat() if m.timestamp else None
+        } for m in items]
+        result['total'] = total
+
+    elif detail_type == 'slices':
+        # 活跃切片
+        query = NetworkSlice.query
+        if search:
+            query = query.filter(
+                db.or_(
+                    NetworkSlice.name.ilike(f'%{search}%'),
+                    NetworkSlice.slice_type.ilike(f'%{search}%')
+                )
+            )
+        total = query.count()
+        items = query.all()
+        result['items'] = [{
+            'id': s.id, 'name': s.name, 'slice_type': s.slice_type,
+            'latency': s.latency, 'sla_compliance': s.sla_compliance,
+            'status': s.status
+        } for s in items]
+        result['total'] = total
+
+    elif detail_type == 'edge_nodes':
+        # 边缘节点
+        query = EdgeNode.query
+        if search:
+            query = query.filter(
+                db.or_(
+                    EdgeNode.name.ilike(f'%{search}%'),
+                    EdgeNode.location.ilike(f'%{search}%')
+                )
+            )
+        total = query.count()
+        items = query.all()
+        result['items'] = [{
+            'id': e.id, 'name': e.name, 'location': e.location,
+            'cpu_cores': getattr(e, 'cpu_cores', 'N/A'),
+            'memory_gb': getattr(e, 'memory_gb', 'N/A'),
+            'status': e.status
+        } for e in items]
+        result['total'] = total
+
+    elif detail_type == 'sla':
+        # SLA合规率：从DashboardMetric历史
+        query = DashboardMetric.query
+        total = query.count()
+        items = query.order_by(DashboardMetric.timestamp.desc()).offset((page - 1) * per_page).limit(per_page).all()
+        result['items'] = [{
+            'id': m.id, 'sla_compliance': m.sla_compliance,
+            'reliability': m.reliability,
+            'sensing_accuracy': m.sensing_accuracy,
+            'timestamp': m.timestamp.isoformat() if m.timestamp else None
+        } for m in items]
+        result['total'] = total
+
+    elif detail_type == 'reliability':
+        # 网络可靠性：从DashboardMetric历史
+        query = DashboardMetric.query
+        total = query.count()
+        items = query.order_by(DashboardMetric.timestamp.desc()).offset((page - 1) * per_page).limit(per_page).all()
+        result['items'] = [{
+            'id': m.id, 'reliability': m.reliability,
+            'sla_compliance': m.sla_compliance,
+            'urllc_latency': m.urllc_latency,
+            'timestamp': m.timestamp.isoformat() if m.timestamp else None
+        } for m in items]
+        result['total'] = total
+
+    else:
+        return jsonify({"success": False, "message": f"未知的详情类型: {detail_type}"}), 400
+
+    return jsonify({"success": True, "data": result})
+
+
 # ============================================
 # 网络切片管理 API
 # ============================================

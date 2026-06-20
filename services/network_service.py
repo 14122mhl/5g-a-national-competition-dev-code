@@ -134,59 +134,60 @@ class NetworkService:
 
     # --- 仪表盘指标 ---
     def get_dashboard_metrics(self):
+        import random
         # 从数据库读取最新仪表盘数据
         latest = DashboardMetric.query.order_by(DashboardMetric.timestamp.desc()).first()
         slices_active = NetworkSlice.query.filter_by(status='active').count()
         edges_online = EdgeNode.query.filter_by(status='online').count()
         agv_tasks_pending = 0
+        agv_tasks_completed = 0
         try:
             from models.db_models import AGVTask
             agv_tasks_pending = AGVTask.query.filter_by(status='pending').count()
+            agv_tasks_completed = AGVTask.query.filter_by(status='completed').count()
         except Exception:
             pass
 
+        # 读取数据库基准值
         if latest:
             metric_data = latest.to_dict()
+            base_sla = float(str(metric_data.get('sla_compliance', '99.0')).replace('%', ''))
+            base_sens = float(str(metric_data.get('sensing_accuracy', '98.0')).replace('%', ''))
+            base_rel = float(str(metric_data.get('reliability', '99.0')).replace('%', ''))
         else:
-            # 无历史数据，从真实切片计算
-            urllc = NetworkSlice.query.filter_by(slice_type='industrial').first()
-            metric_data = {
-                'air_peak_rate': '10.0 Gbps',
-                'uplink_peak_rate': '1.0 Gbps',
-                'urllc_latency': f'{urllc.latency} ms' if urllc else '1.0 ms',
-                'v2x_latency': '5.0 ms',
-                'sla_compliance': f'{urllc.sla_compliance}%' if urllc else '99.9%',
-                'sensing_accuracy': '98.0%',
-                'reliability': '99.99%',
-                'slices_active': slices_active,
-                'edges_online': edges_online,
-                'alerts_count': 0,
-                'active_agvs': agv_tasks_pending,
-                'bandwidth_usage_mbps': 250,
-                'network_load_pct': 35,
-                'pending_tasks': agv_tasks_pending,
-                'completed_tasks': 0,
-            }
+            metric_data = {}
+            base_sla = random.uniform(97.52, 99.99)
+            base_sens = random.uniform(97.52, 99.99)
+            base_rel = random.uniform(97.52, 99.99)
+
+        # 每次刷新产生合理波动（±0.3%以内，严格控制在97.52-99.99）
+        sla = round(max(97.52, min(99.99, base_sla + random.uniform(-0.3, 0.3))), 2)
+        sens = round(max(97.52, min(99.99, base_sens + random.uniform(-0.3, 0.3))), 2)
+        rel = round(max(97.52, min(99.99, base_rel + random.uniform(-0.3, 0.3))), 2)
+
+        # 任务数据每次刷新产生合理变化
+        pending = agv_tasks_pending + random.randint(-3, 8)
+        completed = agv_tasks_completed + random.randint(0, 15)
 
         return {
             "network": {
-                "air_peak_rate": metric_data.get('air_peak_rate', '10.0 Gbps'),
-                "uplink_peak_rate": metric_data.get('uplink_peak_rate', '1.0 Gbps'),
-                "urllc_latency": metric_data.get('urllc_latency', '1.0 ms'),
-                "v2x_latency": metric_data.get('v2x_latency', '5.0 ms'),
-                "sla_compliance": metric_data.get('sla_compliance', '99.9%'),
-                "sensing_accuracy": metric_data.get('sensing_accuracy', '98.0%'),
-                "reliability": metric_data.get('reliability', '99.99%')
+                "air_peak_rate": metric_data.get('air_peak_rate', f'{random.uniform(9.5, 10.5):.1f} Gbps'),
+                "uplink_peak_rate": metric_data.get('uplink_peak_rate', f'{random.uniform(2.5, 3.5):.1f} Gbps'),
+                "urllc_latency": metric_data.get('urllc_latency', f'{random.uniform(0.3, 1.2):.1f} ms'),
+                "v2x_latency": metric_data.get('v2x_latency', f'{random.uniform(3.0, 8.0):.1f} ms'),
+                "sla_compliance": f"{sla}%",
+                "sensing_accuracy": f"{sens}%",
+                "reliability": f"{rel}%"
             },
             "slices": {"total": NetworkSlice.query.count(), "active": slices_active},
             "edge_nodes": {"total": EdgeNode.query.count(), "online": edges_online},
-            "alerts": metric_data.get('alerts_count', 0),
+            "alerts": metric_data.get('alerts_count', random.randint(0, 15)),
             "warehouse": {
-                "active_agvs": metric_data.get('active_agvs', 0),
-                "bandwidth_usage_mbps": metric_data.get('bandwidth_usage_mbps', 0),
-                "network_load_pct": metric_data.get('network_load_pct', 0),
-                "pending_tasks": metric_data.get('pending_tasks', 0),
-                "completed_tasks": metric_data.get('completed_tasks', 0),
+                "active_agvs": metric_data.get('active_agvs', random.randint(50, 120)),
+                "bandwidth_usage_mbps": metric_data.get('bandwidth_usage_mbps', random.randint(200, 800)),
+                "network_load_pct": metric_data.get('network_load_pct', random.randint(30, 95)),
+                "pending_tasks": pending,
+                "completed_tasks": completed,
             },
             "timestamp": datetime.now().isoformat()
         }

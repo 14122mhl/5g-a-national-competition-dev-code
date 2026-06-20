@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>佳帮手集团兴平智造基地 - 5G-A确定性网络智能调度平台</title>
+    <title>5GA确定性网络智能调度平台（兴平仓库）</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
@@ -32,8 +32,8 @@
         }
         
         .container {
-            margin-top: 20px;
-            margin-bottom: 30px;
+            margin-top: 10px;
+            margin-bottom: 15px;
         }
         
         /* 标题样式 */
@@ -53,9 +53,9 @@
         /* 头部样式 */
         .header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-bg) 100%);
-            padding: 20px 0;
+            padding: 8px 0;
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 30px;
+            margin-bottom: 10px;
         }
         
         .header-content {
@@ -71,26 +71,26 @@
         }
         
         .logo-icon {
-            width: 50px;
-            height: 50px;
+            width: 32px;
+            height: 32px;
             background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
-            border-radius: 10px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 12px;
             color: var(--primary-color);
         }
         
         .logo-text {
-            font-size: 20px;
+            font-size: 15px;
             font-weight: 700;
             color: var(--text-primary);
         }
         
         .header-title {
-            font-size: 16px;
+            font-size: 13px;
             color: var(--text-secondary);
         }
         
@@ -99,12 +99,12 @@
             background-color: var(--light-bg);
             border-radius: var(--border-radius);
             padding: 0;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
             border: 1px solid var(--border-color);
         }
         
         .navbar-custom .nav-link {
-            padding: 15px 25px;
+            padding: 10px 18px;
             color: #ffffff;
             font-weight: 600;
             border-right: 1px solid var(--border-color);
@@ -149,11 +149,11 @@
             color: var(--text-primary);
             font-weight: 600;
             border-bottom: 1px solid var(--border-color);
-            padding: 15px 20px;
+            padding: 10px 15px;
         }
         
         .card-body {
-            padding: 20px;
+            padding: 15px;
         }
         
         /* 按钮样式 */
@@ -216,11 +216,11 @@
         /* 图表容器 */
         .chart-container {
             position: relative;
-            height: 300px;
-            margin-top: 20px;
+            height: 250px;
+            margin-top: 15px;
             border-radius: var(--border-radius);
             background-color: rgba(15, 35, 54, 0.8);
-            padding: 20px;
+            padding: 15px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
         
@@ -316,15 +316,16 @@
         .metric-card {
             background-color: var(--light-bg);
             border-radius: var(--border-radius);
-            padding: 20px;
+            padding: 12px;
             box-shadow: var(--box-shadow);
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             transition: var(--transition);
             position: relative;
             overflow: hidden;
             border: 1px solid transparent;
             background: linear-gradient(var(--light-bg), var(--light-bg)) padding-box,
                         linear-gradient(135deg, var(--accent-color), var(--secondary-color)) border-box;
+            cursor: pointer;
         }
         
         .metric-card:hover {
@@ -343,9 +344,9 @@
         }
         
         .metric-value {
-            font-size: 28px;
+            font-size: 22px;
             font-weight: 700;
-            margin: 10px 0;
+            margin: 6px 0;
             color: var(--text-accent);
             animation: numberPulse 3s infinite;
         }
@@ -357,6 +358,29 @@
             50% {
                 transform: scale(1.05);
             }
+        }
+
+        /* 数据平滑更新动画 */
+        @keyframes valueFlash {
+            0% { opacity: 0.5; transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .metric-value.updating {
+            animation: valueFlash 0.4s ease-out;
+        }
+
+        /* 刷新指示器 */
+        .refresh-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            margin-right: 6px;
+            transition: opacity 0.3s;
+        }
+        .refresh-dot.loading {
+            animation: pulse 1s infinite;
         }
         
         .metric-label {
@@ -846,17 +870,17 @@
         /* 底部标语 */
         .footer-slogan {
             text-align: center;
-            padding: 30px;
-            margin-top: 40px;
+            padding: 10px;
+            margin-top: 15px;
             border-top: 1px solid var(--border-color);
         }
         
         .slogan-text {
-            font-size: 24px;
+            font-size: 14px;
             font-weight: 700;
             color: var(--text-primary);
             text-shadow: 0 0 30px rgba(51, 255, 136, 0.5);
-            letter-spacing: 5px;
+            letter-spacing: 3px;
         }
         
         .slogan-sub {
@@ -923,10 +947,10 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <div class="logo-icon">5G-A</div>
-                    <div class="logo-text">佳帮手集团 · 智能调度中心</div>
+                    <div class="logo-icon">5GA</div>
+                    <div class="logo-text">兴平仓库 · 智能调度中心</div>
                 </div>
-                <div class="header-title">佳帮手集团兴平智造基地 - 5G-A确定性网络智能调度平台</div>
+                <div class="header-title">5GA确定性网络智能调度平台（兴平仓库）</div>
             </div>
         </div>
     </div>
@@ -1000,8 +1024,41 @@
     
     <!-- 底部 -->
     <div class="footer-slogan">
-        <div class="slogan-text">5G-A赋能智能制造</div>
-        <div class="slogan-sub">佳帮手集团 · 兴平智能制造基地 · 确定性网络智能调度平台 v3.0</div>
+        <div class="slogan-text">5GA确定性网络智能调度平台</div>
+        <div class="slogan-sub">陕西佳帮手集团 · 兴平仓库 · v3.0</div>
+    </div>
+    
+    <!-- 详情弹窗 -->
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content" style="background-color: var(--light-bg); border: 1px solid var(--border-color); color: var(--text-primary);">
+                <div class="modal-header" style="border-bottom: 1px solid var(--border-color);">
+                    <h5 class="modal-title" id="detailModalTitle">数据详情</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="detailSearch" placeholder="输入关键词检索..." style="background-color: var(--dark-bg); border: 1px solid var(--border-color); color: var(--text-primary);">
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary" onclick="searchDetail()">检索</button>
+                            <button class="btn btn-secondary" onclick="clearSearch()" style="margin-left: 5px;">清除</button>
+                        </div>
+                        <div class="col-md-3 text-end">
+                            <span class="text-secondary" id="detailTotal">共 0 条</span>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover" id="detailTable">
+                            <thead id="detailTableHead"></thead>
+                            <tbody id="detailTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-center" id="detailPagination"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1053,14 +1110,48 @@
         }
 
         // ==================== 生产总览 (Dashboard) ====================
+        // 仪表盘指标定义（id到detailType的映射）
+        const METRIC_KEYS = [
+            { id: 'urllc_latency',   label: 'URLLC时延',   key: 'urllc_latency',   source: 'network',   detailType: 'sla' },
+            { id: 'reliability',     label: '网络可靠性',   key: 'reliability',     source: 'network',   detailType: 'reliability' },
+            { id: 'sla_compliance',  label: 'SLA合规率',    key: 'sla_compliance',  source: 'network',   detailType: 'sla' },
+            { id: 'sensing_accuracy',label: '感知精度',     key: 'sensing_accuracy',source: 'network',   detailType: 'sla' },
+            { id: 'active_agvs',     label: '活跃AGV',      key: 'active_agvs',     source: 'warehouse',  detailType: 'agvs' },
+            { id: 'network_load',    label: '网络负载',     key: 'network_load_pct',source: 'warehouse',  detailType: 'network_load' },
+            { id: 'completed_tasks', label: '已完成任务',   key: 'completed_tasks',  source: 'warehouse',  detailType: 'completed_tasks' },
+            { id: 'pending_tasks',   label: '待处理任务',   key: 'pending_tasks',    source: 'warehouse',  detailType: 'pending_tasks' },
+            { id: 'slices_active',   label: '活跃切片',     key: 'active',           source: 'slices',     detailType: 'slices' },
+            { id: 'edges_online',    label: '边缘节点',     key: 'online',           source: 'edge_nodes', detailType: 'edge_nodes' },
+            { id: 'alerts_count',    label: '告警数量',     key: 'alerts',           source: 'special',    detailType: 'alerts' },
+            { id: 'uplink_rate',     label: '上行峰值',     key: 'uplink_peak_rate', source: 'network',   detailType: 'network_load' },
+        ];
+
+        let dashboardRendered = false;
+        let dashboardUpdating = false;
+
         async function loadDashboard() {
-            const containerId = 'dashboard-content';
-            showLoading(containerId);
+            if (dashboardUpdating) return;
+            dashboardUpdating = true;
+            // 刷新按钮状态
+            const refreshBtn = document.getElementById('dashboard-refresh-btn');
+            const refreshDot = document.getElementById('refresh-dot');
+            if (refreshDot) refreshDot.classList.add('loading');
+            if (refreshBtn) refreshBtn.disabled = true;
+
             try {
                 const data = await apiFetch('/api/dashboard/metrics');
-                renderDashboard(data);
+                if (!dashboardRendered) {
+                    renderDashboard(data);
+                    dashboardRendered = true;
+                } else {
+                    refreshDashboardData(data);
+                }
             } catch (err) {
-                showError(containerId, '加载生产总览数据失败: ' + err.message);
+                console.error('Dashboard刷新失败:', err);
+            } finally {
+                dashboardUpdating = false;
+                if (refreshDot) refreshDot.classList.remove('loading');
+                if (refreshBtn) refreshBtn.disabled = false;
             }
         }
 
@@ -1068,37 +1159,37 @@
             const container = document.getElementById('dashboard-content');
             if (!container) return;
 
-            // data = {network, slices, edge_nodes, warehouse, alerts, timestamp}
             const network = data.network || {};
             const warehouse = data.warehouse || {};
             const slices = data.slices || {};
             const edgeNodes = data.edge_nodes || {};
             const alerts = data.alerts || 0;
 
-            // 核心指标卡片
-            const metricCards = [
-                { label: 'URLLC时延', value: network.urllc_latency || '--', unit: '' },
-                { label: '网络可靠性', value: network.reliability || '--', unit: '' },
-                { label: 'SLA合规率', value: network.sla_compliance || '--', unit: '' },
-                { label: '感知精度', value: network.sensing_accuracy || '--', unit: '' },
-                { label: '活跃AGV', value: warehouse.active_agvs || '--', unit: '台' },
-                { label: '网络负载', value: warehouse.network_load_pct || '--', unit: '%' },
-                { label: '已完成任务', value: warehouse.completed_tasks || '--', unit: '个' },
-                { label: '待处理任务', value: warehouse.pending_tasks || '--', unit: '个' },
-                { label: '活跃切片', value: slices.active || '--', unit: '/' + (slices.total || '--') },
-                { label: '边缘节点', value: edgeNodes.online || '--', unit: '/' + (edgeNodes.total || '--') },
-                { label: '告警数量', value: alerts, unit: '条' },
-                { label: '上行峰值', value: network.uplink_peak_rate || '--', unit: '' },
-            ];
-
             let cardsHtml = '';
-            metricCards.forEach(m => {
+            METRIC_KEYS.forEach(m => {
+                let val = '--';
+                let unit = '';
+                if (m.source === 'network') {
+                    val = network[m.key] || '--';
+                } else if (m.source === 'warehouse') {
+                    val = warehouse[m.key] || '--';
+                } else if (m.source === 'slices') {
+                    val = slices[m.key] || '--';
+                    unit = '/' + (slices.total || '--');
+                } else if (m.source === 'edge_nodes') {
+                    val = edgeNodes[m.key] || '--';
+                    unit = '/' + (edgeNodes.total || '--');
+                } else if (m.id === 'alerts_count') {
+                    val = alerts;
+                    unit = '条';
+                }
+
                 cardsHtml += `
                 <div class="col-md-3">
-                    <div class="metric-card fade-in">
+                    <div class="metric-card" onclick="openDetailModal('${escapeHtml(m.detailType)}', '${escapeHtml(m.label)}')" title="点击查看 ${escapeHtml(m.label)} 详情">
                         <div class="metric-label">${escapeHtml(m.label)}</div>
-                        <div class="metric-value">${escapeHtml(String(m.value))}</div>
-                        <div class="text-secondary">${escapeHtml(m.unit)}</div>
+                        <div class="metric-value" id="metric-val-${m.id}">${escapeHtml(String(val))}</div>
+                        <div class="text-secondary" id="metric-unit-${m.id}">${escapeHtml(unit)}</div>
                     </div>
                 </div>`;
             });
@@ -1109,7 +1200,9 @@
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span>生产核心指标</span>
-                                <button class="btn btn-primary btn-sm" onclick="loadDashboard()">刷新</button>
+                                <button class="btn btn-primary btn-sm" id="dashboard-refresh-btn" onclick="loadDashboard()">
+                                    <span class="refresh-dot" id="refresh-dot"></span>刷新
+                                </button>
                             </div>
                         </div>
                         <div class="card-body">
@@ -1125,17 +1218,70 @@
                     </div>
                 </div>`;
 
-            // 初始化仪表盘图表
-            initDashboardChart(metricCards);
+            initDashboardChart(data);
         }
 
-        function initDashboardChart(metricItems) {
+        function refreshDashboardData(data) {
+            const network = data.network || {};
+            const warehouse = data.warehouse || {};
+            const slices = data.slices || {};
+            const edgeNodes = data.edge_nodes || {};
+            const alerts = data.alerts || 0;
+
+            // 错峰更新：每个指标延迟不同时间，避免同时操作DOM
+            METRIC_KEYS.forEach((m, i) => {
+                setTimeout(() => {
+                    let val = '--';
+                    let unit = '';
+                    if (m.source === 'network') {
+                        val = network[m.key] || '--';
+                    } else if (m.source === 'warehouse') {
+                        val = warehouse[m.key] || '--';
+                    } else if (m.source === 'slices') {
+                        val = slices[m.key] || '--';
+                        unit = '/' + (slices.total || '--');
+                    } else if (m.source === 'edge_nodes') {
+                        val = edgeNodes[m.key] || '--';
+                        unit = '/' + (edgeNodes.total || '--');
+                    } else if (m.id === 'alerts_count') {
+                        val = alerts;
+                        unit = '条';
+                    }
+
+                    const valEl = document.getElementById('metric-val-' + m.id);
+                    const unitEl = document.getElementById('metric-unit-' + m.id);
+
+                    // 平滑更新数值
+                    if (valEl) {
+                        const oldVal = valEl.textContent;
+                        const newVal = String(val);
+                        if (oldVal !== newVal) {
+                            valEl.textContent = newVal;
+                            // 触发闪烁动画
+                            valEl.classList.remove('updating');
+                            void valEl.offsetWidth; // 强制回流
+                            valEl.classList.add('updating');
+                        }
+                    }
+                    if (unitEl && unitEl.textContent !== unit) {
+                        unitEl.textContent = unit;
+                    }
+
+                    // 最后一个指标更新完成后更新图表
+                    if (i === METRIC_KEYS.length - 1) {
+                        setTimeout(() => updateDashboardChart(data), 100);
+                    }
+                }, i * 40); // 每个指标间隔40ms，12个指标约480ms完成
+            });
+        }
+
+        function initDashboardChart(data) {
             const ctx = document.getElementById('dashboard-main-chart');
             if (!ctx) return;
             if (dashboardChart) dashboardChart.destroy();
 
-            const labels = metricItems.map(m => m.name || m.label || m.key || '');
-            const values = metricItems.map(m => parseFloat(m.value || m.val || 0));
+            const labels = METRIC_KEYS.map(m => m.label);
+            const values = _extractChartValues(data);
 
             dashboardChart = new Chart(ctx, {
                 type: 'bar',
@@ -1152,6 +1298,7 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    animation: { duration: 400, easing: 'easeOutQuart' },
                     scales: {
                         y: {
                             beginAtZero: true,
@@ -1167,6 +1314,37 @@
                         legend: { labels: { color: '#ffffff' } }
                     }
                 }
+            });
+        }
+
+        function updateDashboardChart(data) {
+            if (!dashboardChart) return;
+            const values = _extractChartValues(data);
+            dashboardChart.data.datasets[0].data = values;
+            dashboardChart.update('active'); // 'active'模式：平滑过渡动画
+        }
+
+        function _extractChartValues(data) {
+            const network = data.network || {};
+            const warehouse = data.warehouse || {};
+            const slices = data.slices || {};
+            const edgeNodes = data.edge_nodes || {};
+            const alerts = data.alerts || 0;
+
+            return METRIC_KEYS.map(m => {
+                let val = 0;
+                if (m.source === 'network') {
+                    val = parseFloat(String(network[m.key] || '0').replace(/[^0-9.]/g, '')) || 0;
+                } else if (m.source === 'warehouse') {
+                    val = parseFloat(String(warehouse[m.key] || '0').replace(/[^0-9.]/g, '')) || 0;
+                } else if (m.source === 'slices') {
+                    val = parseInt(slices[m.key]) || 0;
+                } else if (m.source === 'edge_nodes') {
+                    val = parseInt(edgeNodes[m.key]) || 0;
+                } else if (m.id === 'alerts_count') {
+                    val = parseInt(alerts) || 0;
+                }
+                return val;
             });
         }
 
@@ -1900,8 +2078,7 @@
 
         // ==================== AI分析 (AI Analysis) ====================
         async function loadAI() {
-            const containerId = 'ai-content';
-            const container = document.getElementById(containerId);
+            const container = document.getElementById('ai-content');
             if (!container) return;
 
             container.innerHTML = `
@@ -1909,38 +2086,36 @@
                     <div class="card">
                         <div class="card-header">AI智能分析</div>
                         <div class="card-body">
-                            <div class="row mb-4">
+                            <div class="row mb-3">
                                 <div class="col-md-3">
-                                    <button class="btn btn-primary w-100 mb-2 ${currentAnalysisType === 'scheduling' ? 'active' : ''}" onclick="runAIAnalysis('scheduling')" id="ai-btn-scheduling">调度分析</button>
+                                    <button class="btn btn-primary w-100 mb-2" id="ai-btn-scheduling" onclick="runAIAnalysis('scheduling')">调度分析</button>
                                 </div>
                                 <div class="col-md-3">
-                                    <button class="btn btn-primary w-100 mb-2" onclick="runAIAnalysis('network')" id="ai-btn-network">网络分析</button>
+                                    <button class="btn btn-primary w-100 mb-2" id="ai-btn-network" onclick="runAIAnalysis('network')">网络分析</button>
                                 </div>
                                 <div class="col-md-3">
-                                    <button class="btn btn-primary w-100 mb-2" onclick="runAIAnalysis('production')" id="ai-btn-production">生产分析</button>
+                                    <button class="btn btn-primary w-100 mb-2" id="ai-btn-production" onclick="runAIAnalysis('production')">生产分析</button>
                                 </div>
                                 <div class="col-md-3">
-                                    <button class="btn btn-primary w-100 mb-2" onclick="runAIAnalysis('prediction')" id="ai-btn-prediction">预测分析</button>
+                                    <button class="btn btn-primary w-100 mb-2" id="ai-btn-prediction" onclick="runAIAnalysis('prediction')">预测分析</button>
                                 </div>
                             </div>
-                            <div class="row mb-4">
-                                <div class="col-md-12">
-                                    <button class="btn btn-primary" onclick="loadQuickInsight()">快速洞察</button>
-                                </div>
+                            <div class="mb-3 d-flex align-items-center">
+                                <span id="ai-source-badge" class="badge bg-secondary me-2" style="display:none;"></span>
+                                <span id="ai-score-badge" class="badge bg-info" style="display:none;"></span>
                             </div>
-                            <div class="ai-result-area" id="ai-result-area">
-                                <p class="text-secondary">请点击上方按钮进行AI分析...</p>
+                            <div id="ai-result-area">
+                                <p class="text-secondary">正在从数据库获取数据，请稍候...</p>
                             </div>
                         </div>
                     </div>
                 </div>`;
 
-            // 高亮当前按钮
-            highlightAIButton(currentAnalysisType);
+            // 自动执行调度分析
+            runAIAnalysis('scheduling');
         }
 
         function highlightAIButton(type) {
-            currentAnalysisType = type;
             ['scheduling', 'network', 'production', 'prediction'].forEach(t => {
                 const btn = document.getElementById('ai-btn-' + t);
                 if (btn) {
@@ -1959,7 +2134,16 @@
             highlightAIButton(type);
             const resultArea = document.getElementById('ai-result-area');
             if (!resultArea) return;
-            resultArea.innerHTML = '<div class="loading-container"><div class="spinner"></div><p>AI分析中...</p></div>';
+
+            // 加载动画
+            resultArea.innerHTML = `
+                <div class="text-center" style="padding: 40px;">
+                    <div class="spinner-border" style="width: 3rem; height: 3rem; color: var(--accent-color);" role="status">
+                        <span class="visually-hidden">分析中...</span>
+                    </div>
+                    <p style="margin-top: 15px; color: var(--accent-color);">DeepSeek AI 正在分析数据...</p>
+                    <p class="text-secondary">从数据库读取实时数据，调用大模型进行智能分析</p>
+                </div>`;
 
             try {
                 const result = await apiFetch('/api/ai/analyze', {
@@ -1973,19 +2157,6 @@
             }
         }
 
-        async function loadQuickInsight() {
-            const resultArea = document.getElementById('ai-result-area');
-            if (!resultArea) return;
-            resultArea.innerHTML = '<div class="loading-container"><div class="spinner"></div><p>获取快速洞察...</p></div>';
-
-            try {
-                const result = await apiFetch('/api/ai/quick-insight');
-                renderAIResult('quick-insight', result);
-            } catch (err) {
-                resultArea.innerHTML = '<div class="alert alert-danger">获取快速洞察失败: ' + escapeHtml(err.message) + '</div>';
-            }
-        }
-
         function renderAIResult(type, result) {
             const resultArea = document.getElementById('ai-result-area');
             if (!resultArea) return;
@@ -1994,28 +2165,60 @@
                 'scheduling': '调度分析',
                 'network': '网络分析',
                 'production': '生产分析',
-                'prediction': '预测分析',
-                'quick-insight': '快速洞察'
+                'prediction': '预测分析'
             };
 
-            let content = '';
-            if (typeof result === 'string') {
-                content = result;
-            } else if (result && result.result) {
-                content = typeof result.result === 'string' ? result.result : JSON.stringify(result.result, null, 2);
-            } else if (result && result.analysis) {
-                content = typeof result.analysis === 'string' ? result.analysis : JSON.stringify(result.analysis, null, 2);
-            } else if (result && result.insight) {
-                content = typeof result.insight === 'string' ? result.insight : JSON.stringify(result.insight, null, 2);
-            } else {
-                content = JSON.stringify(result, null, 2);
+            const data = result.data || {};
+            const suggestions = result.suggestions || [];
+            const source = result.source || 'local';
+            const score = result.score || 0;
+
+            // 显示来源和评分
+            const sourceBadge = document.getElementById('ai-source-badge');
+            const scoreBadge = document.getElementById('ai-score-badge');
+            if (sourceBadge) {
+                sourceBadge.style.display = 'inline-block';
+                sourceBadge.textContent = source === 'deepseek' ? 'DeepSeek AI' : '本地分析';
+                sourceBadge.className = 'badge ' + (source === 'deepseek' ? 'bg-success' : 'bg-secondary') + ' me-2';
+            }
+            if (scoreBadge) {
+                scoreBadge.style.display = 'inline-block';
+                scoreBadge.textContent = '评分: ' + score + '/100';
+                scoreBadge.className = 'badge ' + (score >= 80 ? 'bg-success' : score >= 60 ? 'bg-warning' : 'bg-danger');
             }
 
+            // 构建JSON数据块展示
+            let jsonHtml = '<div class="row"><div class="col-md-8">';
+            jsonHtml += '<h6 style="color: var(--accent-color);">分析数据</h6>';
+            jsonHtml += '<pre class="json-block" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; max-height: 400px; overflow-y: auto; font-size: 13px; color: #c9d1d9;">';
+            jsonHtml += escapeHtml(JSON.stringify(data, null, 2));
+            jsonHtml += '</pre></div>';
+
+            // 构建简短建议
+            jsonHtml += '<div class="col-md-4">';
+            jsonHtml += '<h6 style="color: var(--accent-color);">简短建议</h6>';
+
+            if (suggestions.length > 0) {
+                jsonHtml += '<div class="list-group">';
+                suggestions.forEach((s, i) => {
+                    const icon = i === 0 ? 'bi-star-fill' : 'bi-check-circle';
+                    jsonHtml += `
+                        <div class="list-group-item" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); color: var(--text-primary); margin-bottom: 8px; border-radius: 6px;">
+                            <div style="display: flex; align-items: flex-start;">
+                                <span style="color: var(--accent-color); font-weight: bold; margin-right: 8px; min-width: 20px;">${i + 1}.</span>
+                                <span>${escapeHtml(s)}</span>
+                            </div>
+                        </div>`;
+                    });
+                jsonHtml += '</div>';
+            } else {
+                jsonHtml += '<p class="text-secondary">暂无建议</p>';
+            }
+            jsonHtml += '</div></div>';
+
             resultArea.innerHTML = `
-                <h5 class="mb-3" style="color: var(--accent-color);">${typeNames[type] || type} - 分析结果</h5>
-                <div class="scenario-description">
-                    <pre style="color: #ffffff; white-space: pre-wrap; margin: 0; font-family: 'Microsoft YaHei', sans-serif; font-size: 14px;">${escapeHtml(content)}</pre>
-                </div>
+                <h5 style="color: var(--accent-color); margin-bottom: 15px;">${typeNames[type] || type} - 分析结果</h5>
+                ${jsonHtml}
             `;
         }
 
@@ -2038,6 +2241,148 @@
                     loadAGV();
                 }
             }, 10000);
+        }
+
+        // ==================== 详情弹窗 ====================
+        let currentDetailType = '';
+        let currentDetailLabel = '';
+        let currentDetailPage = 1;
+
+        async function openDetailModal(detailType, label) {
+            currentDetailType = detailType;
+            currentDetailLabel = label;
+            currentDetailPage = 1;
+            document.getElementById('detailModalTitle').textContent = label + ' - 数据详情';
+            document.getElementById('detailSearch').value = '';
+            // 使用Bootstrap modal
+            const modal = new bootstrap.Modal(document.getElementById('detailModal'));
+            modal.show();
+            await loadDetailData();
+        }
+
+        async function loadDetailData() {
+            const search = document.getElementById('detailSearch').value.trim();
+            const url = `${API_BASE}/api/dashboard/details?type=${currentDetailType}&search=${encodeURIComponent(search)}&page=${currentDetailPage}&per_page=20`;
+            try {
+                const data = await apiFetch(url);
+                renderDetailTable(data);
+            } catch (err) {
+                document.getElementById('detailTableBody').innerHTML = `<tr><td colspan="10" class="text-center text-danger">加载失败: ${escapeHtml(err.message)}</td></tr>`;
+            }
+        }
+
+        function renderDetailTable(data) {
+            const items = data.items || [];
+            const total = data.total || 0;
+            document.getElementById('detailTotal').textContent = `共 ${total} 条`;
+
+            let headHtml = '';
+            let bodyHtml = '';
+
+            if (items.length === 0) {
+                bodyHtml = '<tr><td colspan="10" class="text-center">暂无数据</td></tr>';
+            } else if (currentDetailType === 'pending_tasks' || currentDetailType === 'completed_tasks') {
+                headHtml = '<tr><th>任务编号</th><th>设备名称</th><th>起始区域</th><th>目标区域</th><th>任务类型</th><th>状态</th><th>创建时间</th></tr>';
+                items.forEach(item => {
+                    bodyHtml += `<tr>
+                        <td>${escapeHtml(item.task_no || '')}</td>
+                        <td>${escapeHtml(item.device_name || '')}</td>
+                        <td>${escapeHtml(item.source_zone_name || '')}</td>
+                        <td>${escapeHtml(item.target_zone_name || '')}</td>
+                        <td>${escapeHtml(item.task_type || '')}</td>
+                        <td><span class="badge ${item.status === 'pending' ? 'bg-warning' : 'bg-success'}">${escapeHtml(item.status || '')}</span></td>
+                        <td>${escapeHtml(item.created_at || '')}</td>
+                    </tr>`;
+                });
+            } else if (currentDetailType === 'alerts') {
+                headHtml = '<tr><th>事件类型</th><th>描述</th><th>严重程度</th><th>时间</th></tr>';
+                items.forEach(item => {
+                    bodyHtml += `<tr>
+                        <td>${escapeHtml(item.event_type || '')}</td>
+                        <td>${escapeHtml(item.description || '')}</td>
+                        <td><span class="badge ${item.severity === 'critical' ? 'bg-danger' : 'bg-warning'}">${escapeHtml(item.severity || '')}</span></td>
+                        <td>${escapeHtml(item.timestamp || '')}</td>
+                    </tr>`;
+                });
+            } else if (currentDetailType === 'agvs') {
+                headHtml = '<tr><th>设备名称</th><th>设备编码</th><th>设备类型</th><th>所属区域</th><th>状态</th></tr>';
+                items.forEach(item => {
+                    bodyHtml += `<tr>
+                        <td>${escapeHtml(item.name || '')}</td>
+                        <td>${escapeHtml(item.code || '')}</td>
+                        <td>${escapeHtml(item.device_subtype || item.type || '')}</td>
+                        <td>${escapeHtml(item.line_name || '')}</td>
+                        <td><span class="badge bg-info">${escapeHtml(item.status || '')}</span></td>
+                    </tr>`;
+                });
+            } else if (currentDetailType === 'network_load' || currentDetailType === 'sla' || currentDetailType === 'reliability') {
+                headHtml = '<tr><th>ID</th><th>网络负载(%)</th><th>带宽(Mbps)</th><th>SLA合规率</th><th>可靠性</th><th>时间</th></tr>';
+                items.forEach(item => {
+                    bodyHtml += `<tr>
+                        <td>${item.id}</td>
+                        <td>${escapeHtml(String(item.network_load_pct || 'N/A'))}</td>
+                        <td>${escapeHtml(String(item.bandwidth_usage_mbps || 'N/A'))}</td>
+                        <td>${escapeHtml(String(item.sla_compliance || 'N/A'))}</td>
+                        <td>${escapeHtml(String(item.reliability || 'N/A'))}</td>
+                        <td>${escapeHtml(item.timestamp || '')}</td>
+                    </tr>`;
+                });
+            } else if (currentDetailType === 'slices') {
+                headHtml = '<tr><th>切片名称</th><th>切片类型</th><th>时延(ms)</th><th>SLA合规率(%)</th><th>状态</th></tr>';
+                items.forEach(item => {
+                    bodyHtml += `<tr>
+                        <td>${escapeHtml(item.name || '')}</td>
+                        <td>${escapeHtml(item.slice_type || '')}</td>
+                        <td>${escapeHtml(String(item.latency || ''))}</td>
+                        <td>${escapeHtml(String(item.sla_compliance || ''))}</td>
+                        <td><span class="badge bg-success">${escapeHtml(item.status || '')}</span></td>
+                    </tr>`;
+                });
+            } else if (currentDetailType === 'edge_nodes') {
+                headHtml = '<tr><th>节点名称</th><th>位置</th><th>CPU核数</th><th>内存(GB)</th><th>状态</th></tr>';
+                items.forEach(item => {
+                    bodyHtml += `<tr>
+                        <td>${escapeHtml(item.name || '')}</td>
+                        <td>${escapeHtml(item.location || '')}</td>
+                        <td>${escapeHtml(String(item.cpu_cores || ''))}</td>
+                        <td>${escapeHtml(String(item.memory_gb || ''))}</td>
+                        <td><span class="badge bg-success">${escapeHtml(item.status || '')}</span></td>
+                    </tr>`;
+                });
+            }
+
+            document.getElementById('detailTableHead').innerHTML = headHtml;
+            document.getElementById('detailTableBody').innerHTML = bodyHtml;
+
+            // 分页
+            const totalPages = Math.ceil(total / 20);
+            let pagHtml = '';
+            if (totalPages > 1) {
+                pagHtml += '<nav><ul class="pagination pagination-sm">';
+                pagHtml += `<li class="page-item ${currentDetailPage <= 1 ? 'disabled' : ''}"><a class="page-link" href="#" onclick="goDetailPage(${currentDetailPage - 1})">上一页</a></li>`;
+                for (let i = 1; i <= Math.min(totalPages, 10); i++) {
+                    pagHtml += `<li class="page-item ${i === currentDetailPage ? 'active' : ''}"><a class="page-link" href="#" onclick="goDetailPage(${i})">${i}</a></li>`;
+                }
+                pagHtml += `<li class="page-item ${currentDetailPage >= totalPages ? 'disabled' : ''}"><a class="page-link" href="#" onclick="goDetailPage(${currentDetailPage + 1})">下一页</a></li>`;
+                pagHtml += '</ul></nav>';
+            }
+            document.getElementById('detailPagination').innerHTML = pagHtml;
+        }
+
+        async function goDetailPage(page) {
+            currentDetailPage = page;
+            await loadDetailData();
+        }
+
+        async function searchDetail() {
+            currentDetailPage = 1;
+            await loadDetailData();
+        }
+
+        async function clearSearch() {
+            document.getElementById('detailSearch').value = '';
+            currentDetailPage = 1;
+            await loadDetailData();
         }
 
         // ==================== 初始化 ====================
